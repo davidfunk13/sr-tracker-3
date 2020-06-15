@@ -1,4 +1,5 @@
 {
     "clientId": "s7gGbuKWGBCuYlysklVZHtov2JjABoOw",
-    "domain": "daves-auth-server.auth0.com"
+    "domain": "daves-auth-server.auth0.com",
+    "audience": "AuthAPI"
 }

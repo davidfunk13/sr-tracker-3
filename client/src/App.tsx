@@ -2,6 +2,7 @@
 
 import React from "react";
 import NavBar from "./components/NavBar";
+import ExternalApi from './views/ExternalApi';
 import PrivateRoute from "./components/PrivateRoutes";
 import { Router, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
@@ -18,6 +19,7 @@ function App() {
         <Switch>
           <Route path="/" exact />
           <PrivateRoute path="/profile" component={Profile} />
+          <PrivateRoute path="/external-api" component={ExternalApi} />
         </Switch>
       </Router>
     </div>

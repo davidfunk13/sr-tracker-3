@@ -1,28 +1,41 @@
-// src/App.js
 
-import React from "react";
-import NavBar from "./components/NavBar";
+
+import React, { useState } from "react";
+import clsx from 'clsx';
 import ExternalApi from './views/ExternalApi';
-import PrivateRoute from "./components/PrivateRoutes";
 import { Router, Route, Switch } from "react-router-dom";
-import Profile from "./components/Profile";
 import history from "./utils/history";
+import { Welcome, Dashboard, Profile } from './views'
+import { Container } from "@material-ui/core";
+import { useAuth0 } from './react-auth0-spa';
+import { NavBar, PrivateRoute } from './components';
+import useStyles from "./App.Styles";
+import DrawerRight from "./components/DrawerRight/DrawerRight.Component";
+import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 
-function App() {
+const App = () => {
+  const { isAuthenticated } = useAuth0();
+
+  const { open, handleDrawerClose, handleDrawerOpen } = useDrawer();
+
+  const classes = useStyles();
 
   return (
-    <div className="App">
-      <Router history={history}>
-        <header>
-          <NavBar />
-        </header>
-        <Switch>
-          <Route path="/" exact />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/external-api" component={ExternalApi} />
-        </Switch>
-      </Router>
-    </div>
+    <Router history={history}>
+      <header>
+        <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
+      </header>
+      <main className={clsx(classes.content, { [classes.contentShift]: open, })}>
+        <Container>
+          <Switch>
+            <Route path="/" exact component={isAuthenticated ? Dashboard : Welcome} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/external-api" component={ExternalApi} />
+          </Switch>
+        </Container>
+      </main>
+      <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
+    </Router>
   );
 }
 

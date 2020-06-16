@@ -16,9 +16,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import useStyles from './DrawerRight.Component.Styles';
 import { useTheme } from '@material-ui/core/styles';
-import useDrawer from '../../hooks/useDrawer/useDrawer.Hook';
 
-const DrawerRight: React.ComponentType<DrawerRightProps> = ({open, handleDrawerClose}) => {
+const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
 
     const theme = useTheme();
@@ -29,10 +28,7 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({open, handleDrawerC
             variant="persistent"
             anchor="right"
             open={open}
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-        >
+            classes={{ paper: classes.drawerPaper, }}>
             <div className={classes.drawerHeader}>
                 <IconButton onClick={() => handleDrawerClose()}>
                     {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

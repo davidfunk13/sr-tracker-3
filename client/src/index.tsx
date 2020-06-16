@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import theme from './utils/theme';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 
-const onRedirectCallback = appState => {
+const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
   history.push(
     appState && appState.targetUrl
       ? appState.targetUrl

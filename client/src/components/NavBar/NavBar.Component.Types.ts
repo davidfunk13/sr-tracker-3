@@ -3,7 +3,7 @@ export interface OptionalNavBarProps {
 }
 
 // these are all the required props
-export interface NavBarProps extends Partial<OptionalNavBarProps> {
+export default interface NavBarProps extends Partial<OptionalNavBarProps> {
   open: boolean,
   handleDrawerOpen: () => void
 }

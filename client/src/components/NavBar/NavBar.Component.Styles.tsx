@@ -22,13 +22,12 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-        fontSize: '1.4em',
     },
     titleSm: {
-        fontSize: '.9em',
+        fontSize: '1.15em',
     },
     loginButton: {
-        marginRight: '5%'
+        marginRight: '3%'
     }
 }));
 

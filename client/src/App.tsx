@@ -13,29 +13,30 @@ import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
-  
+
   const { open, handleDrawerClose, handleDrawerOpen } = useDrawer();
 
   const classes = useStyles();
 
   const route = isAuthenticated ? Dashboard : Welcome;
+
   return (
     <Router history={history}>
       <header >
         <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
       </header>
-      <Container maxWidth={'md'}>
-        <main className={clsx(classes.content, { [classes.contentShift]: open })}>
+      <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
+      <main className={clsx(classes.content, { [classes.contentShift]: open })}>
+        <Container maxWidth={'md'}>
           <Switch>
             <Route path="/" exact component={route} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
-        </main>
-      </Container>
-      <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
+        </Container>
+      </main>
     </Router>
   );
 }
 
-export default App;
+export default React.memo(App);

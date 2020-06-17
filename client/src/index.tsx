@@ -19,6 +19,7 @@ const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <CssBaseline /> */}
     <Auth0Provider
       domain={config.domain}
       client_id={config.clientId}
@@ -26,8 +27,8 @@ ReactDOM.render(
       audience={config.audience}
       onRedirectCallback={onRedirectCallback}
     >
-      <CssBaseline />
       <ThemeProvider theme={theme}>
+        {console.log(theme)}
         <App />
       </ThemeProvider>
     </Auth0Provider>

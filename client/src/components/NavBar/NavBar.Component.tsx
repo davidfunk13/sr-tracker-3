@@ -1,8 +1,7 @@
 import React from "react";
 import clsx from 'clsx';
 import { useAuth0 } from "../../react-auth0-spa";
-import { Link } from "react-router-dom";
-import { Menu as MenuIcon } from '@material-ui/icons';
+import MenuIcon from '@material-ui/icons/Menu';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography'
@@ -19,10 +18,7 @@ const NavBar: React.ComponentType<NavBarProps> = ({ open, handleDrawerOpen }) =>
 
   const titleMaxWidth = '(max-width:500px)'
 
-  const matches = useMediaQuery(titleMaxWidth);
-
-console.log(open, !isAuthenticated, open && !isAuthenticated)
-
+  const matches = useMediaQuery(titleMaxWidth, { noSsr: true });
 
   return (
     <div className={clsx(classes.appBar, { [classes.appBarShift]: open, })}>
@@ -30,18 +26,22 @@ console.log(open, !isAuthenticated, open && !isAuthenticated)
         <Toolbar>
 
           {!isAuthenticated &&
-            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => loginWithRedirect({})}>Log in</Button>
+            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => loginWithRedirect({})}>
+              <Typography variant={'button'}>Log in</Typography>
+            </Button>
           }
 
           {isAuthenticated &&
-            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => logout()}>Log out</Button>
+            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => logout()}>
+              <Typography variant={'button'}>Log out</Typography>
+            </Button>
           }
 
-          <Typography className={clsx(classes.title, { [classes.titleSm]: matches })} variant="h6" >
+          <Typography className={clsx(classes.title, { [classes.titleSm]: matches })} variant="h1" >
             Overwatch Dashboard
           </Typography>
 
-          <IconButton disabled={!isAuthenticated || open } onClick={() => handleDrawerOpen()} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton disabled={!isAuthenticated || open} onClick={() => handleDrawerOpen()} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
 

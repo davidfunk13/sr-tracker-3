@@ -7,9 +7,10 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
-      width: '100%',
+      width: '100vw',
+      maxWidth: '100vw',
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: '6% 0 0 0',
       transition: theme.transitions.create('all', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,

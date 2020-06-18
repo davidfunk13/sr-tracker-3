@@ -9,10 +9,9 @@ const Welcome: React.ComponentType<WelcomeViewProps> = () => {
     return (
         <Grid spacing={2} container>
             <Grid item xs={12}>
-                <Card  >
                     <CardContent>
 
-                        <Typography variant="h1" gutterBottom>
+                        <Typography variant="h5" gutterBottom>
                             Welcome
                 </Typography>
                         <Typography variant="subtitle1" color="textSecondary" gutterBottom>
@@ -33,12 +32,11 @@ const Welcome: React.ComponentType<WelcomeViewProps> = () => {
                             Welcome
                 </Typography>
                     </CardContent>
-                </Card>
             </Grid>
             <Grid item xs={12}>
                 <Card elevation={4}  >
                     <CardContent>
-                        <Typography variant="h1" gutterBottom>
+                        <Typography variant="h5" gutterBottom>
                             Patch Notes:
                  </Typography>
                         <Typography variant="body1" gutterBottom>

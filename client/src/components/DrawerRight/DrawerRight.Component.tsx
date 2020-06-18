@@ -16,11 +16,18 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import useStyles from './DrawerRight.Component.Styles';
 import { useTheme } from '@material-ui/core/styles';
-
+import history from '../../utils/history';
 const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
 
     const theme = useTheme();
+
+    function navigate(url: string) {
+        history.push(url);
+        handleDrawerClose();
+    }
+
+
 
     return (
         <Drawer
@@ -36,12 +43,18 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
             </div>
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem onClick={() => navigate('/')} button key={'Home'}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Home'} />
+                </ListItem>
+                <ListItem onClick={() => navigate('/link')} button key={'Link New Battletag'}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Link new Battletag'} />
+                </ListItem>
             </List>
             <Divider />
             <List>

@@ -24,7 +24,6 @@ const NavBar: React.ComponentType<NavBarProps> = ({ open, handleDrawerOpen }) =>
     <div className={clsx(classes.appBar, { [classes.appBarShift]: open, })}>
       <AppBar position="static">
         <Toolbar>
-
           {!isAuthenticated &&
             <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => loginWithRedirect({})}>
               <Typography variant={'button'}>Log in</Typography>
@@ -37,14 +36,13 @@ const NavBar: React.ComponentType<NavBarProps> = ({ open, handleDrawerOpen }) =>
             </Button>
           }
 
-          <Typography className={clsx(classes.title, { [classes.titleSm]: matches })} variant="h1" >
+          <Typography className={clsx(classes.title, { [classes.titleSm]: matches })} variant="h5" >
             Overwatch Dashboard
           </Typography>
 
           <IconButton disabled={!isAuthenticated || open} onClick={() => handleDrawerOpen()} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-
         </Toolbar>
       </AppBar>
       {/* {isAuthenticated && (

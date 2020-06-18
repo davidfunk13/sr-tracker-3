@@ -22,10 +22,13 @@ const App = () => {
 
   return (
     <Router history={history}>
+
       <header >
         <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
       </header>
+
       <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
+
       <main className={clsx(classes.content, { [classes.contentShift]: open })}>
         <Container maxWidth={'md'}>
           <Switch>
@@ -35,8 +38,9 @@ const App = () => {
           </Switch>
         </Container>
       </main>
+
     </Router>
   );
-}
+};
 
 export default React.memo(App);

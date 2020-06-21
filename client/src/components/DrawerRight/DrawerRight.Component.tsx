@@ -17,6 +17,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import useStyles from './DrawerRight.Component.Styles';
 import { useTheme } from '@material-ui/core/styles';
 import history from '../../utils/history';
+import DrawerItem from './DrawerItem/DrawerItem.Component';
 const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
 
@@ -43,28 +44,19 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
             </div>
             <Divider />
             <List>
-                <ListItem onClick={() => navigate('/')} button key={'Home'}>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'Home'} />
-                </ListItem>
-                <ListItem onClick={() => navigate('/link')} button key={'Link New Battletag'}>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={'Link new Battletag'} />
-                </ListItem>
+                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/'} listItemKey={'Home'} listItemText={'Home'} />
+                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
+                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
             </List>
             <Divider />
-            <List>
+            {/* <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </Drawer>
     );
 }

@@ -1,21 +1,42 @@
 import React, { Fragment } from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { ProfileProps } from './Profile.View.Types';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-const Profile: React.ComponentType<ProfileProps> = () => {
+const Profile: React.FC<ProfileProps> = () => {
     const { loading, user } = useAuth0();
 
     if (loading || !user) {
-        return <div>Loading...</div>;
+        return (
+            <Grid container spacing={4}>
+                <Grid justify={'center'} item xs={12}>
+                    <CircularProgress color="primary" />
+                </Grid>
+            </Grid>
+        );
     }
 
     return (
         <Fragment>
-            <img src={user.picture} alt="Profile" />
-            <h2>{user.name}</h2>
-            <p>{user.email}</p>
-            <code>{JSON.stringify(user, null, 2)}</code>
+            <Grid container>
+                <Grid item xs={12}>
+                    <Card>
+                        <CardContent>
+                            <img src={user.picture} style={{ width: '100%' }} alt="Profile" />
+                            <Typography variant={'body1'}>Nickname: {user.nickname}</Typography>
+                            <Typography variant={'body1'}>Name: {user.name}</Typography>
+                            <Typography variant={'body1'}>Email: {user.email}</Typography>
+                            <Typography variant={"body1"}>{user.email_verified ? 'Email Verified.' : 'Email not verified.'}</Typography>
+                        </CardContent>
+
+                    </Card>
+                </Grid>
+            </Grid>
         </Fragment>
     );
 };

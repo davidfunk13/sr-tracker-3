@@ -10,6 +10,7 @@ import { NavBar, PrivateRoute } from './components';
 import useStyles from "./App.Styles";
 import DrawerRight from "./components/DrawerRight/DrawerRight.Component";
 import useDrawer from './hooks/useDrawer/useDrawer.Hook';
+import Link from "./views/Link/Link.View";
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
@@ -34,7 +35,7 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={route} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/external-api" component={ExternalApi} />
+            <PrivateRoute path="/link" component={Link} />
           </Switch>
         </Container>
       </main>

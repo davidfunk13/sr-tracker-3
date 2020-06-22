@@ -1,18 +1,22 @@
 import React from "react";
 import clsx from 'clsx';
-import ExternalApi from './views/ExternalApi';
-import { Router, Route, Switch } from "react-router-dom";
 import history from "./utils/history";
-import { Welcome, Dashboard, Profile } from './views'
-import { Container, useMediaQuery } from "@material-ui/core";
 import { useAuth0 } from './react-auth0-spa';
-import { NavBar, PrivateRoute } from './components';
+import { Router, Route, Switch } from "react-router-dom";
+import Container from "@material-ui/core/Container";
 import useStyles from "./App.Styles";
 import DrawerRight from "./components/DrawerRight/DrawerRight.Component";
-import useDrawer from './hooks/useDrawer/useDrawer.Hook';
+import NavBar from './components/NavBar/NavBar.Component';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.Component';
+import Dashboard from './views/Dashboard/Dashboard.View'
 import Link from "./views/Link/Link.View";
+import Profile from './views/Profile/Profile.View';
+import Welcome from './views/Welcome/Welcome.View';
+import useDrawer from './hooks/useDrawer/useDrawer.Hook';
+import Stats from "./views/Stats/Stats.View";
+import { AppProps } from "./App.Types";
 
-const App = () => {
+const App: React.FC<AppProps> = () => {
   const { isAuthenticated } = useAuth0();
 
   const { open, handleDrawerClose, handleDrawerOpen } = useDrawer();
@@ -31,11 +35,12 @@ const App = () => {
       <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
 
       <main className={clsx(classes.content, { [classes.contentShift]: open })}>
-        <Container maxWidth={'md'}>
+        <Container maxWidth={'lg'}>
           <Switch>
             <Route path="/" exact component={route} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/link" component={Link} />
+            <PrivateRoute path="/stats" component={Stats} />
           </Switch>
         </Container>
       </main>

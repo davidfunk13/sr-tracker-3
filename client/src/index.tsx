@@ -5,9 +5,9 @@ import './index.css';
 import { Auth0Provider } from "./react-auth0-spa";
 import config from "./auth_config.json";
 import history from "./utils/history";
-import * as serviceWorker from './serviceWorker';
 import theme from './utils/theme';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
+import * as serviceWorker from './serviceWorker';
 
 const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
   history.push(
@@ -19,7 +19,6 @@ const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <CssBaseline /> */}
     <Auth0Provider
       domain={config.domain}
       client_id={config.clientId}
@@ -28,7 +27,6 @@ ReactDOM.render(
       onRedirectCallback={onRedirectCallback}
     >
       <ThemeProvider theme={theme}>
-        {console.log(theme)}
         <App />
       </ThemeProvider>
     </Auth0Provider>

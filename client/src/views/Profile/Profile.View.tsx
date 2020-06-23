@@ -22,22 +22,23 @@ const Profile: React.FC<ProfileProps> = () => {
     }
 
     return (
-        <Fragment>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Card>
-                        <CardContent>
-                            <img src={user.picture} style={{ width: '100%' }} alt="Profile" />
-                            <Typography variant={'body1'}>Nickname: {user.nickname}</Typography>
-                            <Typography variant={'body1'}>Name: {user.name}</Typography>
-                            <Typography variant={'body1'}>Email: {user.email}</Typography>
-                            <Typography variant={"body1"}>{user.email_verified ? 'Email Verified.' : 'Email not verified.'}</Typography>
-                        </CardContent>
-
-                    </Card>
-                </Grid>
+        <Grid container spacing={4}>
+            <Grid item xs={12}>
+                <Typography variant={'h4'}>Profile</Typography>
             </Grid>
-        </Fragment>
+            <Grid item xs={12}>
+                <Card>
+                    <CardContent>
+                        <img src={user.picture} style={{ width: '100%' }} alt="Profile" />
+                        <Typography variant={'body1'}>Nickname: {user.nickname}</Typography>
+                        <Typography variant={'body1'}>Name: {user.name}</Typography>
+                        <Typography variant={'body1'}>Email: {user.email}</Typography>
+                        <Typography variant={"body1"}>{user.email_verified ? 'Email Verified.' : 'Email not verified.'}</Typography>
+                    </CardContent>
+
+                </Card>
+            </Grid>
+        </Grid>
     );
 };
 

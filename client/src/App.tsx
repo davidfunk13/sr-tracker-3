@@ -14,7 +14,8 @@ import Profile from './views/Profile/Profile.View';
 import Welcome from './views/Welcome/Welcome.View';
 import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 import Stats from "./views/Stats/Stats.View";
-import { AppProps } from "./App.Types";
+import Track from "./views/Track/Track.View";
+import AppProps from "./App.Types";
 
 const App: React.FC<AppProps> = () => {
   const { isAuthenticated } = useAuth0();
@@ -41,6 +42,8 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/link" component={Link} />
             <PrivateRoute path="/stats" component={Stats} />
+            <PrivateRoute path="/track" component={Track} />
+            {/* <PrivateRoute path="/track/:w" component={Track} /> */}
           </Switch>
         </Container>
       </main>

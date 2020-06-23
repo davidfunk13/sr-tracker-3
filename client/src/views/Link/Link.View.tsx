@@ -9,6 +9,7 @@ import { CircularProgress } from "@material-ui/core";
 
 const Link: React.FC<LinkProps> = () => {
     const [isOn, setIsOn] = useState<boolean>(false);
+    
     const [search, setSearch] = useState<string>('');
 
     const fakeBattletags: Array<BlizzAPIBattletag> = [
@@ -20,7 +21,7 @@ const Link: React.FC<LinkProps> = () => {
     return (
         <Grid container spacing={4}>
             <Grid item xs={12}>
-                <Typography variant={"h5"}>
+                <Typography variant={"h4"}>
                     Link New Battletag
                 </Typography>
             </Grid>

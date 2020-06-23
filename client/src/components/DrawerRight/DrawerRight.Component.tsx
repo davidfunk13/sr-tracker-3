@@ -40,6 +40,7 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/stats'} listItemKey={'Profile Statistics'} listItemText={'Profile Statistics'} />
+                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/track'} listItemKey={'Track Skill Rating'} listItemText={'Track Skill Rating'} />
             </List>
             <Divider />
         </Drawer>

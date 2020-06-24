@@ -9,7 +9,7 @@ import { CircularProgress } from "@material-ui/core";
 
 const Link: React.FC<LinkProps> = () => {
     const [isOn, setIsOn] = useState<boolean>(false);
-    
+
     const [search, setSearch] = useState<string>('');
 
     const fakeBattletags: Array<BlizzAPIBattletag> = [

@@ -8,7 +8,7 @@ import { CardWithAvatarProps } from './CardWithAvatar.UI.Types';
 const CardWithAvatar: React.ComponentType<CardWithAvatarProps> = ({ avatarLetter, CardHeaderTitle, CardHeaderSubtitle, children }) => {
 
     return (
-        <Card >
+        <Card variant={'outlined'} >
             <CardHeader avatar={<Avatar style={{ width: '2.75em', height: '2.75em' }} >{avatarLetter}</Avatar>} title={CardHeaderTitle} subheader={CardHeaderSubtitle} />
             {children ? <CardContent>{children}</CardContent> : null}
         </Card>

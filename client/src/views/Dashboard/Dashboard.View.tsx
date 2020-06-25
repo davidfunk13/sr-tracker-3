@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Grid from '@material-ui/core/Grid';
-import CardWithAvatar from '../../UI/CardWithAvatar.UI';
+import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
 import DashboardViewProps from './Dashboard.View.Types';
 import Typography from '@material-ui/core/Typography';
 

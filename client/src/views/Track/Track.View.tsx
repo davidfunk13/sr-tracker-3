@@ -4,12 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card'
-import Paper from '@material-ui/core/Paper';
 import DamageIcon from '../../assets/icons/roles/Damage.png'
 import SupportIcon from '../../assets/icons/roles/Support.png'
 import TankIcon from '../../assets/icons/roles/Tank.png'
-import CardWithAvatar from '../../UI/CardWithAvatar.UI';
+import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
 import { BlizzAPIBattletag } from '../Link/Link.View.Types';
+import Modal from '../../UI/Modal/Modal.UI';
+import useModal from '../../hooks/useModal/useModal.Hook';
+import useStyles from './Track.Styles';
+import DotsMobileStepper from '../../forms/Mobile/DotsMobileStepper/DotsMobileStepper';
+
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
     { name: "NakedDave#11750", urlName: "NakedDave-11750", id: 364415799, level: 704, playerLevel: 704, isPublic: true, platform: "pc", portrait: "0x02500000000009EB" },
@@ -17,9 +21,11 @@ const fakeBattletags: Array<BlizzAPIBattletag> = [
 ];
 
 const Track: React.FC<TrackProps> = () => {
-
+    const classes = useStyles();
     //toggle state of having a selected battletag in localstorage.
     const [isOn, setIsOn] = useState<boolean>(false);
+
+    const { modalOpen, handleModalClose, handleModalOpen } = useModal();
 
     return (
         <Grid container spacing={4}>
@@ -44,7 +50,7 @@ const Track: React.FC<TrackProps> = () => {
                         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                             <Grid item xs={4}>
                                 <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={DamageIcon} />
+                                    <img style={{ width: '100%' }} src={DamageIcon} alt="Damage SR" />
                                     <Typography align={'center'} variant={'h6'}>
                                         4266
                                     </Typography>
@@ -55,7 +61,7 @@ const Track: React.FC<TrackProps> = () => {
                             </Grid>
                             <Grid item xs={4}>
                                 <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={TankIcon} />
+                                    <img style={{ width: '100%' }} src={TankIcon} alt="Tank SR" />
                                     <Typography align={'center'} variant={'h6'}>
                                         4001
                                     </Typography>
@@ -66,7 +72,7 @@ const Track: React.FC<TrackProps> = () => {
                             </Grid>
                             <Grid item xs={4}>
                                 <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={SupportIcon} />
+                                    <img style={{ width: '100%' }} src={SupportIcon} alt="Support SR" />
                                     <Typography align={'center'} variant={'h6'}>
                                         3209
                                     </Typography>
@@ -74,6 +80,9 @@ const Track: React.FC<TrackProps> = () => {
                                         Support
                                     </Typography>
                                 </Card>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button onClick={() => handleModalOpen()} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
                             </Grid>
                         </Grid>
                     </Fragment>
@@ -89,14 +98,25 @@ const Track: React.FC<TrackProps> = () => {
                                 const numbers: string = '#' + battletagSplit[1];
                                 const avatarLetter = Array.from(name)[0];
 
-                                return <Grid item xs={12}>
-                                    <CardWithAvatar key={battletag.name} avatarLetter={avatarLetter} CardHeaderTitle={name} CardHeaderSubtitle={numbers} />
+                                return <Grid key={battletag.name} item xs={12}>
+                                    <CardWithAvatar avatarLetter={avatarLetter} CardHeaderTitle={name} CardHeaderSubtitle={numbers} />
                                 </Grid>
                             })}
                         </Grid>
                     </Fragment>
                 }
             </Grid>
+            <Modal handleModalClose={handleModalClose} modalOpen={modalOpen}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12}>
+                        <Typography variant={'h5'}>
+                            Testing
+                        </Typography>
+                    </Grid>
+                    <DotsMobileStepper/>
+                    <Button variant={'contained'} fullWidth color={'primary'} onClick={() => handleModalClose()}>Close Modal</Button>
+                </Grid>
+            </Modal>
         </Grid>
     );
 };

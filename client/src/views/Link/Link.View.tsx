@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Typography from "@material-ui/core/Typography";
+import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
 import LinkProps, { BlizzAPIBattletag } from './Link.View.Types';
-import Button from "@material-ui/core/Button";
-import CardWithAvatar from "../../UI/CardWithAvatar.UI";
-import { CircularProgress } from "@material-ui/core";
 
 const Link: React.FC<LinkProps> = () => {
     const [isOn, setIsOn] = useState<boolean>(false);

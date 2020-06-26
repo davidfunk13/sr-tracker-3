@@ -12,7 +12,8 @@ import { BlizzAPIBattletag } from '../Link/Link.View.Types';
 import Modal from '../../UI/Modal/Modal.UI';
 import useModal from '../../hooks/useModal/useModal.Hook';
 import useStyles from './Track.Styles';
-import CreateSeasonRoot from '../../forms/CreateSeason/CreateSeasonRoot';
+import seasonFormComponents from '../../forms/CreateSeason';
+import useForm from '../../hooks/useForm/useForm.Hook';
 
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
@@ -22,6 +23,13 @@ const fakeBattletags: Array<BlizzAPIBattletag> = [
 
 const Track: React.FC<TrackProps> = () => {
     const classes = useStyles();
+
+    //make interface for season form object.
+    const [seasonFormstate, setSeasonFormState] = useForm({
+        seasonType: '',
+        mainHeroes: '',
+    });
+
     //toggle state of having a selected battletag in localstorage.
     const [isOn, setIsOn] = useState<boolean>(false);
 
@@ -106,10 +114,10 @@ const Track: React.FC<TrackProps> = () => {
                     </Fragment>
                 }
             </Grid>
-            <Modal componentsSwitch={CreateSeasonRoot} handleModalClose={handleModalClose} modalOpen={modalOpen}>
-              <Typography>Testing</Typography>
-            </Modal>
+
+            <Modal formState={seasonFormstate} setFormState={setSeasonFormState} components={seasonFormComponents} handleModalClose={handleModalClose} modalOpen={modalOpen} />
         </Grid>
+
     );
 };
 

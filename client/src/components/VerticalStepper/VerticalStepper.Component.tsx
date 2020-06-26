@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import React, { useState, FunctionComponent } from 'react';
+import { FormComponentObject } from '../../UI/Modal/Modal.UI.Types';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -10,12 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
 
-const VerticalStepper: React.FC<VerticalStepperTypes> = ({componentsSwitch}) => {
+const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }) => {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = useState(0);
 
-    //convert steps to return an array with objects in it with a label and component property.
-    // const steps = getSteps();
+    const [activeStep, setActiveStep] = useState(0);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -28,15 +26,18 @@ const VerticalStepper: React.FC<VerticalStepperTypes> = ({componentsSwitch}) => 
     const handleReset = () => {
         setActiveStep(0);
     };
-    const currentComponent = componentsSwitch(activeStep).component;
+
     return (
         <div className={classes.root}>
             <Stepper activeStep={activeStep} orientation="vertical">
-                {/* {steps.map((label, index) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
+                {components.map((step: FormComponentObject, index) => {
+
+                    const StepComponent = step.component;
+
+                    return <Step key={step.label}>
+                        <StepLabel>{step.label}</StepLabel>
                         <StepContent>
-                            <Typography>{getStepContent(index)}</Typography>
+                            <StepComponent />
                             <div className={classes.actionsContainer}>
                                 <div>
                                     <Button
@@ -52,20 +53,21 @@ const VerticalStepper: React.FC<VerticalStepperTypes> = ({componentsSwitch}) => 
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                        {activeStep === components.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
                                 </div>
                             </div>
                         </StepContent>
                     </Step>
-                ))} */}
+                })}
             </Stepper>
-            {/* {activeStep === steps.length && (
+            {activeStep === components.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
+                    {/* Put close button here with reset! Have it act as a submit button! */}
+                    <Typography>All steps completed - you're finished.</Typography>
                     <Button onClick={handleReset} className={classes.button}>Reset</Button>
                 </Paper>
-            )} */}
+            )}
         </div>
     );
 }

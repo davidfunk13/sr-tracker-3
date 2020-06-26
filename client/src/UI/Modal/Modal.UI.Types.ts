@@ -1,5 +1,8 @@
-interface FormComponentObject  {
-    label: string; component: () => JSX.Element;
+import { FunctionComponent } from "react";
+
+export interface FormComponentObject {
+    label: string;
+    component: FunctionComponent;
 }
 
 export default interface Modal {
@@ -8,4 +11,6 @@ export default interface Modal {
     handleModalClose: () => void,
     toggleModal?: () => void,
     components: FormComponentObject[];
+    formState: any, //Make an interface for this. 
+    setFormState: () => { [key: string]: any; }, //Do better with this too.
 }

@@ -12,7 +12,7 @@ import { BlizzAPIBattletag } from '../Link/Link.View.Types';
 import Modal from '../../UI/Modal/Modal.UI';
 import useModal from '../../hooks/useModal/useModal.Hook';
 import useStyles from './Track.Styles';
-import DotsMobileStepper from '../../forms/Mobile/DotsMobileStepper/DotsMobileStepper';
+import CreateSeasonRoot from '../../forms/CreateSeason/CreateSeasonRoot';
 
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
@@ -106,16 +106,8 @@ const Track: React.FC<TrackProps> = () => {
                     </Fragment>
                 }
             </Grid>
-            <Modal handleModalClose={handleModalClose} modalOpen={modalOpen}>
-                <Grid container spacing={4}>
-                    <Grid item xs={12}>
-                        <Typography variant={'h5'}>
-                            Testing
-                        </Typography>
-                    </Grid>
-                    <DotsMobileStepper/>
-                    <Button variant={'contained'} fullWidth color={'primary'} onClick={() => handleModalClose()}>Close Modal</Button>
-                </Grid>
+            <Modal componentsSwitch={CreateSeasonRoot} handleModalClose={handleModalClose} modalOpen={modalOpen}>
+              <Typography>Testing</Typography>
             </Modal>
         </Grid>
     );

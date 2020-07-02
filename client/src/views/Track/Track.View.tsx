@@ -14,7 +14,7 @@ import useModal from '../../hooks/useModal/useModal.Hook';
 import useStyles from './Track.Styles';
 import seasonFormComponents from '../../forms/CreateSeason';
 import useForm from '../../hooks/useForm/useForm.Hook';
-
+import { SeasonFormProvider } from '../../contexts/SeasonFormContext';
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
     { name: "NakedDave#11750", urlName: "NakedDave-11750", id: 364415799, level: 704, playerLevel: 704, isPublic: true, platform: "pc", portrait: "0x02500000000009EB" },
@@ -114,8 +114,15 @@ const Track: React.FC<TrackProps> = () => {
                     </Fragment>
                 }
             </Grid>
-
-            <Modal formState={seasonFormstate} setFormState={setSeasonFormState} components={seasonFormComponents} handleModalClose={handleModalClose} modalOpen={modalOpen} />
+            <SeasonFormProvider>
+                <Modal
+                    // formState={seasonFormstate}
+                    // setFormState={setSeasonFormState}
+                    components={seasonFormComponents}
+                    handleModalClose={handleModalClose}
+                    modalOpen={modalOpen}
+                />
+            </SeasonFormProvider>
         </Grid>
 
     );

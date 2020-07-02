@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 export interface FormComponentObject {
     label: string;
-    component: FunctionComponent;
+    component: FunctionComponent<any>;
 }
 
 export default interface Modal {

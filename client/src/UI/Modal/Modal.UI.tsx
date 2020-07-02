@@ -18,7 +18,7 @@ const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, components, 
     return <Dialog open={modalOpen} fullScreen={fullScreen}>
         <section className={classes.modalContent}>
             {children}
-            <VerticalStepper components={components} />
+            {/* <VerticalStepper components={components} /> */}
             <Button variant={'contained'} fullWidth color={'primary'} onClick={() => handleModalClose()}>Close Modal</Button>
         </section>
     </Dialog>

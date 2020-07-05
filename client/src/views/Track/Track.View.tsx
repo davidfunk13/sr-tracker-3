@@ -13,9 +13,8 @@ import Modal from '../../UI/Modal/Modal.UI';
 import useModal from '../../hooks/useModal/useModal.Hook';
 import useStyles from './Track.Styles';
 import seasonFormComponents from '../../forms/CreateSeason';
-import useForm from '../../hooks/useForm/useForm.Hook';
 import SeasonFormProvider from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
-import ContextTest from './ContextTest';
+import VerticalStepper from '../../components/VerticalStepper/VerticalStepper.Component';
 
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
@@ -117,14 +116,12 @@ const Track: React.FC<TrackProps> = () => {
                 }
             </Grid>
             <SeasonFormProvider>
-                {/* <Modal
-                    // formState={seasonFormstate}
-                    // setFormState={setSeasonFormState}
-                    components={seasonFormComponents}
+                <Modal
                     handleModalClose={handleModalClose}
                     modalOpen={modalOpen}
-                /> */}
-                <ContextTest/>
+                >
+                    <VerticalStepper components={seasonFormComponents}/>
+                </Modal>
             </SeasonFormProvider>
         </Grid>
 

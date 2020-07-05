@@ -10,7 +10,4 @@ export default interface Modal {
     handleModalOpen?: () => void,
     handleModalClose: () => void,
     toggleModal?: () => void,
-    components: FormComponentObject[];
-    formState: any, //Make an interface for this. 
-    setFormState: () => { [key: string]: any; }, //Do better with this too.
 }

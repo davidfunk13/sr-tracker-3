@@ -1,5 +1,4 @@
 import React, { useState, createContext } from 'react';
-import seasonFormReducer from './SeasonFormReducer.Context';
 
 export const SeasonFormContext = createContext({});
 

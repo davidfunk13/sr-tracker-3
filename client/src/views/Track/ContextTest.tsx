@@ -12,8 +12,7 @@ const ContextTest = () => {
     }
 
     function push(arg: any) {
-        let newState = state;
-        newState.mainHeroes = [...newState.mainHeroes, arg];
+        let newState = { ...state, mainHeroes: [...state.mainHeroes, arg] };
         setState(newState);
     }
 
@@ -23,6 +22,7 @@ const ContextTest = () => {
         <div>
             <button onClick={() => set()}>test</button>
             <button onClick={() => push('item')}>poosh</button>
+            {state.seasonType || 0}
             {state.mainHeroes.map((item: React.ReactNode) => <div>{item}</div>)}
         </div>
     )

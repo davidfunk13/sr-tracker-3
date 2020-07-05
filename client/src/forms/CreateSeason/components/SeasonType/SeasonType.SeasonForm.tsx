@@ -1,15 +1,22 @@
-import React, { Fragment, FunctionComponent, useContext } from 'react';
+import React, { Fragment, FunctionComponent, useContext, useState, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import DamageIcon from '../../../../assets/icons/roles/Damage.png';
+import TankIcon from '../../../../assets/icons/roles/Tank.png';
+import SupportIcon from '../../../../assets/icons/roles/Support.png';
 import Grid from '@material-ui/core/Grid';
 import SeasonFormProps from './SeasonType.SeasonForm.Types';
+import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/SeasonFormContext.Context';
 
-const SeasonType: FunctionComponent<SeasonFormProps> = ({ }) => {
+const SeasonType: FunctionComponent<SeasonFormProps> = () => {
+
+    const { state, setState }: any = useContext(SeasonFormContext);
 
     function selectRole(val: number) {
-        console.log({ roleSelected: val })
-        // setFormState()
+        const newState = { ...state, seasonType: val };
+        setState(newState);
     }
+
+    useEffect(() => console.log(state), [state])
 
     return (
         <Fragment>
@@ -20,13 +27,13 @@ const SeasonType: FunctionComponent<SeasonFormProps> = ({ }) => {
                     </Typography>
                 </Grid>
                 <Grid onClick={() => selectRole(0)} item xs={4}>
-                    <img style={{ maxWidth: '100%' }} src={DamageIcon} alt="Damage Season" />
+                    <img style={{ maxWidth: '100%' }} src={TankIcon} alt="Damage Season" />
                 </Grid>
                 <Grid onClick={() => selectRole(1)} item xs={4}>
                     <img style={{ maxWidth: '100%' }} src={DamageIcon} alt="Damage Season" />
                 </Grid>
                 <Grid onClick={() => selectRole(2)} item xs={4}>
-                    <img style={{ maxWidth: '100%' }} src={DamageIcon} alt="Damage Season" />
+                    <img style={{ maxWidth: '100%' }} src={SupportIcon} alt="Damage Season" />
                 </Grid>
             </Grid>
         </Fragment>

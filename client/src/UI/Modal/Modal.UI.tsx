@@ -5,9 +5,8 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import Dialog from '@material-ui/core/Dialog';
 import useStyles from './Modal.UI.Styles';
 import Button from '@material-ui/core/Button';
-import VerticalStepper from '../../components/VerticalStepper/VerticalStepper.Component';
 
-const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, components, children }) => {
+const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, children }) => {
 
     const theme = useTheme();
 
@@ -18,7 +17,6 @@ const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, components, 
     return <Dialog open={modalOpen} fullScreen={fullScreen}>
         <section className={classes.modalContent}>
             {children}
-            {/* <VerticalStepper components={components} /> */}
             <Button variant={'contained'} fullWidth color={'primary'} onClick={() => handleModalClose()}>Close Modal</Button>
         </section>
     </Dialog>

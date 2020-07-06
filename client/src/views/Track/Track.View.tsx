@@ -37,8 +37,8 @@ const Track: React.FC<TrackProps> = () => {
     const { modalOpen, handleModalClose, handleModalOpen } = useModal();
 
     return (
-        <Grid container spacing={4}>
-            <Grid item xs={12}>
+        <Grid container justify={'center'} spacing={4}>
+            <Grid item xs={12} md={8}>
                 <Typography variant={"h4"}>
                     Track Skill Rating
                 </Typography>
@@ -47,7 +47,7 @@ const Track: React.FC<TrackProps> = () => {
                 </Typography>
                 <Button variant={'contained'} color={"primary"} onClick={() => { const newState = !isOn; setIsOn(newState) }}>Toggle</Button>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={8}>
                 {isOn ?
                     <Fragment>
                         <Typography gutterBottom variant={"h5"}>
@@ -116,10 +116,7 @@ const Track: React.FC<TrackProps> = () => {
                 }
             </Grid>
             <SeasonFormProvider>
-                <Modal
-                    handleModalClose={handleModalClose}
-                    modalOpen={modalOpen}
-                >
+                <Modal handleModalClose={handleModalClose}modalOpen={modalOpen}>
                     <VerticalStepper components={seasonFormComponents}/>
                 </Modal>
             </SeasonFormProvider>

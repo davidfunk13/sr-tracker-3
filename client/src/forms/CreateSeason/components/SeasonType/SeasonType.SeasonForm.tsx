@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useContext, useState, useEffect } from 'react';
+import React, { Fragment, FunctionComponent, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import DamageIcon from '../../../../assets/icons/roles/Damage.png';
 import TankIcon from '../../../../assets/icons/roles/Tank.png';
@@ -12,11 +12,9 @@ const SeasonType: FunctionComponent<SeasonFormProps> = () => {
     const { state, setState }: any = useContext(SeasonFormContext);
 
     function selectRole(val: number) {
-        const newState = { ...state, seasonType: val };
+        const newState = { ...state, currentStep: state.currentStep + 1, seasonType: val };
         setState(newState);
     }
-
-    useEffect(() => console.log(state), [state])
 
     return (
         <Fragment>
@@ -27,13 +25,13 @@ const SeasonType: FunctionComponent<SeasonFormProps> = () => {
                     </Typography>
                 </Grid>
                 <Grid onClick={() => selectRole(0)} item xs={4}>
-                    <img style={{ maxWidth: '100%' }} src={TankIcon} alt="Damage Season" />
+                    <img style={{ maxWidth: '100%' }} src={TankIcon} alt="Tank Season" />
                 </Grid>
                 <Grid onClick={() => selectRole(1)} item xs={4}>
                     <img style={{ maxWidth: '100%' }} src={DamageIcon} alt="Damage Season" />
                 </Grid>
                 <Grid onClick={() => selectRole(2)} item xs={4}>
-                    <img style={{ maxWidth: '100%' }} src={SupportIcon} alt="Damage Season" />
+                    <img style={{ maxWidth: '100%' }} src={SupportIcon} alt="Support Season" />
                 </Grid>
             </Grid>
         </Fragment>

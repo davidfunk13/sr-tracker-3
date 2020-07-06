@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useContext, FunctionComponent } from 'react';
 import { FormComponentObject } from '../../UI/Modal/Modal.UI.Types';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -9,27 +9,31 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
+import { SeasonFormContext } from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
 
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }) => {
     const classes = useStyles();
 
-    const [activeStep, setActiveStep] = useState(0);
+    const { state, setState }: any = useContext(SeasonFormContext);
 
     const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        const newState = { ...state, currentStep: state.currentStep + 1 };
+        setState(newState);
     };
 
     const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        const newState = { ...state, currentStep: state.currentStep - 1 };
+        setState(newState);
     };
 
     const handleReset = () => {
-        setActiveStep(0);
+        const newState = { ...state, currentStep: 0 };
+        setState(newState);
     };
 
     return (
         <div className={classes.root}>
-            <Stepper activeStep={activeStep} orientation="vertical">
+            <Stepper activeStep={state.currentStep} orientation="vertical">
                 {components.map((step: FormComponentObject, index) => {
 
                     const StepComponent = step.component;
@@ -41,7 +45,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
                             <div className={classes.actionsContainer}>
                                 <div>
                                     <Button
-                                        disabled={activeStep === 0}
+                                        disabled={state.currentStep === 0}
                                         onClick={handleBack}
                                         className={classes.button}
                                     >
@@ -53,7 +57,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === components.length - 1 ? 'Finish' : 'Next'}
+                                        {state.currentStep === components.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
                                 </div>
                             </div>
@@ -61,7 +65,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
                     </Step>
                 })}
             </Stepper>
-            {activeStep === components.length && (
+            {state.currentStep === components.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
                     {/* Put close button here with reset! Have it act as a submit button! */}
                     <Typography>All steps completed - you're finished.</Typography>
@@ -71,4 +75,5 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
         </div>
     );
 }
+
 export default VerticalStepper;

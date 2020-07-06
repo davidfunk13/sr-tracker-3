@@ -2,7 +2,7 @@ type RoleName = "tank" | "damage" | "support";
 
 type RoleKey = 0 | 1 | 2;
 
-interface HeroEntry {
+export interface HeroEntry {
     name: string,
     roleKey: RoleKey,
     roleName: RoleName,

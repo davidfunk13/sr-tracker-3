@@ -15,17 +15,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
     const classes = useStyles();
 
     const { state, setState }: any = useContext(SeasonFormContext);
-
-    const handleNext = () => {
-        const newState = { ...state, currentStep: state.currentStep + 1 };
-        setState(newState);
-    };
-
-    const handleBack = () => {
-        const newState = { ...state, currentStep: state.currentStep - 1 };
-        setState(newState);
-    };
-
+    
     const handleReset = () => {
         const newState = { ...state, currentStep: 0 };
         setState(newState);
@@ -42,25 +32,6 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
                         <StepLabel>{step.label}</StepLabel>
                         <StepContent>
                             <StepComponent />
-                            <div className={classes.actionsContainer}>
-                                <div>
-                                    <Button
-                                        disabled={state.currentStep === 0}
-                                        onClick={handleBack}
-                                        className={classes.button}
-                                    >
-                                        Back
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleNext}
-                                        className={classes.button}
-                                    >
-                                        {state.currentStep === components.length - 1 ? 'Finish' : 'Next'}
-                                    </Button>
-                                </div>
-                            </div>
                         </StepContent>
                     </Step>
                 })}

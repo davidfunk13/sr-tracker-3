@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import TrackProps from './Track.View.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -12,9 +12,11 @@ import { BlizzAPIBattletag } from '../Link/Link.View.Types';
 import Modal from '../../UI/Modal/Modal.UI';
 import useModal from '../../hooks/useModal/useModal.Hook';
 import useStyles from './Track.Styles';
-import seasonFormComponents from '../../forms/CreateSeason';
+import { useLocation, useHistory, Link } from 'react-router-dom';
+// import seasonFormComponents from '../../forms/CreateSeason';
 import SeasonFormProvider from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
-import VerticalStepper from '../../components/VerticalStepper/VerticalStepper.Component';
+// import VerticalStepper from '../../components/VerticalStepper/VerticalStepper.Component';
+import ConfirmSeason from '../../UI/Modal/ConfirmSeason/ConfirmSeason.Modal.UI';
 
 const fakeBattletags: Array<BlizzAPIBattletag> = [
     { name: "Nakeddave#1894", urlName: "Nakeddave-1894", id: 57242976, level: 1541, playerLevel: 1541, isPublic: true, platform: "pc", portrait: "0x0250000000001405" },
@@ -34,7 +36,18 @@ const Track: React.FC<TrackProps> = () => {
     //toggle state of having a selected battletag in localstorage.
     const [isOn, setIsOn] = useState<boolean>(false);
 
-    const { modalOpen, handleModalClose, handleModalOpen } = useModal();
+    // const [modalOpen, setModalOpen] = useModal();
+
+    const location = useLocation();
+    const history = useHistory();
+
+    useEffect(() => {
+        console.log(location);
+        console.log(history);
+
+    }, [location, history])
+
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <Grid container justify={'center'} spacing={4}>
@@ -58,40 +71,46 @@ const Track: React.FC<TrackProps> = () => {
                         </Typography>
                         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                             <Grid item xs={4}>
-                                <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={DamageIcon} alt="Damage SR" />
-                                    <Typography align={'center'} variant={'h6'}>
-                                        4266
+                                <Link to={'/track/damage'}>
+                                    <Card style={{ padding: '.5em' }} variant={'outlined'}>
+                                        <img style={{ width: '100%' }} src={DamageIcon} alt="Damage SR" />
+                                        <Typography align={'center'} variant={'h6'}>
+                                            4266
                                     </Typography>
-                                    <Typography align={'center'} variant={'subtitle1'}>
-                                        Damage
+                                        <Typography align={'center'} variant={'subtitle1'}>
+                                            Damage
                                     </Typography>
-                                </Card>
+                                    </Card>
+                                </Link>
                             </Grid>
                             <Grid item xs={4}>
-                                <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={TankIcon} alt="Tank SR" />
-                                    <Typography align={'center'} variant={'h6'}>
-                                        4001
+                                <Link to={'/track/tank'}>
+                                    <Card style={{ padding: '.5em' }} variant={'outlined'}>
+                                        <img style={{ width: '100%' }} src={TankIcon} alt="Tank SR" />
+                                        <Typography align={'center'} variant={'h6'}>
+                                            4001
                                     </Typography>
-                                    <Typography align={'center'} variant={'subtitle1'}>
-                                        Tank
+                                        <Typography align={'center'} variant={'subtitle1'}>
+                                            Tank
                                    </Typography>
-                                </Card>
+                                    </Card>
+                                </Link>
                             </Grid>
                             <Grid item xs={4}>
-                                <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                                    <img style={{ width: '100%' }} src={SupportIcon} alt="Support SR" />
-                                    <Typography align={'center'} variant={'h6'}>
-                                        3209
+                                <Link to={'/track/support'}>
+                                    <Card style={{ padding: '.5em' }} variant={'outlined'}>
+                                        <img style={{ width: '100%' }} src={SupportIcon} alt="Support SR" />
+                                        <Typography align={'center'} variant={'h6'}>
+                                            3209
                                     </Typography>
-                                    <Typography align={'center'} variant={'subtitle1'}>
-                                        Support
+                                        <Typography align={'center'} variant={'subtitle1'}>
+                                            Support
                                     </Typography>
-                                </Card>
+                                    </Card>
+                                </Link>
                             </Grid>
                             <Grid item xs={12}>
-                                <Button onClick={() => handleModalOpen()} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
+                                <Button onClick={() => setOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
                             </Grid>
                         </Grid>
                     </Fragment>
@@ -115,11 +134,12 @@ const Track: React.FC<TrackProps> = () => {
                     </Fragment>
                 }
             </Grid>
-            <SeasonFormProvider>
-                <Modal handleModalClose={handleModalClose}modalOpen={modalOpen}>
-                    <VerticalStepper components={seasonFormComponents}/>
-                </Modal>
-            </SeasonFormProvider>
+            {/* <SeasonFormProvider> */}
+            <Modal open={open} title={'Create New Season'} >
+                <ConfirmSeason setOpen={setOpen} />
+                {/* <VerticalStepper components={seasonFormComponents}/> */}
+            </Modal>
+            {/* </SeasonFormProvider> */}
         </Grid>
 
     );

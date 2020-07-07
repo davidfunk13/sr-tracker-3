@@ -1,13 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ModalTypes from './Modal.UI.Types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Dialog from '@material-ui/core/Dialog';
 import useStyles from './Modal.UI.Styles';
-import Button from '@material-ui/core/Button';
-import { SeasonFormContext } from '../../contexts/SeasonFormContext/SeasonFormContext.Context'
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Slide from '@material-ui/core/Slide';
+import { TransitionProps } from '@material-ui/core/transitions';
 
-const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, children }) => {
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & { children?: React.ReactElement<any, any> },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Modal: React.FC<ModalTypes> = ({ children, open, title, isFullScreen }) => {
 
     const theme = useTheme();
 
@@ -15,19 +25,19 @@ const Modal: React.FC<ModalTypes> = ({ modalOpen, handleModalClose, children }) 
 
     const classes = useStyles();
 
-    const { state, setState }: any = useContext(SeasonFormContext);
-
-    function handleClose() {
-        const newState = { ...state, currentStep: 0 }
-        setState(newState);
-        handleModalClose();
-    }
-
-    return <Dialog open={modalOpen} fullScreen={fullScreen}>
-        <section className={classes.modalContent}>
+    return <Dialog
+        open={open}
+        fullScreen={isFullScreen ? fullScreen : undefined}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-labelledby="Confirm Season"
+        aria-describedby="Confirm creation of season">
+        <DialogTitle>
+            {title ? title : 'Modal'}
+        </DialogTitle>
+        <DialogContent>
             {children}
-            <Button variant={'contained'} fullWidth color={'primary'} onClick={() => handleClose()} > Close Modal</Button>
-        </section>
+        </DialogContent>
     </Dialog>
 }
 

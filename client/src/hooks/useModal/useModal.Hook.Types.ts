@@ -1,12 +1,5 @@
-import Modal from '../../UI/Modal/Modal.UI.Types';
+import { SetStateAction } from 'react';
 
-interface ModalHook {
-    modalOpen: boolean,
-    handleModalOpen: () => void,
-    handleModalClose: () => void,
-    toggleModal: () => void,
-}
-
-export type UseModalHook = () => ModalHook;
+export type UseModalHook = () => [boolean, React.Dispatch<SetStateAction<boolean>>];
 
 export type IUseModalState = boolean;

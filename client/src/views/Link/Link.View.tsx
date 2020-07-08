@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 import Typography from "@material-ui/core/Typography";
 import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
-import LinkProps, { BlizzAPIBattletag } from './Link.View.Types';
+import LinkProps from './Link.View.Types';
+import { BlizzAPIBattletag } from '../../App.Types';
 
 const Link: React.FC<LinkProps> = () => {
     const [isOn, setIsOn] = useState<boolean>(false);
@@ -29,10 +30,7 @@ const Link: React.FC<LinkProps> = () => {
                 <TextField id="outlined-search" fullWidth required value={search} onChange={(e) => setSearch(e.target.value)} label="Search for Battletag" type="search" variant="outlined" />
             </Grid>
             <Grid item xs={12}>
-                <Button onClick={() => {
-                    const isOnCopy = !isOn;
-                    setIsOn(isOnCopy);
-                }} variant="contained" color="primary">
+                <Button onClick={() => { const isOnCopy = !isOn; setIsOn(isOnCopy); }} variant="contained" color="primary">
                     Search
                 </Button>
             </Grid>

@@ -6,8 +6,8 @@ export interface FormComponentObject {
 }
 
 export default interface Modal {
-    modalOpen: boolean,
-    handleModalOpen?: () => void,
-    handleModalClose: () => void,
-    toggleModal?: () => void,
+    children: any,
+    open: boolean,
+    title?: string,
+    isFullScreen?: boolean | null,
 }

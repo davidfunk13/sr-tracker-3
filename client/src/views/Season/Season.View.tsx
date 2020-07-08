@@ -16,7 +16,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const fakeLocalStorage = {}
+    const fakeLocalStorage = {};
 
     const history = useHistory();
 
@@ -24,7 +24,6 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         if (!fakeLocalStorage) {
             history.push('/track');
         }
-
     }, []);
 
     return (

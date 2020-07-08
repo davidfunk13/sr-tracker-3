@@ -17,14 +17,14 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
     const history = useHistory();
 
     //redirect if already selected.
-    
-    // useEffect(() => {
-    //     const selected = localStorage.getItem('selected');
 
-    //     if (selected) {
-    //         history.push('/season')
-    //     }
-    // }, []);
+    useEffect(() => {
+        const selected = localStorage.getItem('selected');
+
+        if (selected) {
+            history.push('/season')
+        }
+    }, []);
 
     return (
         <Fragment>

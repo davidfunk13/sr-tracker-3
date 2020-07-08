@@ -1,3 +1,3 @@
 export default interface RoleTypes {
-    location?:any
+    location?: any
 }

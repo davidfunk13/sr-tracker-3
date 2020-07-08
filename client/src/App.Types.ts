@@ -11,6 +11,17 @@ export interface Battletag {
   portrait: string,
 }
 
-export default interface AppProps{
+export interface BlizzAPIBattletag {
+  name: string,
+  urlName: string,
+  id: number,
+  level: number,
+  playerLevel: number,
+  isPublic: boolean,
+  platform: Platform,
+  portrait: string
+}
+
+export default interface AppProps {
 
 }

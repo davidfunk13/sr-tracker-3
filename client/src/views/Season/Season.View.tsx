@@ -11,32 +11,43 @@ import TankIcon from '../../assets/icons/roles/Tank.png';
 import Modal from '../../UI/Modal/Modal.UI';
 import ConfirmSeason from '../../UI/Modal/ConfirmSeason/ConfirmSeason.Modal.UI';
 import { useHistory } from 'react-router-dom';
+import { BlizzAPIBattletag } from '../../App.Types';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const fakeLocalStorage = {};
-
     const history = useHistory();
 
+    const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
+
     useEffect(() => {
-        if (!fakeLocalStorage) {
+        const selected = localStorage.getItem('selected');
+
+        if (selected) {
+            const parsed: BlizzAPIBattletag = JSON.parse(selected);
+
+            setBattletag(parsed);
+        }
+
+        if (!selected) {
             history.push('/track');
         }
+
     }, []);
 
+    useEffect(() => console.log(battletag), [battletag]);
     return (
         <Fragment>
             <Typography gutterBottom variant={"h5"}>
-                Battletag Name
-        </Typography>
+                {battletag && battletag.name ? battletag.name : '...loading'}
+            </Typography>
             <Typography gutterBottom variant={"h6"}>
                 Most Recent Season
         </Typography>
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                 <Grid item xs={4}>
-                    <Link to={'/season/damage'}>
+                    <Link to={{ pathname: '/season/role', state: { role: 'damage' } }}>
                         <Card style={{ padding: '.5em' }} variant={'outlined'}>
                             <img style={{ width: '100%' }} src={DamageIcon} alt="Damage SR" />
                             <Typography align={'center'} variant={'h6'}>
@@ -49,7 +60,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link to={'/season/tank'}>
+                    <Link to={{ pathname: '/season/role', state: { role: 'tank' } }} >
                         <Card style={{ padding: '.5em' }} variant={'outlined'}>
                             <img style={{ width: '100%' }} src={TankIcon} alt="Tank SR" />
                             <Typography align={'center'} variant={'h6'}>
@@ -62,7 +73,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link to={'/season/support'}>
+                    <Link to={{ pathname: '/season/role', state: { role: 'support' } }}>
                         <Card style={{ padding: '.5em' }} variant={'outlined'}>
                             <img style={{ width: '100%' }} src={SupportIcon} alt="Support SR" />
                             <Typography align={'center'} variant={'h6'}>

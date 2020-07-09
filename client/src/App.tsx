@@ -14,7 +14,6 @@ import Profile from './views/Profile/Profile.View';
 import Welcome from './views/Welcome/Welcome.View';
 import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 import Stats from "./views/Stats/Stats.View";
-// import Track from "./views/Track/Track.View";
 import AppProps from "./App.Types";
 import Role from "./views/Role/Role.View";
 import Season from './views/Season/Season.View';
@@ -46,7 +45,7 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/link" component={Link} />
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/track" component={SelectBattletag} />
-            <PrivateRoute path="/season/:role" component={Role} />
+            <PrivateRoute path="/season/role" component={Role} />
             <PrivateRoute path="/season" component={Season} />
           </Switch>
         </Container>

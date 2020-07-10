@@ -44,7 +44,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             </Typography>
             <Typography gutterBottom variant={"h6"}>
                 Most Recent Season
-        </Typography>
+            </Typography>
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                 <Grid item xs={4}>
                     <Link to={{ pathname: '/season/role', state: { role: 'damage' } }}>

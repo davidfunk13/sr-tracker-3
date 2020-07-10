@@ -9,13 +9,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
-import { SeasonFormContext } from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
 
-const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }) => {
+const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, formContext }) => {
     const classes = useStyles();
 
-    const { state, setState }: any = useContext(SeasonFormContext);
-    
+    const {state, setState} = useContext(formContext)
+
     const handleReset = () => {
         const newState = { ...state, currentStep: 0 };
         setState(newState);
@@ -25,7 +24,6 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components }
         <div className={classes.root}>
             <Stepper activeStep={state.currentStep} orientation="vertical">
                 {components.map((step: FormComponentObject, index) => {
-
                     const StepComponent = step.component;
 
                     return <Step key={step.label}>

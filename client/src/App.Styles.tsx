@@ -7,8 +7,8 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     content: {
-      width: '100vw',
-      maxWidth: '100vw',
+      width: '97vw',
+      maxWidth: '97vw',
       flexGrow: 1,
       padding: '6% 0 0 0',
       transition: theme.transitions.create('all', {

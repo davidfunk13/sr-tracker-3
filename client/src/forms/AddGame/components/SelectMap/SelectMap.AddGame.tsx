@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import SelectMapProps from './SelectMap.AddGame.Types';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 
-const SelectMap: FunctionComponent<SelectMapProps> = () => {
+const SelectMap: FunctionComponent<SelectMapProps> = ({role}) => {
 
     const { state, setState }: any = useContext(GameFormContext);
 
@@ -12,6 +12,8 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
     //     const newState = { ...state, currentStep: state.currentStep + 1, mapPlayed: 'testing' };
     //     setState(newState);
     // }
+
+    console.log(role)
 
     return (
         <Fragment>

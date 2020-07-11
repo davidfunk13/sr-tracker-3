@@ -1,6 +1,7 @@
+import { RoleEnum } from "../../App.Types";
 
 export type LocationState = {
-    role: string,
+    role: RoleEnum,
 }
 
 export default interface RoleTypes {

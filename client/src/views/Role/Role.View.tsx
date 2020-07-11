@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, Fragment, useContext } from 'react';
+import React, { useState, FunctionComponent, Fragment } from 'react';
 import RoleTypes from './Role.View.Types';
 import { useLocation } from 'react-router-dom';
 import { LocationState } from './Role.View.Types';
@@ -43,7 +43,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <Modal open={open}>
                 <GameFormProvider >
-                    <VerticalStepper formContext={GameFormContext} components={gameFormComponents} />
+                    <VerticalStepper role={role} formContext={GameFormContext} components={gameFormComponents} />
                 </GameFormProvider>
                 <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setOpen(false)}  >
                     <Typography variant={'button'}>

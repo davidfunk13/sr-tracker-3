@@ -10,10 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
 
-const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, formContext }) => {
+const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {
     const classes = useStyles();
 
-    const { state, setState } = useContext(formContext)
+    const { state, setState } = useContext(formContext); 
 
     const handleReset = () => {
         const newState = { ...state, currentStep: 0 };
@@ -39,7 +39,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, 
                     return <Step key={step.label}>
                         <StepLabel>{step.label}</StepLabel>
                         <StepContent>
-                            <StepComponent />
+                            <StepComponent role={role} />
                         </StepContent>
                     </Step>
                 })}
@@ -59,7 +59,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, 
                         className={classes.button}
                     >
                         Back
-                                    </Button>
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"

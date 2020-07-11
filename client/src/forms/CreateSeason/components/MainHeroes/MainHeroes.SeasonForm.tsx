@@ -6,6 +6,7 @@ import MainHeroesProps from './MainHeroes.SeasonForm.Types';
 import { heroDictionary, HeroEntry } from '../../../../utils/dictionaries';
 import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/SeasonFormContext.Context';
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
+
 const MainHeroes: FunctionComponent<MainHeroesProps> = () => {
     const { state, setState }: any = useContext(SeasonFormContext);
 

@@ -1,8 +1,10 @@
 import { FunctionComponent } from "react";
+import { RoleEnum } from "../../App.Types";
 
 export interface FormComponentObject {
-    label: string;
-    component: FunctionComponent<any>;
+    label: string,
+    component: FunctionComponent<any>,
+    role?: RoleEnum,
 }
 
 export default interface Modal {

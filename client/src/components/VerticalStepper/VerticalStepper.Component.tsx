@@ -13,10 +13,20 @@ import VerticalStepperTypes from './VerticalStepper.Component.Types';
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, formContext }) => {
     const classes = useStyles();
 
-    const {state, setState} = useContext(formContext)
+    const { state, setState } = useContext(formContext)
 
     const handleReset = () => {
         const newState = { ...state, currentStep: 0 };
+        setState(newState);
+    };
+
+    const handleNext = () => {
+        const newState = { ...state, currentStep: state.currentStep + 1 };
+        setState(newState);
+    };
+
+    const handleBack = () => {
+        const newState = { ...state, currentStep: state.currentStep - 1 };
         setState(newState);
     };
 
@@ -41,6 +51,25 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ components, 
                     <Button onClick={handleReset} className={classes.button}>Reset</Button>
                 </Paper>
             )}
+            <div className={classes.actionsContainer}>
+                <div>
+                    <Button
+                        disabled={state.currentStep === 0}
+                        onClick={handleBack}
+                        className={classes.button}
+                    >
+                        Back
+                                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                    >
+                        {state.currentStep === state.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useContext } from "react";
-import {SeasonFormContext} from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
 import useStyles from './VerticalStepper.Component.Styles';
 import Button from '@material-ui/core/Button';
+import { GameFormContext } from "../../contexts/GameFormContext/GameFormContext.Context";
 
 const VerticalStepperButtons: FunctionComponent = () => {
     const classes = useStyles();
 
-    const { state, setState }: any = useContext(SeasonFormContext);
+    const { state, setState }: any = useContext(GameFormContext);
 
     const handleNext = () => {
         const newState = { ...state, currentStep: state.currentStep + 1 };

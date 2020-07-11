@@ -5,7 +5,7 @@ export const GameFormContext = createContext({});
 
 const GameFormProvider = ({ children }: any) => {
 
-    const [state, setState] = useState<GameFormContextTypes>({ currentStep: 1, mapPlayed: undefined });
+    const [state, setState] = useState<GameFormContextTypes>({ currentStep: 0, mapPlayed: undefined });
 
     return (
         <GameFormContext.Provider value={{ state, setState }}>

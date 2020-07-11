@@ -2,7 +2,6 @@ import React, { Fragment, FunctionComponent, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import SelectMapProps from './SelectMap.AddGame.Types';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const SelectMap: FunctionComponent<SelectMapProps> = () => {
 
@@ -19,7 +18,6 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
             <Typography variant={"subtitle2"}>
                 What map are you playing?
             </Typography>
-            <VerticalStepperButtons />
         </Fragment>
     )
 }

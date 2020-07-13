@@ -9,24 +9,25 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
+import GameFormContextTypes from '../../contexts/GameFormContext/GameFormContext.Context.Types';
 
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {
     const classes = useStyles();
 
-    const { state, setState } = useContext(formContext); 
+    const { state, setState } = useContext(formContext);
 
-    const handleReset = () => {
-        const newState = { ...state, currentStep: 0 };
+    const handleReset: () => void = () => {
+        const newState: GameFormContextTypes = { ...state, currentStep: 0 };
         setState(newState);
     };
 
-    const handleNext = () => {
-        const newState = { ...state, currentStep: state.currentStep + 1 };
+    const handleNext: () => void = () => {
+        const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1 };
         setState(newState);
     };
 
-    const handleBack = () => {
-        const newState = { ...state, currentStep: state.currentStep - 1 };
+    const handleBack: () => void = () => {
+        const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep - 1 };
         setState(newState);
     };
 

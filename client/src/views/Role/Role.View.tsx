@@ -17,7 +17,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const { role } = (location.state as LocationState);
 
-    const title = role.split('')[0].toUpperCase() + role.slice(1);
+    const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
     const [open, setOpen] = useState<boolean>(false);
 

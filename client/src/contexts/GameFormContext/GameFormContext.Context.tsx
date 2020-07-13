@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect } from 'react';
 import GameFormContextTypes from './GameFormContext.Context.Types';
 
-export const GameFormContext = createContext({});
+export const GameFormContext: React.Context<{}> = createContext({});
 
 const GameFormProvider = ({ children }: any) => {
 

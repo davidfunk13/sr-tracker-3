@@ -4,7 +4,6 @@ import SelectMapProps from './SelectMap.AddGame.Types';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import { mapDictionary } from '../../../../utils/dictionaries';
 import Card from '@material-ui/core/Card';
-import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
 
 const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     const { state, setState }: any = useContext(GameFormContext);
@@ -22,8 +21,6 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
         })
 
     }, []);
-
-    console.log(role)
 
     return (
         <Fragment>

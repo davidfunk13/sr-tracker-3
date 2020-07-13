@@ -17,6 +17,7 @@ const Modal: React.FC<ModalTypes> = ({ children, open, title, isFullScreen }) =>
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return <Dialog
+        fullWidth
         open={open}
         fullScreen={isFullScreen ? fullScreen : undefined}
         TransitionComponent={Transition}

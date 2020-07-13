@@ -1,10 +1,12 @@
 export type Platform = "playstation" | "xbl" | "pc" | "nintendo-switch";
 
-// export type Role = 'damage' | 'tank' | 'support'
-
 export enum RoleEnum {
   Tank = 'tank', Damage = 'damage', Support = 'support'
 }
+
+export type RoleName = "tank" | "damage" | "support";
+
+export type RoleKey = 0 | 1 | 2;
 
 export interface Battletag {
   userId: number,

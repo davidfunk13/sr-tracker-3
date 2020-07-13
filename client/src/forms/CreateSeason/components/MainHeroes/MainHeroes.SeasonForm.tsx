@@ -3,7 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import MainHeroesProps from './MainHeroes.SeasonForm.Types';
-import { heroDictionary, HeroEntry } from '../../../../utils/dictionaries';
+import { heroDictionary } from '../../../../utils/dictionaries';
+import { HeroEntry } from '../../../../utils/heroDictionary';
 import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/SeasonFormContext.Context';
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 

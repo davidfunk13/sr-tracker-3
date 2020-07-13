@@ -1,4 +1,5 @@
-import { HeroEntry } from '../../utils/dictionaries';
+import { HeroEntry } from '../../utils/heroDictionary';
+
 export default interface SeasonFormContextTypes {
     currentStep: number,
     seasonType: number | null,

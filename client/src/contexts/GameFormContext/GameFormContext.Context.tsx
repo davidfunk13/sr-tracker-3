@@ -10,7 +10,7 @@ const GameFormProvider = ({ children }: any) => {
     useEffect(() => console.log(state), [state]);
 
     return (
-        <GameFormContext.Provider value={{ state, setState }}>
+        <GameFormContext.Provider value={[state, setState ]}>
             {children}
         </GameFormContext.Provider>
     );

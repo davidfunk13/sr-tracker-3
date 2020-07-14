@@ -7,7 +7,7 @@ import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormC
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
-    const { state, setState }: any = useContext(GameFormContext);
+    const [ state, setState ]: any = useContext(GameFormContext);
 
     function selectOutcome(val: number) {
         const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1, outcome: val };

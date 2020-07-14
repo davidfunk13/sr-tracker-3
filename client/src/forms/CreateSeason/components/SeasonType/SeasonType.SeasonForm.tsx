@@ -9,7 +9,7 @@ import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/Season
 
 const SeasonType: FunctionComponent<SeasonFormProps> = () => {
 
-    const { state, setState }: any = useContext(SeasonFormContext);
+    const [state, setState ]: any = useContext(SeasonFormContext);
 
     function selectRole(val: number) {
         const newState = { ...state, currentStep: state.currentStep + 1, seasonType: val };

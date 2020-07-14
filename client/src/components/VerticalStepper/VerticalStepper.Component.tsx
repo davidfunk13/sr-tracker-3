@@ -14,7 +14,7 @@ import GameFormContextTypes from '../../contexts/GameFormContext/GameFormContext
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {
     const classes = useStyles();
 
-    const { state, setState } = useContext(formContext);
+    const [state, setState ] = useContext(formContext);
 
     const handleReset: () => void = () => {
         const newState: GameFormContextTypes = { ...state, currentStep: 0 };

@@ -10,7 +10,7 @@ import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormC
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
-    const { state, setState }: any = useContext(GameFormContext);
+    const [ state, setState ]: any = useContext(GameFormContext);
 
     const filtered = heroDictionary.filter(hero => hero.roleName === role);
 

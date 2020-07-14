@@ -9,7 +9,7 @@ import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/Season
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const MainHeroes: FunctionComponent<MainHeroesProps> = () => {
-    const { state, setState }: any = useContext(SeasonFormContext);
+    const [ state, setState ]: any = useContext(SeasonFormContext);
 
     const [selected, setSelected] = useState<HeroEntry[]>([]);
 

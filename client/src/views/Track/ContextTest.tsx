@@ -4,7 +4,7 @@ import { SeasonFormContext } from '../../contexts/SeasonFormContext/SeasonFormCo
 const ContextTest = () => {
 
     //give them the type here;
-    const { state, setState }: any = useContext(SeasonFormContext);
+    const [ state, setState ]: any = useContext(SeasonFormContext);
 
     function set() {
         const newState = { ...state, seasonType: 1 };

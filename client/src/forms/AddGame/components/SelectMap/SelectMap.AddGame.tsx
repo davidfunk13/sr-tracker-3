@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
-    const { state, setState }: any = useContext(GameFormContext);
+    const [ state, setState ]: any = useContext(GameFormContext);
 
     //enum for maps use here
     function selectMap(val: any) {

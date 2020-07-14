@@ -8,12 +8,12 @@ const VerticalStepperButtons: FunctionComponent = () => {
 
     const { state, setState }: any = useContext(GameFormContext);
 
-    const handleNext = () => {
+    const handleNext: () => void = () => {
         const newState = { ...state, currentStep: state.currentStep + 1 };
         setState(newState);
     };
 
-    const handleBack = () => {
+    const handleBack: () => void = () => {
         const newState = { ...state, currentStep: state.currentStep - 1 };
         setState(newState);
     };
@@ -27,7 +27,7 @@ const VerticalStepperButtons: FunctionComponent = () => {
                     className={classes.button}
                 >
                     Back
-                                    </Button>
+                </Button>
                 <Button
                     variant="contained"
                     color="primary"

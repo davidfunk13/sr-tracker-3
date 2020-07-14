@@ -11,9 +11,15 @@ import Button from '@material-ui/core/Button';
 import gameFormComponents from '../../forms/AddGame';
 import GameFormProvider from '../../contexts/GameFormContext/GameFormContext.Context';
 import { GameFormContext } from '../../contexts/GameFormContext/GameFormContext.Context';
+import { useHistory } from 'react-router-dom';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const location = useLocation();
+    const history = useHistory();
+
+    if (!location) {
+        history.push('/')
+    }
 
     const { role } = (location.state as LocationState);
 
@@ -22,26 +28,26 @@ const Role: FunctionComponent<RoleTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
 
     return (
-        <Fragment>
-            <Typography gutterBottom variant={'h4'}>
-                {title} Season
-            </Typography>
-            <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
-                <Grid item xs={12}>
-                    <Typography variant={'h5'}>
-                        Games
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <GameTable setOpen={setOpen} />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setOpen(true)}>
-                        <Typography variant={'button'}>Add A Game</Typography>
-                    </Button>
-                </Grid>
+        <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
+            <Grid item xs={12}>
+                <Typography gutterBottom variant={'h4'}>
+                    {title} Season
+                </Typography>
             </Grid>
-            <Modal open={open}>
+            <Grid item xs={12}>
+                <Typography variant={'h5'}>
+                    Games
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <GameTable setOpen={setOpen} />
+            </Grid>
+            <Grid item xs={12}>
+                <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setOpen(true)}>
+                    <Typography variant={'button'}>Add A Game</Typography>
+                </Button>
+            </Grid>
+            <Modal title={'Add New Game'} open={open}>
                 <GameFormProvider >
                     <VerticalStepper role={role} formContext={GameFormContext} components={gameFormComponents} />
                 </GameFormProvider>
@@ -51,7 +57,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
                     </Typography>
                 </Button>
             </Modal>
-        </Fragment >
+        </Grid>
     )
 }
 

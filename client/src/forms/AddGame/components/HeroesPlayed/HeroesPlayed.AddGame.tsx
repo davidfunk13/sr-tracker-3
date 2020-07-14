@@ -7,6 +7,7 @@ import { heroDictionary } from '../../../../utils/dictionaries';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import { HeroEntry } from '../../../../utils/heroDictionary';
 import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
+import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     const { state, setState }: any = useContext(GameFormContext);
@@ -49,20 +50,26 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     }
 
     return (
-        <Grid container>
+        <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     Selected
                 </Typography>
+            </Grid>
+            <Grid item xs={12}>
                 <Card variant={'outlined'} style={{ minHeight: '15vh' }}>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {/* please replace all of this with material ui spacing and components */}
                         {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '32%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
                     </div>
                 </Card>
+            </Grid>
+            <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     MainHeroes
                 </Typography>
+            </Grid>
+            <Grid item xs={12}>
                 <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
                     <Card variant={'outlined'}>
                         {filtered.map(hero => {
@@ -70,6 +77,9 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                         })}
                     </Card>
                 </div>
+            </Grid>
+            <Grid item xs={12}>
+                <VerticalStepperButtons />
             </Grid>
         </Grid>
     )

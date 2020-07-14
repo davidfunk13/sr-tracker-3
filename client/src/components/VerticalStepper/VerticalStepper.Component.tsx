@@ -21,15 +21,19 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
         setState(newState);
     };
 
-    const handleNext: () => void = () => {
-        const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1 };
-        setState(newState);
-    };
+    function handleSubmit(): void {
+        console.log('submitting Form!', {state});
+    }
 
-    const handleBack: () => void = () => {
-        const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep - 1 };
-        setState(newState);
-    };
+    // const handleNext: () => void = () => {
+    //     const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1 };
+    //     setState(newState);
+    // };
+
+    // const handleBack: () => void = () => {
+    //     const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep - 1 };
+    //     setState(newState);
+    // };
 
     return (
         <div className={classes.root}>
@@ -49,28 +53,10 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
                 <Paper square elevation={0} className={classes.resetContainer}>
                     {/* Put close button here with reset! Have it act as a submit button! */}
                     <Typography>All steps completed - you're finished.</Typography>
+                    <Button onClick={handleSubmit} className={classes.button}>Reset</Button>
                     <Button onClick={handleReset} className={classes.button}>Reset</Button>
                 </Paper>
             )}
-            <div className={classes.actionsContainer}>
-                <div>
-                    <Button
-                        disabled={state.currentStep === 0}
-                        onClick={handleBack}
-                        className={classes.button}
-                    >
-                        Back
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                    >
-                        {state.currentStep === state.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                </div>
-            </div>
         </div>
     );
 }

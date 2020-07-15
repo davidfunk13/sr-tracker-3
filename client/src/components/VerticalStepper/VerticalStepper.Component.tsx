@@ -10,30 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
 import GameFormContextTypes from '../../contexts/GameFormContext/GameFormContext.Context.Types';
+import ConfirmGame from '../../forms/AddGame/components/ConfirmGame/ConfirmGame.AddGame';
 
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {
     const classes = useStyles();
 
-    const [state, setState ] = useContext(formContext);
-
-    const handleReset: () => void = () => {
-        const newState: GameFormContextTypes = { ...state, currentStep: 0 };
-        setState(newState);
-    };
-
-    function handleSubmit(): void {
-        console.log('submitting Form!', {state});
-    }
-
-    // const handleNext: () => void = () => {
-    //     const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1 };
-    //     setState(newState);
-    // };
-
-    // const handleBack: () => void = () => {
-    //     const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep - 1 };
-    //     setState(newState);
-    // };
+    const [state, setState] = useContext(formContext);
 
     return (
         <div className={classes.root}>
@@ -50,12 +32,12 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
                 })}
             </Stepper>
             {state.currentStep === components.length && (
-                <Paper square elevation={0} className={classes.resetContainer}>
-                    {/* Put close button here with reset! Have it act as a submit button! */}
+
+                <ConfirmGame/>
+                    /* Put close button here with reset! Have it act as a submit button!
                     <Typography>All steps completed - you're finished.</Typography>
-                    <Button onClick={handleSubmit} className={classes.button}>Reset</Button>
-                    <Button onClick={handleReset} className={classes.button}>Reset</Button>
-                </Paper>
+                    <Button onClick={handleSubmit} className={classes.button}>Submit</Button>
+                    <Button onClick={handleReset} className={classes.button}>Reset</Button> */
             )}
         </div>
     );

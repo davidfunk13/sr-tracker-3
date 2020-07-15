@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useContext } from "react";
-import useStyles from './VerticalStepper.Component.Styles';
+import useStyles from '../VerticalStepper.Component.Styles';
 import Button from '@material-ui/core/Button';
-import { GameFormContext } from "../../contexts/GameFormContext/GameFormContext.Context";
+import { GameFormContext } from "../../../contexts/GameFormContext/GameFormContext.Context";
+import VerticalStepperButtonsProps from './VerticalStepperButtons.Component.Types';
 
-const VerticalStepperButtons: FunctionComponent = () => {
+const VerticalStepperButtons: FunctionComponent<VerticalStepperButtonsProps> = ({ disabled }) => {
     const classes = useStyles();
 
-    const [ state, setState ]: any = useContext(GameFormContext);
+    const [state, setState]: any = useContext(GameFormContext);
 
     const handleNext: () => void = () => {
         const newState = { ...state, currentStep: state.currentStep + 1 };
@@ -17,6 +18,8 @@ const VerticalStepperButtons: FunctionComponent = () => {
         const newState = { ...state, currentStep: state.currentStep - 1 };
         setState(newState);
     };
+
+    console.log({disabled})
 
     return (
         <div className={classes.actionsContainer}>
@@ -29,6 +32,7 @@ const VerticalStepperButtons: FunctionComponent = () => {
                     Back
                 </Button>
                 <Button
+                    disabled={disabled}
                     variant="contained"
                     color="primary"
                     onClick={handleNext}

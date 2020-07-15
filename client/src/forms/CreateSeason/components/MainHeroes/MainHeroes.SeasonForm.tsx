@@ -6,7 +6,7 @@ import MainHeroesProps from './MainHeroes.SeasonForm.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
 import { HeroEntry } from '../../../../utils/heroDictionary';
 import { SeasonFormContext } from '../../../../contexts/SeasonFormContext/SeasonFormContext.Context';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
+import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
 
 const MainHeroes: FunctionComponent<MainHeroesProps> = () => {
     const [ state, setState ]: any = useContext(SeasonFormContext);
@@ -63,7 +63,7 @@ const MainHeroes: FunctionComponent<MainHeroesProps> = () => {
                         {filtered.map(hero => <img key={hero.name} onClick={selectHero(hero)} style={{ maxWidth: '25%' }} src={hero.icon.toString()} alt={hero.name} />)}
                     </Card>
                 </div>
-                <VerticalStepperButtons />
+                <VerticalStepperButtons disabled={true} />
             </Grid>
         </Grid>
     )

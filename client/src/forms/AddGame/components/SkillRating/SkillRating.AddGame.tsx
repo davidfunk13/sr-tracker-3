@@ -1,13 +1,20 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import SkillratingProps from './SkillRating.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import useStyles from './SkillRating.AddGame.Styles';
 import TextField from '@material-ui/core/TextField';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
+import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
+import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 
 const SkillRating: FunctionComponent<SkillratingProps> = () => {
     const classes = useStyles();
-    const [skillrating, setSkillRating] = useState<number>(0);
+
+    const [state, setState]: any = useContext(GameFormContext);
+
+    function setSkillrating(val: number) {
+        const newState = { ...state, skillRating: val };
+        setState(newState);
+    }
 
     return (
         <Grid container spacing={2}>
@@ -18,14 +25,14 @@ const SkillRating: FunctionComponent<SkillratingProps> = () => {
                     type="number"
                     variant="outlined"
                     className={classes.numInputHideArrows}
-                    value={skillrating}
+                    value={state.skillRating}
                     inputProps={{ min: 0, max: 5000 }}
-                    onChange={(e) => setSkillRating(parseInt(e.target.value, 10))}
+                    onChange={(e) => setSkillrating(parseInt(e.target.value, 10))}
                     label="New Skill Rating"
                 />
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons/>
+                <VerticalStepperButtons disabled={!!!state.skillRating} />
             </Grid>
         </Grid>
     );

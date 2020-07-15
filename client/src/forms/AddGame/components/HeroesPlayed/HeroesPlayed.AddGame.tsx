@@ -7,7 +7,7 @@ import { heroDictionary } from '../../../../utils/dictionaries';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import { HeroEntry } from '../../../../utils/heroDictionary';
 import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
+import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     const [ state, setState ]: any = useContext(GameFormContext);
@@ -79,7 +79,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                 </div>
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons />
+                <VerticalStepperButtons disabled={!!!state.heroesPlayed.length} />
             </Grid>
         </Grid>
     )

@@ -1,16 +1,20 @@
-import React, { FunctionComponent, useContext, SetStateAction, Dispatch } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import OutcomeProps from './Outcome.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons.Component';
+import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
-    const [ state, setState ]: any = useContext(GameFormContext);
+    const [state, setState]: any = useContext(GameFormContext);
 
     function selectOutcome(val: number) {
-        const newState: GameFormContextTypes = { ...state, currentStep: state.currentStep + 1, outcome: val };
+        const newState: GameFormContextTypes = {
+            ...state,
+            currentStep: state.currentStep + 1,
+            outcome: val
+        };
         setState(newState);
     }
 
@@ -30,7 +34,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons />
+                <VerticalStepperButtons disabled={!!!state.outcome !== undefined} />
             </Grid>
         </Grid>
     );

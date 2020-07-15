@@ -17,28 +17,25 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
 
     const [state, setState] = useContext(formContext);
 
+    function renderSteps(): JSX.Element {
+        return (<Stepper activeStep={state.currentStep} orientation="vertical">
+            {components.map((step: FormComponentObject, index) => {
+                const StepComponent = step.component;
+                
+                return <Step key={step.label}>
+                    <StepLabel>{step.label}</StepLabel>
+                    <StepContent>
+                        <StepComponent role={role} />
+                    </StepContent>
+                </Step>
+            })}
+        </Stepper>);
+    }
+
+
     return (
         <div className={classes.root}>
-            <Stepper activeStep={state.currentStep} orientation="vertical">
-                {components.map((step: FormComponentObject, index) => {
-                    const StepComponent = step.component;
-
-                    return <Step key={step.label}>
-                        <StepLabel>{step.label}</StepLabel>
-                        <StepContent>
-                            <StepComponent role={role} />
-                        </StepContent>
-                    </Step>
-                })}
-            </Stepper>
-            {state.currentStep === components.length && (
-
-                <ConfirmGame/>
-                    /* Put close button here with reset! Have it act as a submit button!
-                    <Typography>All steps completed - you're finished.</Typography>
-                    <Button onClick={handleSubmit} className={classes.button}>Submit</Button>
-                    <Button onClick={handleReset} className={classes.button}>Reset</Button> */
-            )}
+            {state.currentStep === components.length ? <ConfirmGame /> : renderSteps()}
         </div>
     );
 }

@@ -3,8 +3,8 @@ import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { GameFormContext, initialGameFormState } from '../../../../contexts/GameFormContext/GameFormContext.Context';
-import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
 import Button from '@material-ui/core/Button';
+
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
   const [state, setState]: any = useContext(GameFormContext);
 

@@ -4,6 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { GameFormContext, initialGameFormState } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
+import Card from '@material-ui/core/Card';
+import { HeroEntry } from '../../../../utils/heroDictionary';
+import GameCard from '../../../../UI/GameCard/GameCard.UI';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
   const [state, setState]: any = useContext(GameFormContext);
@@ -24,18 +28,7 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography>
-          {state.mapPlayed.name}
-        </Typography>
-        <Typography>
-          {state.heroesPlayed.toString()}
-        </Typography>
-        <Typography>
-          {state.outcome}
-        </Typography>
-        <Typography>
-          {state.skillRating}
-        </Typography>
+        <GameCard />
       </Grid>
       <Button onClick={handleSubmit}>
         <Typography variant={"button"}>Submit</Typography>

@@ -27,16 +27,16 @@ const VerticalStepperButtons: FunctionComponent<VerticalStepperButtonsProps> = (
                 <Button
                     disabled={state.currentStep === 0}
                     onClick={handleBack}
-                    className={classes.button}
+                    size={'small'}
                 >
                     Back
                 </Button>
                 <Button
                     disabled={disabled}
                     variant="contained"
+                    size={'small'}
                     color="primary"
                     onClick={handleNext}
-                    className={classes.button}
                 >
                     {state.currentStep === state.length - 1 ? 'Finish' : 'Next'}
                 </Button>

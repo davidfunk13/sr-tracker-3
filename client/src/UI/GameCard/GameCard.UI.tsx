@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { useEffect, FunctionComponent, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -11,6 +11,9 @@ import GameCardTypes from './GameCard.UI.Types';
 import Grid from '@material-ui/core/Grid';
 import { GameFormContext } from '../../contexts/GameFormContext/GameFormContext.Context';
 import { HeroEntry } from '../../utils/heroDictionary';
+import Win from '../../assets/icons/other/win.png';
+import Loss from '../../assets/icons/other/loss.png';
+import Draw from '../../assets/icons/other/draw.png';
 
 const useStyles = makeStyles({
     root: {
@@ -28,13 +31,46 @@ const useStyles = makeStyles({
 });
 
 const GameCard: FunctionComponent<GameCardTypes> = () => {
+
     const classes = useStyles();
 
     const [state, setState]: any = useContext(GameFormContext);
 
+    function generateOutcomeIcon(outcome: number) {
+        switch (outcome) {
+            case 0:
+                return Loss;
+            case 1:
+                return Win;
+            case 2:
+                return Draw
+        
+            default:
+                break;
+        }
+    }
+
+    function generateOutcomeString(outcome: number) {
+        switch (outcome) {
+            case 0:
+                return 'Defeat';
+            case 1:
+                return 'Victory';
+            case 2:
+                return 'Draw';
+        
+            default:
+                break;
+        }
+    }
+
+    const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
+    
+    const outcomeString: string | undefined = generateOutcomeString(state.outcome);
+
     return (
         <Grid container spacing={2}>
-            <Grid item xs={5}>
+            <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
                         <CardMedia
@@ -50,7 +86,23 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                     </CardActionArea>
                 </Card>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12}>
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.media}
+                            image={iconPath}
+                            title={state.outcome}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            {outcomeString}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Grid>
+            <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
                         <div className={classes.heroCardFlex}>

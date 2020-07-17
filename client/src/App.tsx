@@ -38,7 +38,7 @@ const App: React.FC<AppProps> = () => {
       <DrawerRight open={open} handleDrawerClose={handleDrawerClose} />
 
       <main className={clsx(classes.content, { [classes.contentShift]: open })}>
-        <Container maxWidth={'lg'}>
+        <Container maxWidth={'sm'}>
           <Switch>
             <Route path="/" exact component={route} />
             <PrivateRoute path="/profile" component={Profile} />

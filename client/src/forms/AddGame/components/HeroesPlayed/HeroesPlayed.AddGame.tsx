@@ -57,10 +57,10 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <Card variant={'outlined'} style={{ minHeight: '15vh' }}>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Card variant={'outlined'} style={{ minHeight: '12vh' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                         {/* please replace all of this with material ui spacing and components */}
-                        {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '32%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
+                        {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '33%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
                     </div>
                 </Card>
             </Grid>
@@ -73,7 +73,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                 <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
                     <Card variant={'outlined'}>
                         {filtered.map(hero => {
-                            return <img key={hero.name} onClick={selectHero(hero)} style={{ maxWidth: '25%' }} src={hero.icon.toString()} alt={hero.name} />
+                            return <img key={hero.name} onClick={selectHero(hero)} style={{ maxWidth: '30%', padding: '.1em' }} src={hero.icon.toString()} alt={hero.name} />
                         })}
                     </Card>
                 </div>

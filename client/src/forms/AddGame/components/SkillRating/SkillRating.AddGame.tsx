@@ -3,7 +3,7 @@ import SkillratingProps from './SkillRating.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import useStyles from './SkillRating.AddGame.Styles';
 import TextField from '@material-ui/core/TextField';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
+import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 
 const SkillRating: FunctionComponent<SkillratingProps> = () => {
@@ -32,7 +32,7 @@ const SkillRating: FunctionComponent<SkillratingProps> = () => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons disabled={!!!state.skillRating} />
+                <StepButtons disabled={!!!state.skillRating} />
             </Grid>
         </Grid>
     );

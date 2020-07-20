@@ -21,7 +21,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
         return (<Stepper activeStep={state.currentStep} orientation="vertical">
             {components.map((step: FormComponentObject, index) => {
                 const StepComponent = step.component;
-                
+
                 return <Step key={step.label}>
                     <StepLabel>{step.label}</StepLabel>
                     <StepContent>

@@ -9,7 +9,7 @@ import DamageIcon from '../../assets/icons/roles/Damage.png';
 import SupportIcon from '../../assets/icons/roles/Support.png';
 import TankIcon from '../../assets/icons/roles/Tank.png';
 import Modal from '../../UI/Modal/Modal.UI';
-import ConfirmSeason from '../../UI/Modal/ConfirmSeason/ConfirmSeason.Modal.UI';
+import ConfirmSeason from '../../forms/CreateSeason/components/ConfirmSeason/ConfirmSeason.Modal.UI';
 import { useHistory } from 'react-router-dom';
 import { BlizzAPIBattletag } from '../../App.Types';
 
@@ -89,7 +89,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                     <Button onClick={() => setOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
                 </Grid>
             </Grid>
-            <Modal open={open} title={'Create New Season'} >
+            <Modal setOpen={setOpen} open={open} title={'Create New Season'} >
                 <ConfirmSeason setOpen={setOpen} />
             </Modal>
         </Fragment>

@@ -10,13 +10,14 @@ import { TransitionProps } from '@material-ui/core/transitions';
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & { children?: React.ReactElement<any, any> }, ref: React.Ref<unknown>,) { return <Slide direction="up" ref={ref} {...props} />; });
 
-const Modal: React.FC<ModalTypes> = ({ children, open, title, isFullScreen }) => {
+const Modal: React.FC<ModalTypes> = ({ children, open, title, isFullScreen, setOpen }) => {
 
     const theme = useTheme();
 
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return <Dialog
+        onClose={() => setOpen(false)}
         fullWidth
         open={open}
         fullScreen={isFullScreen ? fullScreen : undefined}

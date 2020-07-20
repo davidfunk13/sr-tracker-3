@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
+import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
     const [state, setState]: any = useContext(GameFormContext);
@@ -23,18 +23,18 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
             <Grid item xs={12}>
                 <Grid container spacing={2}>
                     <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(1)} color={"primary"}>Win</Button>
+                        <Button onClick={() => selectOutcome(1)} variant={'contained'} color={"primary"}>Win</Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(0)} color={"secondary"}>Loss</Button>
+                        <Button onClick={() => selectOutcome(0)} variant={"contained"} color={"secondary"}>Loss</Button>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(2)} >Draw</Button>
+                        <Button onClick={() => selectOutcome(2)} variant={"contained"} >Draw</Button>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons disabled={!!!state.outcome !== undefined} />
+                <StepButtons disabled={!!!state.outcome !== undefined} />
             </Grid>
         </Grid>
     );

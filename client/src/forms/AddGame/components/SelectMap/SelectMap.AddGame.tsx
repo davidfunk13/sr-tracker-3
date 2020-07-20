@@ -5,7 +5,7 @@ import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormCo
 import { mapDictionary } from '../../../../utils/dictionaries';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
-import VerticalStepperButtons from '../../../../components/VerticalStepper/VerticalStepperButtons/VerticalStepperButtons.Component';
+import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
@@ -46,7 +46,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
                 </div>
             </Grid>
             <Grid item xs={12}>
-                <VerticalStepperButtons disabled={!!!state.mapPlayed} />
+                <StepButtons disabled={!!!state.mapPlayed} />
             </Grid>
         </Grid>
     )

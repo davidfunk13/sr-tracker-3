@@ -1,10 +1,11 @@
 import { HeroEntry } from "../../utils/heroDictionary";
+import { MapEntry } from "../../utils/mapDictionary";
 
 
-export default interface GameFormContextTypes {
+export default interface GameForm {
     currentStep: number
-    mapPlayed: undefined | string
+    mapPlayed: MapEntry
     heroesPlayed: HeroEntry[]
-    outcome: 0 | 1 | 2 | undefined
-    skillRating: number | undefined
+    outcome: 0 | 1 | 2 | null,
+    skillRating: number | null,
 }

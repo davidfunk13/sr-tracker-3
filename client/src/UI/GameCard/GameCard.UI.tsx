@@ -70,7 +70,7 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
                         <CardMedia
@@ -85,7 +85,7 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                         </CardContent>
                     </CardActionArea>
                 </Card>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>

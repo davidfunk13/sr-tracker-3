@@ -34,7 +34,6 @@ interface GameFormProps {
 const GameForm: FunctionComponent<GameFormProps> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
-
     function renderComponent(step: number): JSX.Element {
         switch (step) {
             case 0:

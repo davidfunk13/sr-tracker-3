@@ -3,14 +3,14 @@ import OutcomeProps from './Outcome.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
-import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
+import GameForm from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
     const [state, setState]: any = useContext(GameFormContext);
 
     function selectOutcome(val: number) {
-        const newState: GameFormContextTypes = {
+        const newState: GameForm = {
             ...state,
             currentStep: state.currentStep + 1,
             outcome: val

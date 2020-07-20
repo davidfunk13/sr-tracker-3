@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
-import GameFormContextTypes from '../../contexts/GameFormContext/GameFormContext.Context.Types';
+import GameForm from '../../contexts/GameFormContext/GameFormContext.Context.Types';
 import ConfirmGame from '../../forms/AddGame/components/ConfirmGame/ConfirmGame.AddGame';
 
 const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {

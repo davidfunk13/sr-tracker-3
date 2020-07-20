@@ -1,20 +1,22 @@
-import React, { useState, createContext, useEffect } from 'react';
-import GameFormContextTypes from './GameFormContext.Context.Types';
+import React, { useState, createContext, useEffect, Dispatch, SetStateAction } from 'react';
+import GameForm from './GameFormContext.Context.Types';
+import { MapEntry } from '../../utils/mapDictionary';
 
-export const GameFormContext: React.Context<{}> = createContext({});
+export type GameContext = [GameForm, Dispatch<SetStateAction<GameForm>>] | [];
 
-export const initialGameFormState: GameFormContextTypes =
-{
+export const GameFormContext: React.Context<GameContext> = createContext<GameContext>([] as GameContext);
+
+export const initialGameFormState: GameForm = {
     currentStep: 0,
-    mapPlayed: undefined,
+    mapPlayed: {} as MapEntry,
     heroesPlayed: [],
-    outcome: undefined,
-    skillRating: undefined
+    outcome: null,
+    skillRating: null 
 }
 
 const GameFormProvider = ({ children }: any) => {
 
-    const [state, setState] = useState<GameFormContextTypes>(initialGameFormState);
+    const [state, setState]: GameContext = useState<GameForm>(initialGameFormState);
 
     useEffect(() => console.log(state), [state]);
 

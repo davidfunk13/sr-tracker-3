@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from "react";
 import useStyles from '../../../components/VerticalStepper/VerticalStepper.Component.Styles';
 import Button from '@material-ui/core/Button';
-import { GameFormContext } from "../../../contexts/GameFormContext/GameFormContext.Context";
+import { GameFormContext, initialGameFormState } from "../../../contexts/GameFormContext/GameFormContext.Context";
 import StepButtonsProps from './StepButtons.UITypes';
 import Grid from '@material-ui/core/Grid';
 
@@ -19,6 +19,15 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ disabled }) => {
         const newState = { ...state, currentStep: state.currentStep - 1 };
         setState(newState);
     };
+
+
+    function handleReset(): void {
+        setState(initialGameFormState);
+    };
+
+    function handleSubmit(): void {
+        console.log('submitting Form!', { state });
+    }
 
     console.log({ disabled })
 

@@ -2,7 +2,7 @@ import React, { useEffect, FunctionComponent, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import SelectMapProps from './SelectMap.AddGame.Types';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
-import { mapDictionary } from '../../../../utils/dictionaries';
+import mapDictionary, { MapEntry } from '../../../../utils/mapDictionary';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
@@ -11,7 +11,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
     //enum for maps use here
-    function selectMap(val: any) {
+    function selectMap(val: MapEntry) {
         const newState = { ...state, currentStep: state.currentStep + 1, mapPlayed: val };
         setState(newState);
     }
@@ -38,11 +38,10 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
             </Grid>
             <Grid item xs={12}>
                 <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-                    <Card variant={'outlined'}>
-                        {mapDictionary.map(map => {
-                            return <img key={map.name} onClick={() => selectMap(map)} style={{ maxWidth: '25%' }} src={map.icon.toString()} alt={map.name} />
-                        })}
-                    </Card>
+                    {mapDictionary.map(map => {
+                        return <img key={map.name} onClick={() => selectMap(map)} style={{ maxWidth: '25%' }} src={map.icon.toString()} alt={map.name} />
+                    })}
+
                 </div>
             </Grid>
             <Grid item xs={12}>

@@ -6,7 +6,7 @@ import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import { HeroEntry } from '../../../../utils/heroDictionary';
-import GameFormContextTypes from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
+import GameForm from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
@@ -24,7 +24,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
 
     function selectHero(hero: HeroEntry) {
         return () => {
-            let newState: GameFormContextTypes;
+            let newState: GameForm;
 
             const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
 

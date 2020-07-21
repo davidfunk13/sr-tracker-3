@@ -1,10 +1,10 @@
-import React, { useState, useContext, FunctionComponent, useEffect } from 'react';
+import React, { useState, useContext, FunctionComponent, useEffect, Fragment } from 'react';
 import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
-import { GameFormContext, GameContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
+import { GameFormContext, GameContext, initialGameFormState } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
-// import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 // import CardContent from '@material-ui/core/CardContent';
 // import Card from '@material-ui/core/Card';
 import { MapEntry } from '../../../../utils/mapDictionary';
@@ -21,44 +21,32 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
 
   const [state, setState]: GameContext = useContext<GameContext>(GameFormContext);
 
-  const [game, setGame] = useState<GameForm>({} as GameForm);
+  const rank: YourRank = useGetRank(state.skillRating);
 
-  // function handleReset(): void {
-  //   setState(initialGameFormState);
-  // };
+  function handleReset() {
+    setState(initialGameFormState);
+  };
 
-  // function handleSubmit(): void {
-  //   console.log('submitting Form!', { state });
-  // }
+  function handleSubmit(): void {
+    console.log('submitting Form!', { state });
+  }
 
-  const role: string = game.heroesPlayed[0].name.split('')[0].toUpperCase() + game.heroesPlayed[0].name.slice(1);
-  let iconPath: string = generateOutcomeIcon(game.outcome);
-  let outcomeString: string = generateOutcomeString(game.outcome);
-  const getRank: YourRank = useGetRank(game.skillRating || 0);
-
-  useEffect(() => {
-    if (state) {
-      setGame(state)
-    }
-  }, [state]);
-
-  function generateOutcomeIcon(outcome: number | null): string {
+  function generateOutcomeIcon(outcome: number = 3): string {
     switch (outcome) {
       case 0:
         return Loss;
       case 1:
         return Win;
       case 2:
-        return Draw
-      case null:
+        return Draw;
+      case 3:
         return '';
-
       default:
         return ''
     }
   }
 
-  function generateOutcomeString(outcome: number | null): string {
+  function generateOutcomeString(outcome: number = 0): string {
     switch (outcome) {
       case 0:
         return 'Defeat';
@@ -66,39 +54,40 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
         return 'Victory';
       case 2:
         return 'Draw';
-      case null:
-        return '';
       default:
         return '';
     }
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={4}>
       <Grid item xs={12}>
         <Typography variant={"subtitle2"} >
           Confirm New Game Addition
         </Typography>
-        <Grid item xs={12}>
-          <MediaCard title={getRank.skillRating.toString()} subtitle={getRank.name} image={getRank.icon} />
-        </Grid>
       </Grid>
       <Grid item xs={12}>
-        <MediaCard title={game.mapPlayed.name} image={game.mapPlayed.icon} />
+        <MediaCard title={state.mapPlayed.name} image={state.mapPlayed.icon} />
       </Grid>
       <Grid item xs={12}>
-        <MediaCard title={game.heroesPlayed[0].roleName} multiImage={game.heroesPlayed} />
+        <MediaCard title={state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1)} multiImage={state.heroesPlayed} />
       </Grid>
       <Grid item xs={12}>
-        <MediaCard title={outcomeString!} image={iconPath!} />
+        <MediaCard title={generateOutcomeString(state.outcome)} image={generateOutcomeIcon(state.outcome)} />
       </Grid>
-      {/* <GameCard /> */}
-      {/* <Button onClick={handleSubmit}>
-        <Typography variant={"button"}>Submit</Typography>
-      </Button>
-      <Button onClick={handleReset} >
-        <Typography variant={"button"}>Reset</Typography>
-      </Button> */}
+      <Grid item xs={12}>
+        <MediaCard title={rank.skillRating.toString()} subtitle={rank.name} image={rank.icon} />
+      </Grid>
+      <Grid item xs={6}>
+        <Button fullWidth variant={'contained'} color={'secondary'} onClick={handleReset} >
+          <Typography variant={"button"}>Reset</Typography>
+        </Button>
+      </Grid>
+      <Grid item xs={6}>
+        <Button fullWidth variant={'contained'} color={'primary'} onClick={handleSubmit}>
+          <Typography variant={"button"}>Submit</Typography>
+        </Button>
+      </Grid>
     </Grid>
   );
 }

@@ -1,7 +1,7 @@
 export interface MapEntry {
     name: string
     type: string
-    icon: NodeRequire
+    icon: NodeRequire | string
 }
 
 const mapDictionary: MapEntry[] = [

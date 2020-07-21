@@ -1,6 +1,7 @@
 export interface Rank {
     name: string
     icon: string | NodeRequire
+    skillRating?: number
 };
 
 const rankDictionary: Rank[] = [

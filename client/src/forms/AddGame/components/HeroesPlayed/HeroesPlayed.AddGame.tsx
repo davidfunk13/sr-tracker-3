@@ -64,7 +64,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
-                    MainHeroes
+                    Main Heroes
                 </Typography>
             </Grid>
             <Grid item xs={12}>

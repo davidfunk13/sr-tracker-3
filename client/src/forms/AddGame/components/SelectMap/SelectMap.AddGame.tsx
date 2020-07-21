@@ -6,6 +6,7 @@ import mapDictionary, { MapEntry } from '../../../../utils/mapDictionary';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
+import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 
 const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
@@ -37,12 +38,15 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
             </Typography>
             </Grid>
             <Grid item xs={12}>
-                <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
+                {/* <div style={{ maxHeight: '40vh', overflowY: 'auto' }}> */}
+                <Grid container spacing={2}>
                     {mapDictionary.map(map => {
-                        return <img key={map.name} onClick={() => selectMap(map)} style={{ maxWidth: '25%' }} src={map.icon.toString()} alt={map.name} />
+                        return <Grid key={map.name} item xs={12} onClick={() => selectMap(map)}>
+                            <MediaCard image={map.icon.toString()} title={map.name} />
+                        </Grid>;
                     })}
-
-                </div>
+                </Grid>
+                {/* </div> */}
             </Grid>
             <Grid item xs={12}>
                 <StepButtons disabled={!!!state.mapPlayed} />

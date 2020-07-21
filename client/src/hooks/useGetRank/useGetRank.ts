@@ -8,11 +8,7 @@ export interface YourRank {
 
 type GetRankHook = (rank: number) => YourRank;
 
-const useGetRank: GetRankHook = (rank: number) => {
-
-    if (rank === undefined) {
-        return { ...rankDictionary.filter((item: Rank) => item.name === 'Loading...')[0], skillRating: rank };
-    }
+const useGetRank: GetRankHook = (rank: number = 0) => {
 
     if (rank === 0) {
         return { ...rankDictionary.filter((item: Rank) => item.name === 'Bronze')[0], skillRating: rank };

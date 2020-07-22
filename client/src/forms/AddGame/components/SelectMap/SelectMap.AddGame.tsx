@@ -31,27 +31,19 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     }, []);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant={"subtitle2"}>
-                    What map are you playing?
-            </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                {/* <div style={{ maxHeight: '40vh', overflowY: 'auto' }}> */}
-                <Grid container spacing={2}>
-                    {mapDictionary.map(map => {
-                        return <Grid key={map.name} item xs={12} onClick={() => selectMap(map)}>
-                            <MediaCard image={map.icon.toString()} title={map.name} />
-                        </Grid>;
-                    })}
-                </Grid>
-                {/* </div> */}
-            </Grid>
-            <Grid item xs={12}>
-                <StepButtons disabled={!!!state.mapPlayed} />
-            </Grid>
-        </Grid>
+        <StepButtons disabled={!(Object.keys(state.mapPlayed).length > 0)}>
+                    <Typography variant={"subtitle2"}>
+                        What map are you playing?
+                    </Typography>
+                    {/* <div style={{ maxHeight: '40vh', overflowY: 'auto' }}> */}
+                    <Grid container spacing={2}>
+                        {mapDictionary.map(map => {
+                            return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
+                                        <MediaCard image={map.icon.toString()} title={map.name} />
+                                    </Grid>;
+                        })}
+                    </Grid>
+        </StepButtons>
     )
 }
 

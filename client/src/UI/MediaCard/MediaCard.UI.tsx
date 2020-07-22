@@ -35,21 +35,19 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                     {multiImage.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)}
                 </div>
                 :
-                null
-            }
+                null}
 
             <CardContent>
                 <Typography variant="h5" component="h2">
                     {title}
                 </Typography>
-                
+
                 {!subtitle ? null :
                     <Typography gutterBottom variant={"subtitle2"} component={"p"}>
                         {subtitle}
                     </Typography>
                 }
             </CardContent>
-            
             <CardActionArea>
                 {children}
             </CardActionArea>

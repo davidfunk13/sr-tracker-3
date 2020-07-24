@@ -1,7 +1,6 @@
 import React, { Fragment, FunctionComponent, useContext, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';

@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import GameForm from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
+import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
+import Win from '../../../../assets/icons/other/win.png';
+import Loss from '../../../../assets/icons/other/loss.png';
+import Draw from '../../../../assets/icons/other/draw.png';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
     const [state, setState]: any = useContext(GameFormContext);
@@ -22,14 +26,14 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(1)} variant={'contained'} color={"primary"}>Win</Button>
+                    <Grid item xs={12} sm={4}>
+                        <MediaCard onClick={() => selectOutcome(1)} title={"Win"} image={Win} />
                     </Grid>
-                    <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(0)} variant={"contained"} color={"secondary"}>Loss</Button>
+                    <Grid item xs={12} sm={4}>
+                        <MediaCard onClick={() => selectOutcome(0)} title={"Loss"} image={Loss} /><Button onClick={() => selectOutcome(0)} variant={"contained"} color={"secondary"}>Loss</Button>
                     </Grid>
-                    <Grid item xs={4}>
-                        <Button onClick={() => selectOutcome(2)} variant={"contained"} >Draw</Button>
+                    <Grid item xs={12} sm={4}>
+                        <MediaCard onClick={() => selectOutcome(2)} title={"Draw"} image={Draw} />
                     </Grid>
                 </Grid>
             </Grid>

@@ -23,11 +23,11 @@ const useStyles = makeStyles({
     }
 });
 
-const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, subtitle, multiImage }) => {
+const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, subtitle, multiImage, onClick }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card onClick={onClick} className={classes.root}>
             {!image ? null : <CardMedia className={classes.media} image={image.toString()} title={title} />}
 
             {multiImage && multiImage.length ?

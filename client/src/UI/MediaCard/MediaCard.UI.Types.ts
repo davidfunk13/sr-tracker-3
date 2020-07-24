@@ -5,4 +5,5 @@ export default interface MediaCardProps {
     image?: string | NodeRequire
     subtitle?: string
     multiImage?: HeroEntry[]
+    onClick?: ()=> void
 }

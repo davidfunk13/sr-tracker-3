@@ -1,19 +1,20 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, Dispatch, SetStateAction } from 'react';
 import SelectMap from './components/SelectMap/SelectMap.AddGame';
 import HeroesPlayed from './components/HeroesPlayed/HeroesPlayed.AddGame';
 import Outcome from './components/Outcome/Outcome.AddGame';
 import SkillRating from './components/SkillRating/SkillRating.AddGame';
-import { GameFormContext } from '../../contexts/GameFormContext/GameFormContext.Context';
+import { GameFormContext, GameContext } from '../../contexts/GameFormContext/GameFormContext.Context';
 import { RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 
 interface GameFormProps {
     role: RoleEnum
+    setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const GameForm: FunctionComponent<GameFormProps> = ({ role }) => {
+const GameForm: FunctionComponent<GameFormProps> = ({ role, setOpen }) => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [state, setState]: any = useContext(GameFormContext); 
+    const [state, setState]: GameContext = useContext(GameFormContext); 
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {
@@ -26,7 +27,7 @@ const GameForm: FunctionComponent<GameFormProps> = ({ role }) => {
             case 3:
                 return <SkillRating />
             case 4:
-                return <ConfirmGame />
+                return <ConfirmGame setOpen={setOpen} />
             default:
                 return <h4>Something went wrong</h4>;
         }

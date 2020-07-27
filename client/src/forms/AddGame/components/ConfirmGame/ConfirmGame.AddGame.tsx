@@ -8,14 +8,14 @@ import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
-const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
+const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({setOpen}) => {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [state, setState]: GameContext = useContext<GameContext>(GameFormContext);
 
   const rank: YourRank = useGetRank(state.skillRating);
 
   return (
-    <StepButtons disabled={false}>
+    <StepButtons setOpen={setOpen} disabled={false}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant={"subtitle2"} >

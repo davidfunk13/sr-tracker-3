@@ -4,7 +4,7 @@ import { GameFormContext, initialGameFormState } from "../../../contexts/GameFor
 import StepButtonsProps from './StepButtons.UITypes';
 import Grid from '@material-ui/core/Grid';
 
-const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, confirm }) => {
+const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, setOpen }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
     const handleNext: () => void = () => {
@@ -17,13 +17,17 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, 
         setState(newState);
     };
 
-
     function handleReset(): void {
         setState(initialGameFormState);
     };
 
     function handleSubmit(): void {
         console.log('submitting Form!', { state });
+       
+        if(setOpen){
+            console.log('asss')
+           setOpen(false);
+       }
     }
 
     return (

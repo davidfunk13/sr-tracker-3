@@ -4,15 +4,11 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import useStyles from './VerticalStepper.Component.Styles';
 import VerticalStepperTypes from './VerticalStepper.Component.Types';
-import GameForm from '../../contexts/GameFormContext/GameFormContext.Context.Types';
 import ConfirmGame from '../../forms/AddGame/components/ConfirmGame/ConfirmGame.AddGame';
 
-const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext }) => {
+const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, components, formContext, setOpen }) => {
     const classes = useStyles();
 
     const [state, setState] = useContext(formContext);
@@ -35,7 +31,7 @@ const VerticalStepper: FunctionComponent<VerticalStepperTypes> = ({ role, compon
 
     return (
         <div className={classes.root}>
-            {state.currentStep === components.length ? <ConfirmGame /> : renderSteps()}
+            {state.currentStep === components.length ? <ConfirmGame setOpen={setOpen}  /> : renderSteps()}
         </div>
     );
 }

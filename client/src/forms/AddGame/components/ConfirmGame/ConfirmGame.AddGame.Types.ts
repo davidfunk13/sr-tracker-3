@@ -1,5 +1,5 @@
-import { RoleEnum } from "../../../../App.Types";
+import { Dispatch, SetStateAction } from "react";
 
 export default interface ConfirmGameTypes {
-
+    setOpen: Dispatch<SetStateAction<boolean>>
 }

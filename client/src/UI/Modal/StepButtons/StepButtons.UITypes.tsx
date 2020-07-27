@@ -1,4 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
+
 export default interface StepButtonsProps {
     disabled: boolean
-    confirm?:boolean
+    confirm?: boolean
+    setOpen?: Dispatch<SetStateAction<boolean>>
 }

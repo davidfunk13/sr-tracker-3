@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 import { GameFormContext, GameContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
-import GameForm from '../../../../contexts/GameFormContext/GameFormContext.Context.Types';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 
 const SkillRating: FunctionComponent<SkillratingProps> = () => {

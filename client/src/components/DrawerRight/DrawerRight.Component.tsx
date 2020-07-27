@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DrawerRightProps } from "./DrawerRight.Component.Types";
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -28,10 +28,10 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
     const selected = localStorage.getItem('selected');
 
     function removeSelected() {
-            if (selected) {
-                localStorage.removeItem('selected');
-                navigate('/track')
-            }
+        if (selected) {
+            localStorage.removeItem('selected');
+            navigate('/track')
+        }
     }
 
 

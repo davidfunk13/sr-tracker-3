@@ -13,21 +13,16 @@ const fakeBattletags: Array<BlizzAPIBattletag> = [
 ];
 
 const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
-
     const history = useHistory();
-
-    //redirect if already selected.
 
     useEffect(() => {
         const selected = localStorage.getItem('selected');
-
-        console.log({ selected });
 
         if (selected) {
             history.push('/season');
         }
 
-    }, []);
+    }, [history]);
 
     function setSelected(selected: BlizzAPIBattletag) {
         localStorage.setItem('selected', JSON.stringify(selected));
@@ -46,7 +41,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
                     const numbers: string = '#' + battletagSplit[1];
                     const avatarLetter = Array.from(name)[0];
 
-                    return <Grid key={battletag.name} onClick={()=> setSelected(battletag)} item xs={12}>
+                    return <Grid key={battletag.name} onClick={() => setSelected(battletag)} item xs={12}>
                         <CardWithAvatar avatarLetter={avatarLetter} CardHeaderTitle={name} CardHeaderSubtitle={numbers} />
                     </Grid>
                 })}

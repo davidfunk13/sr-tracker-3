@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useState, useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -14,8 +14,6 @@ const MainHeroes: FunctionComponent<MainHeroesProps> = () => {
     const [selected, setSelected] = useState<HeroEntry[]>([]);
 
     const filtered = heroDictionary.filter(hero => hero.roleKey === state.seasonType);
-
-    useEffect(() => console.log({ length: filtered.length }), [filtered]);
 
     function selectHero(hero: HeroEntry) {
         return () => {

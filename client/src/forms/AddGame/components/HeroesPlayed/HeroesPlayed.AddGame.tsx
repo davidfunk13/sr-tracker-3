@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useContext, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
@@ -16,8 +16,8 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     useEffect(() => {
         filtered.map(hero => {
             const img = new Image();
-            img.src = hero.icon.toString();
-        })
+           return img.src = hero.icon.toString();
+        });
 
     }, [filtered, role]);
 
@@ -63,7 +63,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
             <Grid container spacing={1}>
                 {filtered.map(hero => {
                     return (
-                        <Grid item xs={3}>
+                        <Grid key={hero.name} item xs={3}>
                             <img style={{ width: '100%' }} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
                         </Grid>
                     )

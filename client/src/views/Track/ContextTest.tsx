@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { SeasonFormContext } from '../../contexts/SeasonFormContext/SeasonFormContext.Context';
 
 const ContextTest = () => {
 
     //give them the type here;
-    const [ state, setState ]: any = useContext(SeasonFormContext);
+    const [state, setState]: any = useContext(SeasonFormContext);
 
     function set() {
         const newState = { ...state, seasonType: 1 };
@@ -15,8 +15,6 @@ const ContextTest = () => {
         let newState = { ...state, mainHeroes: [...state.mainHeroes, arg] };
         setState(newState);
     }
-
-    useEffect(() => console.log(state), [state])
 
     return (
         <div>

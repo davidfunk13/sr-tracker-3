@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import StatsProps from './Stats.View.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -37,19 +37,15 @@ const Stats: React.FC<StatsProps> = () => {
         });
     };
 
-    useEffect(() => console.log(options), [options]);
-
     return (
         <Grid container spacing={4}>
             <Grid item xs={12}>
-            <Typography variant={'h4'}>
-                Profile Statistics
-            </Typography>
+                <Typography variant={'h4'}>Profile Statistics</Typography>
             </Grid>
             <Grid item xs={12}>
-            <Typography variant={'h5'} gutterBottom>
-                Select Search Options
-            </Typography>
+                <Typography variant={'h5'} gutterBottom>
+                    Select Search Options
+                </Typography>
                 <FormControl fullWidth variant="outlined" >
                     <InputLabel>Ruleset</InputLabel>
                     <Select

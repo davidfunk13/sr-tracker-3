@@ -2,28 +2,17 @@ import React, { useContext, FunctionComponent } from 'react';
 import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
-import { GameFormContext, GameContext, initialGameFormState } from '../../../../contexts/GameFormContext/GameFormContext.Context';
+import { GameFormContext, GameContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
-import Button from '@material-ui/core/Button';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
-
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [state, setState]: GameContext = useContext<GameContext>(GameFormContext);
 
   const rank: YourRank = useGetRank(state.skillRating);
-
-  function handleReset() {
-    setState(initialGameFormState);
-  };
-
-  function handleSubmit(): void {
-    console.log('submitting Form!', { state });
-  }
-
-
 
   return (
     <StepButtons disabled={false}>

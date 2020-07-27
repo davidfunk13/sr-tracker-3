@@ -2,7 +2,6 @@ import React, { useEffect, useState, Fragment, FunctionComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button'
 import SeasonTypes from './Season.View.Types';
 import DamageIcon from '../../assets/icons/roles/Damage.png';
@@ -35,9 +34,8 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             history.push('/track');
         }
 
-    }, []);
+    }, [history]);
 
-    useEffect(() => console.log(battletag), [battletag]);
     return (
         <Fragment>
             <Typography gutterBottom variant={"h5"}>

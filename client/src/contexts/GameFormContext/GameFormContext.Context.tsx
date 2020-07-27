@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useState, createContext, Dispatch, SetStateAction } from 'react';
 import GameForm from './GameFormContext.Context.Types';
 import { MapEntry } from '../../utils/mapDictionary';
 import { HeroEntry } from '../../utils/heroDictionary';
@@ -18,8 +18,6 @@ export const GameFormContext: React.Context<GameContext> = createContext<GameCon
 const GameFormProvider = ({ children }: any) => {
 
     const [state, setState]: GameContext = useState<GameForm>(initialGameFormState);
-
-    useEffect(() => console.log(state), [state]);
 
     return (
         <GameFormContext.Provider value={[state, setState]}>

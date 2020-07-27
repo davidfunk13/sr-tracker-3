@@ -1,13 +1,10 @@
-import React, { useEffect, FunctionComponent, useContext } from "react";
-import useStyles from '../../../components/VerticalStepper/VerticalStepper.Component.Styles';
+import React, { FunctionComponent, useContext } from "react";
 import Button from '@material-ui/core/Button';
 import { GameFormContext, initialGameFormState } from "../../../contexts/GameFormContext/GameFormContext.Context";
 import StepButtonsProps from './StepButtons.UITypes';
 import Grid from '@material-ui/core/Grid';
 
 const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, confirm }) => {
-    const classes = useStyles();
-
     const [state, setState]: any = useContext(GameFormContext);
 
     const handleNext: () => void = () => {
@@ -31,7 +28,7 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, 
 
     return (
         <Grid container style={{ marginBottom: '.75em' }} spacing={2}>
-            <Grid item xs={12} style={{ height: '60vh', overflowY:'auto' }}>
+            <Grid item xs={12} style={{ height: '60vh', overflowY: 'auto' }}>
                 {children}
             </Grid>
             <Grid item xs={6}>

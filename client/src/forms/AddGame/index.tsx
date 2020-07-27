@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useContext } from 'react';
-// import { FormComponentObject } from '../../UI/Modal/Modal.UI.Types';
 import SelectMap from './components/SelectMap/SelectMap.AddGame';
 import HeroesPlayed from './components/HeroesPlayed/HeroesPlayed.AddGame';
 import Outcome from './components/Outcome/Outcome.AddGame';
@@ -8,31 +7,13 @@ import { GameFormContext } from '../../contexts/GameFormContext/GameFormContext.
 import { RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 
-// const gameFormComponents: FormComponentObject[] = [
-//     {
-//         label: 'Select Map',
-//         component: SelectMap,
-//     },
-//     {
-//         label: 'Select Heroe(s)',
-//         component: HeroesPlayed,
-//     },
-//     {
-//         label: 'Match Outcome',
-//         component: Outcome,
-//     },
-//     {
-//         label: 'New Skill Rating',
-//         component: SkillRating,
-//     },
-// ];
-
 interface GameFormProps {
     role: RoleEnum
 }
 
 const GameForm: FunctionComponent<GameFormProps> = ({ role }) => {
-    const [state, setState]: any = useContext(GameFormContext);
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const [state, setState]: any = useContext(GameFormContext); 
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {

@@ -12,6 +12,7 @@ import Modal from '../../UI/Modal/Modal.UI';
 import ConfirmSeason from '../../forms/CreateSeason/components/ConfirmSeason/ConfirmSeason.Modal.UI';
 import { useHistory } from 'react-router-dom';
 import { BlizzAPIBattletag } from '../../App.Types';
+import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
 
@@ -47,42 +48,18 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             </Typography>
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                 <Grid item xs={4}>
-                    <Link to={{ pathname: '/season/role', state: { role: 'damage' } }}>
-                        <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                            <img style={{ width: '100%' }} src={DamageIcon} alt="Damage SR" />
-                            <Typography align={'center'} variant={'h6'}>
-                                4266
-                            </Typography>
-                            <Typography align={'center'} variant={'subtitle1'}>
-                                Damage
-                            </Typography>
-                        </Card>
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'tank' } }}>
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={"4001"} subtitle={"Tank"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link to={{ pathname: '/season/role', state: { role: 'tank' } }} >
-                        <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                            <img style={{ width: '100%' }} src={TankIcon} alt="Tank SR" />
-                            <Typography align={'center'} variant={'h6'}>
-                                4001
-                            </Typography>
-                            <Typography align={'center'} variant={'subtitle1'}>
-                                Tank
-                            </Typography>
-                        </Card>
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'damage' } }} >
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={"4266"} subtitle={"Damage"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link to={{ pathname: '/season/role', state: { role: 'support' } }}>
-                        <Card style={{ padding: '.5em' }} variant={'outlined'}>
-                            <img style={{ width: '100%' }} src={SupportIcon} alt="Support SR" />
-                            <Typography align={'center'} variant={'h6'}>
-                                3209
-                            </Typography>
-                            <Typography align={'center'} variant={'subtitle1'}>
-                                Support
-                            </Typography>
-                        </Card>
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'support' } }}>
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={"3209"} subtitle={"Support"} />
                     </Link>
                 </Grid>
                 <Grid item xs={12}>

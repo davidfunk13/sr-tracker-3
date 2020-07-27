@@ -7,6 +7,7 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import Button from '@material-ui/core/Button';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
+import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
 
@@ -25,35 +26,27 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = () => {
 
 
   return (
-    <Grid container spacing={4}>
-      <Grid item xs={12}>
-        <Typography variant={"subtitle2"} >
-          Confirm New Game Addition
-        </Typography>
+    <StepButtons disabled={false}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant={"subtitle2"} >
+            Confirm New Game Addition
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard title={state.mapPlayed.name} image={state.mapPlayed.icon} />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1)} multiImage={state.heroesPlayed} />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={generateOutcomeString(state.outcome)} image={generateOutcomeIcon(state.outcome)} />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={rank.skillRating.toString()} subtitle={rank.name} image={rank.icon} />
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <MediaCard title={state.mapPlayed.name} image={state.mapPlayed.icon} />
-      </Grid>
-      <Grid item xs={12}>
-        <MediaCard title={state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1)} multiImage={state.heroesPlayed} />
-      </Grid>
-      <Grid item xs={12}>
-        <MediaCard title={generateOutcomeString(state.outcome)} image={generateOutcomeIcon(state.outcome)} />
-      </Grid>
-      <Grid item xs={12}>
-        <MediaCard title={rank.skillRating.toString()} subtitle={rank.name} image={rank.icon} />
-      </Grid>
-      <Grid item xs={6}>
-        <Button fullWidth variant={'contained'} color={'secondary'} onClick={handleReset} >
-          <Typography variant={"button"}>Reset</Typography>
-        </Button>
-      </Grid>
-      <Grid item xs={6}>
-        <Button fullWidth variant={'contained'} color={'primary'} onClick={handleSubmit}>
-          <Typography variant={"button"}>Submit</Typography>
-        </Button>
-      </Grid>
-    </Grid>
+    </StepButtons>
   );
 }
 

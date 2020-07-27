@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
 import OutcomeProps from './Outcome.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { GameFormContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import GameForm from '../../../../contexts/GameFormContext/GameFormContext.Context.Types'
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
@@ -23,24 +22,23 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
     }
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={4}>
-                        <MediaCard onClick={() => selectOutcome(1)} title={"Win"} image={Win} />
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <MediaCard onClick={() => selectOutcome(0)} title={"Loss"} image={Loss} /><Button onClick={() => selectOutcome(0)} variant={"contained"} color={"secondary"}>Loss</Button>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <MediaCard onClick={() => selectOutcome(2)} title={"Draw"} image={Draw} />
+        <StepButtons disabled={!!!state.outcome !== undefined}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={4}>
+                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(1)} title={"Win"} image={Win} />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(0)} title={"Loss"} image={Loss} />
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(2)} title={"Draw"} image={Draw} />
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <StepButtons disabled={!!!state.outcome !== undefined} />
-            </Grid>
-        </Grid>
+        </StepButtons>
     );
 }
 

@@ -22,27 +22,26 @@ const SkillRating: FunctionComponent<SkillratingProps> = () => {
     const rank: YourRank = useGetRank(state.skillRating);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <MediaCard title={state.skillRating.toString()} subtitle={rank.name} image={rank.icon}  />
+        <StepButtons disabled={!!!state.skillRating}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={state.skillRating.toString()} subtitle={rank.name} image={rank.icon} />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        required
+                        type="number"
+                        variant="outlined"
+                        className={classes.numInputHideArrows}
+                        value={state.skillRating}
+                        inputProps={{ min: 0, max: 5000 }}
+                        onChange={(e) => setSkillrating(parseInt(e.target.value, 10))}
+                        label="New Skill Rating"
+                    />
+                </Grid>
             </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    fullWidth
-                    required
-                    type="number"
-                    variant="outlined"
-                    className={classes.numInputHideArrows}
-                    value={state.skillRating}
-                    inputProps={{ min: 0, max: 5000 }}
-                    onChange={(e) => setSkillrating(parseInt(e.target.value, 10))}
-                    label="New Skill Rating"
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <StepButtons disabled={!!!state.skillRating} />
-            </Grid>
-        </Grid>
+        </StepButtons>
     );
 }
 

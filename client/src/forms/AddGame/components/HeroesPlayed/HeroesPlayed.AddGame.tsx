@@ -49,7 +49,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     }
 
     return (
-        <Fragment>
+        <StepButtons disabled={!!!state.heroesPlayed.length}>
             <Typography variant={"subtitle2"}>
                 Selected
                 </Typography>
@@ -60,19 +60,16 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
             <Typography gutterBottom variant={"subtitle2"}>
                 Main Heroes
                 </Typography>
-            <StepButtons disabled={!!!state.heroesPlayed.length}>
-                <Grid container spacing={1}>
-                    {filtered.map(hero => {
-                        return (
-                            <Grid item xs={3}>
-                                <img style={{width:'100%'}} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </StepButtons>
-            {/* </div> */}
-        </Fragment>
+            <Grid container spacing={1}>
+                {filtered.map(hero => {
+                    return (
+                        <Grid item xs={3}>
+                            <img style={{ width: '100%' }} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
+                        </Grid>
+                    )
+                })}
+            </Grid>
+        </StepButtons>
     )
 };
 

@@ -5,7 +5,7 @@ import { GameFormContext, initialGameFormState } from "../../../contexts/GameFor
 import StepButtonsProps from './StepButtons.UITypes';
 import Grid from '@material-ui/core/Grid';
 
-const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled }) => {
+const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, confirm }) => {
     const classes = useStyles();
 
     const [state, setState]: any = useContext(GameFormContext);
@@ -31,18 +31,18 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled }
 
     return (
         <Grid container style={{ marginBottom: '.75em' }} spacing={2}>
-            <Grid item xs={12} style={{ height: '45vh', overflowY:'auto' }}>
+            <Grid item xs={12} style={{ height: '60vh', overflowY:'auto' }}>
                 {children}
             </Grid>
             <Grid item xs={6}>
                 <Button
                     disabled={state.currentStep === 0}
                     variant={"contained"}
-                    onClick={handleBack}
+                    onClick={state.currentStep === 4 ? handleReset : handleBack}
                     size={'small'}
                     fullWidth
                 >
-                    Back
+                    {state.currentStep === 4 ? 'Reset' : 'Back'}
                 </Button>
             </Grid>
             <Grid item xs={6}>
@@ -52,9 +52,9 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled }
                     size={'small'}
                     fullWidth
                     color="primary"
-                    onClick={handleNext}
+                    onClick={state.currentStep === 4 ? handleSubmit : handleNext}
                 >
-                    {state.currentStep === state.length - 1 ? 'Finish' : 'Next'}
+                    {state.currentStep === 4 ? 'Finish' : 'Next'}
                 </Button>
             </Grid>
         </Grid>

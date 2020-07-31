@@ -1,4 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
+
 const resolvers = require('./resolvers').default;
 
 const typeDefs = `
@@ -27,7 +28,8 @@ type Query {
      allBattletags: [Battletag],
 }
 type Mutation {
-    createBattletag(input:BattletagInput) : Battletag
+    createBattletag(input:BattletagInput!) : Battletag
+    deleteBattletag(_id: ID!) : Battletag
 }
  `;
 

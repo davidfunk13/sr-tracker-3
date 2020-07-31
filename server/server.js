@@ -1,4 +1,4 @@
-const cors = require("cors");
+// const cors = require("cors");
 
 const express = require("express");
 
@@ -28,10 +28,10 @@ mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUn
 
 const schema = require('./graphql/schema').default;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+// app.use(checkJwt);
 
-app.get("/api/external", checkJwt, (req, res) => {
-  res.send({
+app.get("/api/external", (req, res) => {
+  res.json({
     msg: "Your Access Token was successfully validated!"
   });
 });
@@ -39,7 +39,7 @@ app.get("/api/external", checkJwt, (req, res) => {
 app.use('/api/', graphqlHTTP({
   schema: schema,
   graphiql: true,
-}))
+}));
 
 if (process.env.NODE_ENV === 'production') {
   //if you have weird errors with storing images etc in static dir this is why. back out a dir.

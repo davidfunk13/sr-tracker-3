@@ -12,73 +12,38 @@ import { useAuth0 } from "../../react-auth0-spa";
 const Link: React.FC<LinkProps> = () => {
   const { getTokenSilently } = useAuth0();
 
-  const [isOn, setIsOn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [search, setSearch] = useState<string>("");
 
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
 
-  const token = getTokenSilently({
-    audience: "AuthAPI",
-    scope: "read:current_user",
-  });
+  async function fetchBattletags() {
+    setLoading(true);
+    const token = await getTokenSilently({
+      audience: "AuthAPI",
+      scope: "read:current_user",
+    });
 
-  const fakeBattletags: Array<BlizzAPIBattletag> = [
-    {
-      name: "Nakeddave#1894",
-      urlName: "Nakeddave-1894",
-      id: 57242976,
-      level: 1541,
-      playerLevel: 1541,
-      isPublic: true,
-      platform: "pc",
-      portrait: "0x0250000000001405",
-    },
-    {
-      name: "NakedDave#11750",
-      urlName: "NakedDave-11750",
-      id: 364415799,
-      level: 704,
-      playerLevel: 704,
-      isPublic: true,
-      platform: "pc",
-      portrait: "0x02500000000009EB",
-    },
-    {
-      name: "NakedDave#1251",
-      urlName: "NakedDave-1251",
-      id: 92846,
-      level: 35,
-      playerLevel: 35,
-      isPublic: false,
-      platform: "pc",
-      portrait: "0x0250000000000742",
-    },
-  ];
-
-  useEffect(() => {
-    async function fetchGraphQL() {
-      const res = await fetch("/api", {
-        method: "POST",
-        headers: {
-          Authorization: `bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: `query{ 
-                allBattletags{
-                  _id
-                    name
-                  }
-                }`,
-        }),
-      }).then(data=>data.json());
-
-      console.log(res.data)
-    }
-
-    fetchGraphQL();
-  }, []);
+    const res = await fetch("/api", {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `query{
+          searchBattletags(battletag:"ass") {
+            id
+            playerLevel
+            name
+          }
+        }`,
+      }),
+    }).then((data) => data.json());
+    setLoading(false);
+    console.log(res.data);
+  }
 
   return (
     <Grid container spacing={4}>
@@ -99,10 +64,7 @@ const Link: React.FC<LinkProps> = () => {
       </Grid>
       <Grid item xs={12}>
         <Button
-          onClick={() => {
-            const isOnCopy = !isOn;
-            setIsOn(isOnCopy);
-          }}
+          onClick={() => fetchBattletags()}
           variant="contained"
           color="primary"
         >
@@ -111,10 +73,10 @@ const Link: React.FC<LinkProps> = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container justify={"center"} spacing={2}>
-          {isOn ? (
+          {loading ? (
             <CircularProgress style={{ marginTop: "10vh" }} size={100} />
           ) : (
-            fakeBattletags.map((battletag) => {
+            data && data.length && data.map((battletag) => {
               const battletagSplit = battletag.name.split("#");
               const name: string = battletagSplit[0];
               const numbers: string = "#" + battletagSplit[1];

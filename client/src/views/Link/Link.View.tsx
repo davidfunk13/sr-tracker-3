@@ -19,6 +19,7 @@ const Link: React.FC<LinkProps> = () => {
   const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
 
   async function fetchBattletags() {
+    setData([])
     setLoading(true);
     const token = await getTokenSilently({
       audience: "AuthAPI",
@@ -33,7 +34,7 @@ const Link: React.FC<LinkProps> = () => {
       },
       body: JSON.stringify({
         query: `query{
-          searchBattletags(battletag:"ass") {
+          searchBattletags(battletag:"${search}") {
             id
             playerLevel
             name
@@ -42,7 +43,8 @@ const Link: React.FC<LinkProps> = () => {
       }),
     }).then((data) => data.json());
     setLoading(false);
-    console.log(res.data);
+    console.log(res.data.searchBattletags)
+    setData(res.data.searchBattletags)
   }
 
   return (
@@ -73,27 +75,24 @@ const Link: React.FC<LinkProps> = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container justify={"center"} spacing={2}>
-          {loading ? (
-            <CircularProgress style={{ marginTop: "10vh" }} size={100} />
-          ) : (
-            data && data.length && data.map((battletag) => {
-              const battletagSplit = battletag.name.split("#");
-              const name: string = battletagSplit[0];
-              const numbers: string = "#" + battletagSplit[1];
-              const avatarLetter = Array.from(name)[0];
+          {loading ? <CircularProgress style={{ marginTop: "10vh" }} size={100} /> : null}
+          {!data.length ? null : data.map((battletag) => {
+            const battletagSplit = battletag.name.split("#");
+            const name: string = battletagSplit[0];
+            const numbers: string = "#" + battletagSplit[1];
+            const avatarLetter = Array.from(name)[0];
 
-              return (
-                <Grid item xs={12}>
-                  <CardWithAvatar
-                    key={battletag.name}
-                    avatarLetter={avatarLetter}
-                    CardHeaderTitle={name}
-                    CardHeaderSubtitle={numbers}
-                  />
-                </Grid>
-              );
-            })
-          )}
+            return (
+              <Grid key={battletag.id} item xs={12}>
+                <CardWithAvatar
+                  key={battletag.name}
+                  avatarLetter={avatarLetter}
+                  CardHeaderTitle={name}
+                  CardHeaderSubtitle={numbers}
+                />
+              </Grid>
+            );
+          })}
         </Grid>
       </Grid>
     </Grid>

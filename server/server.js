@@ -30,13 +30,7 @@ const schema = require('./graphql/schema').default;
 
 // app.use(checkJwt);
 
-app.get("/api/external", (req, res) => {
-  res.json({
-    msg: "Your Access Token was successfully validated!"
-  });
-});
-
-app.use('/api/', graphqlHTTP({
+app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: true,
 }));

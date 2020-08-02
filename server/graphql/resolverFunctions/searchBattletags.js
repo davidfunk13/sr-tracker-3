@@ -1,9 +1,8 @@
-import axios from 'axios';
+const axios = require("axios");
 
-const searchBattletags = async (req, res) => {
+const searchBattletags = async (battletag) => {
 
     try {
-
         const {
             SEARCH_URL,
             SEARCH_KEY_1,
@@ -22,23 +21,21 @@ const searchBattletags = async (req, res) => {
         const config = {
             headers: {
                 [SEARCH_KEY_1]: SEARCH_VAL_1,
-                [SEARCH_KEY_2]: `${SEARCH_VAL_2}${req.body.battletag}`,
+                [SEARCH_KEY_2]: `${SEARCH_VAL_2}${battletag}`,
                 [SEARCH_KEY_3]: SEARCH_VAL_3,
                 [SEARCH_KEY_4]: SEARCH_VAL_4,
                 [SEARCH_KEY_5]: SEARCH_VAL_5
             }
         }
 
-        const results = await axios.get(`${SEARCH_URL}${req.body.battletag}`, config)
+        const results = await axios.get(`${SEARCH_URL}${battletag}`, config)
 
-        console.log(results.data)
-        const status = !!results.data.length;
+        console.log(results.data);
 
-        res.json({success: status, data: results.data});
+        return results.data;
 
     } catch (err) {
-
-        res.json({success: false, error: 'There was an error! Please check the server console.'});
+        return []
     }
 }
 

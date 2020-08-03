@@ -20,7 +20,9 @@ const Link: React.FC<LinkProps> = () => {
 
   async function fetchBattletags() {
     setData([])
+    
     setLoading(true);
+    
     const token = await getTokenSilently({
       audience: "AuthAPI",
       scope: "read:current_user",
@@ -42,8 +44,11 @@ const Link: React.FC<LinkProps> = () => {
         }`,
       }),
     }).then((data) => data.json());
+    
     setLoading(false);
+    
     console.log(res.data.searchBattletags)
+    
     setData(res.data.searchBattletags)
   }
 

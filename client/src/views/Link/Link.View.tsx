@@ -8,7 +8,8 @@ import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
 import LinkProps from "./Link.View.Types";
 import { BlizzAPIBattletag } from "../../App.Types";
 import { useAuth0 } from "../../react-auth0-spa";
-
+import { fetchGraphQL } from "../../utils/utilityFunctions";
+import { settings } from "cluster";
 const Link: React.FC<LinkProps> = () => {
   const { getTokenSilently } = useAuth0();
 
@@ -18,39 +19,64 @@ const Link: React.FC<LinkProps> = () => {
 
   const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
 
+  const linkBattletag = () => {};
+
+  const query: string = `query{
+            searchBattletags(battletag:"${search}") {
+              id
+              playerLevel
+              name
+            }
+          }`;
+
   async function fetchBattletags() {
-    setData([])
-    
-    setLoading(true);
     
     const token = await getTokenSilently({
       audience: "AuthAPI",
       scope: "read:current_user",
     });
+    setData([]);
 
-    const res = await fetch("/api", {
-      method: "POST",
-      headers: {
-        Authorization: `bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `query{
-          searchBattletags(battletag:"${search}") {
-            id
-            playerLevel
-            name
-          }
-        }`,
-      }),
-    }).then((data) => data.json());
-    
+    setLoading(true);
+
+    const data = await fetchGraphQL(token, query);
+
     setLoading(false);
-    
-    console.log(res.data.searchBattletags)
-    
-    setData(res.data.searchBattletags)
+    setData(data.searchBattletags)
   }
+
+  // async function fetchBattletags() {
+  //   setData([])
+  //   const token = await getTokenSilently({
+  //     audience: "AuthAPI",
+  //     scope: "read:current_user",
+  //   });
+
+  //   setLoading(true);
+
+  //   const res = await fetch("/api", {
+  //     method: "POST",
+  //     headers: {
+  //       Authorization: `bearer ${token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       query: `query{
+  //         searchBattletags(battletag:"${search}") {
+  //           id
+  //           playerLevel
+  //           name
+  //         }
+  //       }`,
+  //     }),
+  //   }).then((data) => data.json());
+
+  //   setLoading(false);
+
+  //   console.log(res.data.searchBattletags)
+
+  //   setData(res.data.searchBattletags)
+  // }
 
   return (
     <Grid container spacing={4}>
@@ -70,34 +96,32 @@ const Link: React.FC<LinkProps> = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button
-          onClick={() => fetchBattletags()}
-          variant="contained"
-          color="primary"
-        >
-          Search
+        <Button onClick={() => fetchBattletags()} variant="contained" color="primary">
+        Search
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Grid container justify={"center"} spacing={2}>
           {loading ? <CircularProgress style={{ marginTop: "10vh" }} size={100} /> : null}
-          {!data.length ? null : data.map((battletag) => {
-            const battletagSplit = battletag.name.split("#");
-            const name: string = battletagSplit[0];
-            const numbers: string = "#" + battletagSplit[1];
-            const avatarLetter = Array.from(name)[0];
+          {!data.length
+            ? null
+            : data.map((battletag) => {
+                const battletagSplit = battletag.name.split("#");
+                const name: string = battletagSplit[0];
+                const numbers: string = "#" + battletagSplit[1];
+                const avatarLetter = Array.from(name)[0];
 
-            return (
-              <Grid key={battletag.id} item xs={12}>
-                <CardWithAvatar
-                  key={battletag.name}
-                  avatarLetter={avatarLetter}
-                  CardHeaderTitle={name}
-                  CardHeaderSubtitle={numbers}
-                />
-              </Grid>
-            );
-          })}
+                return (
+                  <Grid onClick={() => console.log("ass")} key={battletag.id} item xs={12}>
+                    <CardWithAvatar
+                      key={battletag.name}
+                      avatarLetter={avatarLetter}
+                      CardHeaderTitle={name}
+                      CardHeaderSubtitle={numbers}
+                    />
+                  </Grid>
+                );
+              })}
         </Grid>
       </Grid>
     </Grid>

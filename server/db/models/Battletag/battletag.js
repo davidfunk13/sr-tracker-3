@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const BattletagSchema = new Schema({
     _user: {
         type: String,
-        required: true,
+        require: true,
     },
     id: {
         type: Number,

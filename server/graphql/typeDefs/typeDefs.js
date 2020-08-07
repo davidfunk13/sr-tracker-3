@@ -15,17 +15,17 @@ type Battletag {
 
 type Season {
     _id:ID!
-    _battletag: ID!,
-    tankSR: Int!,
-    damageSR: Int!,
-    supportSR: Int!,
+    _battletag: ID!
+    tankSR: Int!
+    damageSR: Int!
+    supportSR: Int!
 }
 
 input SeasonInput {
-    _battletag: ID!,
-    tankSR: Int!,
-    damageSR: Int!,
-    supportSR: Int!,
+    _battletag: ID!
+    tankSR: Int!
+    damageSR: Int!
+    supportSR: Int!
 }
 
 input BattletagInput {
@@ -43,14 +43,14 @@ input BattletagInput {
 type Query {
     getOneBattletag(_id: ID!): Battletag
     getOneSeason(_id: ID!): Season
-    getAllBattletags: [Battletag]
+    getAllBattletags(_user: ID!): [Battletag]
     getAllSeasons(_battletag: ID!): [Season]
     searchBattletags(battletag: String): [Battletag]
 }
 
 type Mutation {
     createBattletag(input:BattletagInput!) : Battletag
-    createSeason(input:SeasonInput!) : Season
+    createSeason(input:SeasonInput!) : [Season]
     deleteBattletag(_id: ID!) : Battletag
     deleteSeason(_id: ID!) : Season
 }`;

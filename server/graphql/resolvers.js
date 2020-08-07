@@ -1,19 +1,21 @@
 const Battletag = require("../db/models/Battletag/battletag");
 const Season = require("../db/models/Season/season");
 const searchBattletags = require('../graphql/resolverFunctions/searchBattletags');
-const { validate } = require("graphql");
+
+// parent, args, ctx, info
 
 const resolvers = {
   Query: {
     async getOneBattletag(_, { _id }) {
-      console.log('hey')
+      console.log('hey');
+      
       return await Battletag.findById(_id);
     },
     async getOneSeason(_, { _id }) {
       return await Season.findById(_id);
     },
-    async getAllBattletags(parent, args, ctx, info) {
-      return await Battletag.find();
+    async getAllBattletags(_, { _user }) {
+      return await Battletag.find({ _user: _user });
     },
     async getAllSeasons(_, { _battletag }) {
       const populated = await Battletag.findById(_battletag).populate('_seasons');
@@ -40,8 +42,9 @@ const resolvers = {
       battletag._seasons.push(season._id);
 
       battletag.save();
-      const seasons = battletag.populate("_seasons");
-      console.log(seasons);
+
+      const seasons = Season.find({ _battletag: battletag._id });
+
       return seasons
     },
     async deleteBattletag(_, { _id }) {

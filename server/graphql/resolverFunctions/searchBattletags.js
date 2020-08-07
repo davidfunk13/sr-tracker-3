@@ -1,7 +1,6 @@
 const axios = require("axios");
-
+require('dotenv').config;
 const searchBattletags = async (battletag) => {
-
     try {
         const {
             SEARCH_URL,
@@ -17,7 +16,6 @@ const searchBattletags = async (battletag) => {
             SEARCH_VAL_5
         } = process.env;
 
-
         const config = {
             headers: {
                 [SEARCH_KEY_1]: SEARCH_VAL_1,
@@ -28,6 +26,8 @@ const searchBattletags = async (battletag) => {
             }
         }
 
+        console.log(`${SEARCH_URL}${battletag}`)
+        
         const results = await axios.get(`${SEARCH_URL}${battletag}`, config)
 
         console.log(results.data);
@@ -35,6 +35,7 @@ const searchBattletags = async (battletag) => {
         return results.data;
 
     } catch (err) {
+        console.log(err)
         return []
     }
 }

@@ -40,7 +40,10 @@ export async function fetchGraphQL(token: string, query: string) {
     body: JSON.stringify({
       query: query,
     }),
-  }).then((data) => data.json());
+  }).then((data) => {
+    console.log(data);
+    return data.json();
+  });
   console.log(res);
-  return res;
+  return res.data;
 }

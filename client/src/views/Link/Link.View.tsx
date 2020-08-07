@@ -9,17 +9,23 @@ import LinkProps from "./Link.View.Types";
 import { BlizzAPIBattletag } from "../../App.Types";
 import { useAuth0 } from "../../react-auth0-spa";
 import { fetchGraphQL } from "../../utils/utilityFunctions";
-import { settings } from "cluster";
+
 const Link: React.FC<LinkProps> = () => {
-  const { getTokenSilently } = useAuth0();
+  const { getTokenSilently, user } = useAuth0();
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  //yo you need to handle special characters here and backend.
   const [search, setSearch] = useState<string>("");
 
   const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
-
-  const linkBattletag = () => {};
+console.log(user)
+  function getToken() {
+    return getTokenSilently({
+      audience: "AuthAPI",
+      scope: "read:current_user",
+    });
+  }
 
   const query: string = `query{
             searchBattletags(battletag:"${search}") {
@@ -30,11 +36,8 @@ const Link: React.FC<LinkProps> = () => {
           }`;
 
   async function fetchBattletags() {
-    
-    const token = await getTokenSilently({
-      audience: "AuthAPI",
-      scope: "read:current_user",
-    });
+    const token = await getToken();
+
     setData([]);
 
     setLoading(true);
@@ -42,7 +45,35 @@ const Link: React.FC<LinkProps> = () => {
     const data = await fetchGraphQL(token, query);
 
     setLoading(false);
-    setData(data.searchBattletags)
+
+    setData(data.searchBattletags);
+  }
+
+  async function linkBattletag(input: any) {
+    const query = ` mutation{
+      createBattletag(input:{
+        _user:"${user.sub.split('|')[1]}"
+        id: ${input.id}
+        isPublic: ${input.isPublic}
+        level: ${input.level}
+        name: ${input.name}
+        platform: ${input.platform}
+        playerLevel: ${input.playerLevel}
+        portrait: ${input.portrait}
+        urlName: ${input.urlName}
+      }){
+        _id
+        id
+        isPublic
+
+        urlName
+      }
+    }`;
+
+    const token = await getToken();
+
+    const data = await fetchGraphQL(token, query);
+    console.log(data)
   }
 
   // async function fetchBattletags() {
@@ -97,31 +128,29 @@ const Link: React.FC<LinkProps> = () => {
       </Grid>
       <Grid item xs={12}>
         <Button onClick={() => fetchBattletags()} variant="contained" color="primary">
-        Search
+          Search
         </Button>
       </Grid>
       <Grid item xs={12}>
         <Grid container justify={"center"} spacing={2}>
           {loading ? <CircularProgress style={{ marginTop: "10vh" }} size={100} /> : null}
-          {!data.length
-            ? null
-            : data.map((battletag) => {
-                const battletagSplit = battletag.name.split("#");
-                const name: string = battletagSplit[0];
-                const numbers: string = "#" + battletagSplit[1];
-                const avatarLetter = Array.from(name)[0];
+          {data && data.length ? data.map((battletag) => {
+            const battletagSplit = battletag.name.split("#");
+            const name: string = battletagSplit[0];
+            const numbers: string = "#" + battletagSplit[1];
+            const avatarLetter = Array.from(name)[0];
 
-                return (
-                  <Grid onClick={() => console.log("ass")} key={battletag.id} item xs={12}>
-                    <CardWithAvatar
-                      key={battletag.name}
-                      avatarLetter={avatarLetter}
-                      CardHeaderTitle={name}
-                      CardHeaderSubtitle={numbers}
-                    />
-                  </Grid>
-                );
-              })}
+            return (
+              <Grid onClick={() => linkBattletag(battletag)} key={battletag.id} item xs={12}>
+                <CardWithAvatar
+                  key={battletag.name}
+                  avatarLetter={avatarLetter}
+                  CardHeaderTitle={name}
+                  CardHeaderSubtitle={numbers}
+                />
+              </Grid>
+            );
+          }) : null}
         </Grid>
       </Grid>
     </Grid>

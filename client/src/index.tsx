@@ -9,7 +9,8 @@ import theme from './utils/theme';
 import { ThemeProvider } from '@material-ui/core';
 import * as serviceWorker from './serviceWorker';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css'
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
   history.push(
@@ -21,6 +22,7 @@ const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
 
 ReactDOM.render(
   <React.StrictMode>
+    <ReactNotification isMobile={true} />
     <Auth0Provider
       domain={config.domain}
       client_id={config.clientId}
@@ -28,7 +30,6 @@ ReactDOM.render(
       audience={config.audience}
       onRedirectCallback={onRedirectCallback}
     >
-      <ReactNotification/>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>

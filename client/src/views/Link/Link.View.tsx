@@ -72,6 +72,7 @@ const Link: React.FC<LinkProps> = () => {
         urlName: "${input.urlName}"
       }){
         _id
+        name
       }
   }`;
 
@@ -79,16 +80,23 @@ const Link: React.FC<LinkProps> = () => {
 
     const data = await fetchGraphQL(token, query);
     if (data.createBattletag && data.createBattletag._id){
-      dispatchNotification({type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
+      dispatchNotification({type: 'success', title: `Successfully linked ${data.createBattletag.name}`, message: "Battletag successfully linked to user" });
       return history.push('/');
     }
     console.log(data);
   }
 
+function testNotification () {
+  dispatchNotification({type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
+}
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={12}>
         <Typography variant={"h4"}>Link New Battletag</Typography>
+      </Grid>
+      <Grid item xs={12}>
+    <Button onClick={()=> testNotification()}>Send Test Notification</Button>
       </Grid>
       <Grid item xs={12}>
         <TextField

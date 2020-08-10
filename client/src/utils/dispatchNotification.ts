@@ -16,8 +16,8 @@ const dispatchNotification = (options: NotificationOptions) => {
         type: options.type,
         insert: "top",
         container: "top-right",
-        animationIn: ["animated", "slideInRight"],
-        animationOut: ["animated", "slideOutRight"],
+        animationIn: ["animate__animated", "animate__fadeInLeft"],
+        animationOut: ["animate__animated", "animate__fadeOutDown"],
         dismiss: {
             duration: 5000,
             onScreen: true

@@ -19,6 +19,7 @@ import Role from "./views/Role/Role.View";
 import Season from './views/Season/Season.View';
 import SelectBattletag from "./views/SelectBattletag/SelectBattletag.View";
 
+
 const App: React.FC<AppProps> = () => {
   const { isAuthenticated } = useAuth0();
 

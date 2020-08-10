@@ -58,7 +58,7 @@ const Link: React.FC<LinkProps> = () => {
   }
 
   async function linkBattletag(input: any) {
-    console.log({ input }, user.sub.split('|')[1]);
+    
     const query = `mutation{
       createBattletag(input:{
         _user:"${user.sub.split('|')[1]}"

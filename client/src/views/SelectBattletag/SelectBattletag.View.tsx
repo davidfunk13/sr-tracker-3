@@ -7,7 +7,8 @@ import { Battletag } from "../../App.Types";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "../../react-auth0-spa";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { Button } from "@material-ui/core";
+import Box from '@material-ui/core/Box'
 const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   const history = useHistory();
 
@@ -76,7 +77,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
       setData([]);
     };
   }, [user]);
-  
+
   return (
     <Fragment>
       <Typography gutterBottom variant={"h5"}>
@@ -93,12 +94,15 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
         const avatarLetter = Array.from(name)[0];
 
         return (
-          <Grid key={battletag._id} onClick={() => setSelected(battletag)} item xs={12}>
+          <Grid key={battletag._id} item xs={12}>
             <CardWithAvatar
               avatarLetter={avatarLetter}
               CardHeaderTitle={name}
               CardHeaderSubtitle={numbers}
-            />
+            >
+              <Button onClick={() => setSelected(battletag)}>Select</Button>
+              <Button color={'secondary'} onClick={() => console.log('yao')}>Delete</Button>
+            </CardWithAvatar>
           </Grid>
         );
       })}

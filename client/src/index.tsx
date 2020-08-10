@@ -8,6 +8,8 @@ import history from "./utils/history";
 import theme from './utils/theme';
 import { ThemeProvider } from '@material-ui/core';
 import * as serviceWorker from './serviceWorker';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
 
 const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
   history.push(
@@ -26,6 +28,7 @@ ReactDOM.render(
       audience={config.audience}
       onRedirectCallback={onRedirectCallback}
     >
+      <ReactNotification/>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>

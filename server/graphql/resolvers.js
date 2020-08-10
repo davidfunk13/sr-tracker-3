@@ -27,7 +27,8 @@ const resolvers = {
     },
   },
   Mutation: {
-    async createBattletag(_, { input }) {
+    async createBattletag(_, {input} ) {
+      console.log(input)
       const battletag = new Battletag(input);
 
       return await battletag.save();

@@ -25,12 +25,8 @@ const searchBattletags = async (battletag) => {
                 [SEARCH_KEY_5]: SEARCH_VAL_5
             }
         }
-
-        console.log(`${SEARCH_URL}${battletag}`)
         
         const results = await axios.get(`${SEARCH_URL}${battletag}`, config)
-
-        console.log(results.data);
 
         return results.data;
 

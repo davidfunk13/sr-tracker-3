@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
@@ -9,8 +9,11 @@ import LinkProps from "./Link.View.Types";
 import { BlizzAPIBattletag } from "../../App.Types";
 import { useAuth0 } from "../../react-auth0-spa";
 import { fetchGraphQL } from "../../utils/utilityFunctions";
+import { useHistory } from "react-router-dom";
+import dispatchNotification from "../../utils/dispatchNotification";
 
 const Link: React.FC<LinkProps> = () => {
+  const history = useHistory();
   const { getTokenSilently, user } = useAuth0();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +22,7 @@ const Link: React.FC<LinkProps> = () => {
   const [search, setSearch] = useState<string>("");
 
   const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
-console.log(user)
+
   function getToken() {
     return getTokenSilently({
       audience: "AuthAPI",
@@ -30,8 +33,13 @@ console.log(user)
   const query: string = `query{
             searchBattletags(battletag:"${search}") {
               id
+              isPublic
+              level
               playerLevel
               name
+              platform
+              portrait
+              urlName
             }
           }`;
 
@@ -50,64 +58,32 @@ console.log(user)
   }
 
   async function linkBattletag(input: any) {
-    const query = ` mutation{
+    console.log({ input }, user.sub.split('|')[1]);
+    const query = `mutation{
       createBattletag(input:{
         _user:"${user.sub.split('|')[1]}"
         id: ${input.id}
         isPublic: ${input.isPublic}
         level: ${input.level}
-        name: ${input.name}
-        platform: ${input.platform}
+        name: "${input.name}"
+        platform: "${input.platform}"
         playerLevel: ${input.playerLevel}
-        portrait: ${input.portrait}
-        urlName: ${input.urlName}
+        portrait: "${input.portrait}"
+        urlName: "${input.urlName}"
       }){
         _id
-        id
-        isPublic
-
-        urlName
       }
-    }`;
+  }`;
 
     const token = await getToken();
 
     const data = await fetchGraphQL(token, query);
-    console.log(data)
+    if (data.createBattletag && data.createBattletag._id){
+      dispatchNotification({type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
+      return history.push('/');
+    }
+    console.log(data);
   }
-
-  // async function fetchBattletags() {
-  //   setData([])
-  //   const token = await getTokenSilently({
-  //     audience: "AuthAPI",
-  //     scope: "read:current_user",
-  //   });
-
-  //   setLoading(true);
-
-  //   const res = await fetch("/api", {
-  //     method: "POST",
-  //     headers: {
-  //       Authorization: `bearer ${token}`,
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       query: `query{
-  //         searchBattletags(battletag:"${search}") {
-  //           id
-  //           playerLevel
-  //           name
-  //         }
-  //       }`,
-  //     }),
-  //   }).then((data) => data.json());
-
-  //   setLoading(false);
-
-  //   console.log(res.data.searchBattletags)
-
-  //   setData(res.data.searchBattletags)
-  // }
 
   return (
     <Grid container spacing={4}>

@@ -2,6 +2,7 @@ module.exports = typeDefs = `
 
 type Battletag {
     _id: ID!
+    _user: ID!
     id: Int!
     isPublic: Boolean!
     level: Int!

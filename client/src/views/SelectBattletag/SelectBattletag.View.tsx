@@ -15,7 +15,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
   const [data, setData] = useState<Array<Battletag>>([]);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>();
 
   async function fetchBattletags() {
     setData([]);
@@ -35,25 +35,23 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
       },
       body: JSON.stringify({
         query: `query{
-                allBattletags {
-                  _id
-                  id
-                  name
-                  platform
-                  urlName
-                  isPublic
-                  level
-                  playerLevel
-                }
-              }`,
+          getAllBattletags(_user:"${user.sub.split('|')[1]}"){
+          _id
+            name
+            _seasons{
+              _id
+            }
+          }
+        }
+        `,
       }),
     }).then((data) => data.json());
 
     setLoading(false);
 
-    console.log(res.data.allBattletags);
+    console.log(res.data.getAllBattletags);
 
-    setData(res.data.allBattletags);
+    setData(res.data.getAllBattletags);
   }
 
   useEffect(() => {
@@ -70,42 +68,40 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   }
 
   useEffect(() => {
-    fetchBattletags();
+    if (user && user.sub) {
+      fetchBattletags();
+    }
 
     return () => {
       setData([]);
     };
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+  }, [user]);
+  
   return (
     <Fragment>
       <Typography gutterBottom variant={"h5"}>
         Select Battletag
       </Typography>
-      <Grid container spacing={2}>
-        {loading ? <CircularProgress style={{ marginTop: "10vh" }} size={100} /> : null}
-        {data &&
-          data.map((battletag) => {
-            const battletagSplit = battletag.name.split("#");
-            const name: string = battletagSplit[0];
-            const numbers: string = "#" + battletagSplit[1];
-            const avatarLetter = Array.from(name)[0];
+      {loading ?
+        <Grid container justify={"center"} spacing={2}>
+          <CircularProgress style={{ marginTop: "10vh" }} size={100} />
+        </Grid> : null}
+      {data && data.map((battletag) => {
+        const battletagSplit = battletag.name.split("#");
+        const name: string = battletagSplit[0];
+        const numbers: string = "#" + battletagSplit[1];
+        const avatarLetter = Array.from(name)[0];
 
-            return (
-              <Grid key={battletag._id} onClick={() => setSelected(battletag)} item xs={12}>
-                <CardWithAvatar
-                  avatarLetter={avatarLetter}
-                  CardHeaderTitle={name}
-                  CardHeaderSubtitle={numbers}
-                />
-              </Grid>
-            );
-          })}
-      </Grid>
+        return (
+          <Grid key={battletag._id} onClick={() => setSelected(battletag)} item xs={12}>
+            <CardWithAvatar
+              avatarLetter={avatarLetter}
+              CardHeaderTitle={name}
+              CardHeaderSubtitle={numbers}
+            />
+          </Grid>
+        );
+      })}
     </Fragment>
   );
 };

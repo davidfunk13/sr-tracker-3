@@ -24,7 +24,11 @@ if (process.env.NODE_ENV === 'production') {
   connectionString = "localhost:27017/sr-tracker";
 }
 
-mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => console.log({ data }))
+mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => {
+  if (data) {
+    console.log('connected');
+  }
+})
 
 const schema = require('./graphql/schema').default;
 

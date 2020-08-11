@@ -9,7 +9,7 @@ export type RoleName = "tank" | "damage" | "support";
 export type RoleKey = 0 | 1 | 2;
 
 export interface Battletag {
-  _id?: number,
+  _id: string,
   userId: number,
   name: string,
   urlName: string,

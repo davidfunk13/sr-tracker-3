@@ -32,7 +32,7 @@ mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUn
 
 const schema = require('./graphql/schema').default;
 
-// app.use(checkJwt);
+app.use(checkJwt);
 
 app.use('/api', graphqlHTTP({
   schema: schema,

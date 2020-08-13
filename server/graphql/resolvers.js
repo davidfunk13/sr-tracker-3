@@ -51,9 +51,15 @@ const resolvers = {
 
       battletag.save();
 
-      const seasons = Season.find({ _battletag: battletag._id });
+      const seasons = await Season.find({ _battletag: battletag._id });
 
-      return seasons
+      const mostRecentSeason = seasons.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      console.log(mostRecentSeason)
+
+      return mostRecentSeason[0]
     },
     async deleteBattletag(_, { _id }) {
       return await Battletag.findByIdAndDelete(_id);

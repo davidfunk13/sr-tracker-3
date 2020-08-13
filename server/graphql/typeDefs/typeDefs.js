@@ -52,7 +52,7 @@ type Query {
 
 type Mutation {
     createBattletag(input:BattletagInput!) : Battletag
-    createSeason(input:SeasonInput!) : [Season]
+    createSeason(input:SeasonInput!) : Season
     deleteBattletag(_id: ID!) : Battletag
     deleteSeason(_id: ID!) : Season
 }`;

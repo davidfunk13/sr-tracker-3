@@ -52,7 +52,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         let selected: { _id: string, name: string } = JSON.parse(storage);
 
         const query: string = `mutation{
-            createSeason(input: {_battletag: "${selected._id}", damageSR: 4444, tankSR: 3333, supportSR: 2222}) {
+            createSeason(input: {_battletag: "${selected._id}", damageSR: 1111, tankSR: 1111, supportSR: 1111}) {
             _id
             damageSR
             tankSR
@@ -65,9 +65,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             scope: "read:current_user",
         });
 
-       const res =  await fetchGraphQL(token, query);
+       const res: {createSeason: any} =  await fetchGraphQL(token, query);
 
-       
+        console.log(res.createSeason)
         //return fetch latest season here. 
     }
 

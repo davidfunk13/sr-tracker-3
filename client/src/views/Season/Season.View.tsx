@@ -12,6 +12,8 @@ import ConfirmSeason from '../../forms/CreateSeason/components/ConfirmSeason/Con
 import { useHistory } from 'react-router-dom';
 import { BlizzAPIBattletag } from '../../App.Types';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import { useAuth0 } from '../../react-auth0-spa';
+import fetchGraphQL from '../../utils/fetchGraphQL';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
 
@@ -21,12 +23,14 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
+    const { getTokenSilently } = useAuth0();
+
     useEffect(() => {
         const selected = localStorage.getItem('selected');
 
         if (selected) {
             const parsed: BlizzAPIBattletag = JSON.parse(selected);
-
+            console.log(parsed);
             setBattletag(parsed);
         }
 
@@ -35,6 +39,37 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         }
 
     }, [history]);
+
+
+    async function createSeason() {
+
+        const storage = localStorage.getItem("selected");
+
+        if (!storage) {
+            return
+        }
+
+        let selected: { _id: string, name: string } = JSON.parse(storage);
+
+        const query: string = `mutation{
+            createSeason(input: {_battletag: "${selected._id}", damageSR: 4444, tankSR: 3333, supportSR: 2222}) {
+            _id
+            damageSR
+            tankSR
+            supportSR
+        }
+    }`;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+       const res =  await fetchGraphQL(token, query);
+
+       
+        //return fetch latest season here. 
+    }
 
     return (
         <Fragment>
@@ -65,7 +100,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                 </Grid>
             </Grid>
             <Modal setOpen={setOpen} open={open} title={'Create New Season'} >
-                <ConfirmSeason setOpen={setOpen} />
+                <ConfirmSeason createSeason={createSeason} setOpen={setOpen} />
             </Modal>
         </Fragment>
     );

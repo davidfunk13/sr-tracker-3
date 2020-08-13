@@ -8,7 +8,7 @@ import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
 import LinkProps from "./Link.View.Types";
 import { BlizzAPIBattletag } from "../../App.Types";
 import { useAuth0 } from "../../react-auth0-spa";
-import { fetchGraphQL } from "../../utils/utilityFunctions";
+import fetchGraphQL from "../../utils/fetchGraphQL";
 import { useHistory } from "react-router-dom";
 import dispatchNotification from "../../utils/dispatchNotification";
 
@@ -58,7 +58,7 @@ const Link: React.FC<LinkProps> = () => {
   }
 
   async function linkBattletag(input: any) {
-    
+
     const query = `mutation{
       createBattletag(input:{
         _user:"${user.sub.split('|')[1]}"
@@ -79,16 +79,16 @@ const Link: React.FC<LinkProps> = () => {
     const token = await getToken();
 
     const data = await fetchGraphQL(token, query);
-    if (data.createBattletag && data.createBattletag._id){
-      dispatchNotification({type: 'success', title: `Successfully linked ${data.createBattletag.name}`, message: "Battletag successfully linked to user" });
+    if (data.createBattletag && data.createBattletag._id) {
+      dispatchNotification({ type: 'success', title: `Successfully linked ${data.createBattletag.name}`, message: "Battletag successfully linked to user" });
       return history.push('/');
     }
     console.log(data);
   }
 
-function testNotification () {
-  dispatchNotification({type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
-}
+  function testNotification() {
+    dispatchNotification({ type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
+  }
 
   return (
     <Grid container spacing={4}>
@@ -96,7 +96,7 @@ function testNotification () {
         <Typography variant={"h4"}>Link New Battletag</Typography>
       </Grid>
       <Grid item xs={12}>
-    <Button onClick={()=> testNotification()}>Send Test Notification</Button>
+        <Button onClick={() => testNotification()}>Send Test Notification</Button>
       </Grid>
       <Grid item xs={12}>
         <TextField

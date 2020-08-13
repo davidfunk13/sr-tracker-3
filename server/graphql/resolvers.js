@@ -7,8 +7,6 @@ const searchBattletags = require('../graphql/resolverFunctions/searchBattletags'
 const resolvers = {
   Query: {
     async getOneBattletag(_, { _id }) {
-      console.log('hey');
-      
       return await Battletag.findById(_id);
     },
     async getOneSeason(_, { _id }) {
@@ -22,12 +20,21 @@ const resolvers = {
 
       return await populated._seasons;
     },
+    async getMostRecentSeason(_, { _battletag }) {
+      const seasons = await Season.find({ _battletag: _battletag });
+
+      const mostRecentSeason = seasons.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      return mostRecentSeason[0];
+    },
     async searchBattletags(parent, { battletag }) {
       return await searchBattletags(battletag);
     },
   },
   Mutation: {
-    async createBattletag(_, {input} ) {
+    async createBattletag(_, { input }) {
       console.log(input)
       const battletag = new Battletag(input);
 

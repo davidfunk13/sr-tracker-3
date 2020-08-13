@@ -44,6 +44,7 @@ input BattletagInput {
 type Query {
     getOneBattletag(_id: ID!): Battletag
     getOneSeason(_id: ID!): Season
+    getMostRecentSeason(_battletag: ID!): Season
     getAllBattletags(_user: ID!): [Battletag]
     getAllSeasons(_battletag: ID!): [Season]
     searchBattletags(battletag: String): [Battletag]

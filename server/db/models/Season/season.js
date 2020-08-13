@@ -7,6 +7,6 @@ const SeasonSchema = new Schema({
     tankSR: { type: Number, require: true },
     damageSR: { type: Number, require: true },
     supportSR: { type: Number, require: true },
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('season', SeasonSchema);

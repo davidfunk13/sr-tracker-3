@@ -43,6 +43,6 @@ const BattletagSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'season'
     }]
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('battletag', BattletagSchema);

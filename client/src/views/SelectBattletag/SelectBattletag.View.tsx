@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { useAuth0 } from "../../react-auth0-spa";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button } from "@material-ui/core";
-import { fetchGraphQL } from "../../utils/utilityFunctions";
+import fetchGraphQL from "../../utils/fetchGraphQL";
 import Modal from "../../UI/Modal/Modal.UI";
 
 const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
@@ -19,21 +19,20 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   const [data, setData] = useState<Array<Battletag>>([]);
 
   const [loading, setLoading] = useState<boolean>();
-  
+
   const [open, setOpen] = useState<boolean>(false);
 
   async function fetchBattletags() {
+    
     if (!user.sub) {
       console.log('error getting user sub');
       return;
     }
+
     const query: string = `query{
       getAllBattletags(_user:"${user.sub.split('|')[1]}"){
       _id
-        name
-        _seasons{
-          _id
-        }
+      name
       }
     }
     `
@@ -116,21 +115,11 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
               CardHeaderSubtitle={numbers}
             >
               <Button onClick={() => setSelected(battletag)}>Select</Button>
-              <Button color={'secondary'} onClick={() => setOpen(!open)}>Delete</Button>
+              <Button color={'secondary'} onClick={() => deleteBattletag(battletag._id)}>Delete</Button>
             </CardWithAvatar>
           </Grid>
         );
       })}
-      <Modal setOpen={setOpen} open={open} title={'Delete this battletag?'}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Button variant={"contained"} color={"secondary"}>Confirm</Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button variant={"contained"} color={"primary"}>Canel</Button>
-            </Grid>
-          </Grid>
-      </Modal>
     </Fragment>
   );
 };

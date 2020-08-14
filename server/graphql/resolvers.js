@@ -57,12 +57,11 @@ const resolvers = {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      console.log(mostRecentSeason)
-
       return mostRecentSeason[0]
     },
     async deleteBattletag(_, { _id }) {
-      return await Battletag.findByIdAndDelete(_id);
+      await Season.deleteMany({ _battletag: _id }).then((deletedSeasons) => console.log({ deletedSeasons }));
+      await Battletag.findByIdAndDelete(_id).then((deletedBattletag) => console.log({ deletedBattletag }));
     },
     async deleteSeason(_, { _id }) {
       return await Season.findByIdAndDelete(_id);

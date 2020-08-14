@@ -65,7 +65,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             scope: "read:current_user",
         });
 
-       const res: {createSeason: any} =  await fetchGraphQL(token, query);
+        const res: { createSeason: any } = await fetchGraphQL(token, query);
 
         console.log(res.createSeason)
         //return fetch latest season here. 

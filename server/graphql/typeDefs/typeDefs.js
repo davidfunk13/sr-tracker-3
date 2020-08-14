@@ -12,21 +12,34 @@ type Battletag {
     portrait: String!
     urlName: String!
     _seasons: [Season]
+    createdAt: String!
+    updatedAt: String
 }
 
 type Season {
     _id:ID!
     _battletag: ID!
     tankSR: Int!
+    startingTankSR: Int!
+    preferredTanks: []
     damageSR: Int!
+    startingDamageSR: Int!
+    preferredDamage: []
     supportSR: Int!
+    startingSupportSR: Int!
+    preferredSupport: []
+    createdAt: String!
+    updatedAt: String
 }
 
 input SeasonInput {
     _battletag: ID!
     tankSR: Int!
+    preferredTanks: []
     damageSR: Int!
+    preferredDamage: []
     supportSR: Int!
+    preferredSupport: []
 }
 
 input BattletagInput {

@@ -23,6 +23,8 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
+    const [season, setSeason] = useState<{ tankSR: number, supportSR: number, damageSR: number }>({ tankSR: 0, supportSR: 0, damageSR: 0 });
+
     const { getTokenSilently } = useAuth0();
 
     useEffect(() => {
@@ -30,7 +32,6 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         if (selected) {
             const parsed: BlizzAPIBattletag = JSON.parse(selected);
-            console.log(parsed);
             setBattletag(parsed);
         }
 
@@ -40,19 +41,54 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     }, [history]);
 
+    useEffect(() => {
+        getMostRecentSeason();
+    }, [])
 
-    async function createSeason() {
-
+    async function getMostRecentSeason() {
         const storage = localStorage.getItem("selected");
 
         if (!storage) {
+            console.error("No battletag ID available, something went wrong getting your most recent season.");
+            return;
+        }
+
+        let selected: { _id: string } = JSON.parse(storage);
+
+        const query: string = `{
+            getMostRecentSeason(_battletag: "${selected._id}") {
+              tankSR
+              supportSR
+              damageSR
+            }
+          }` ;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const res: { getMostRecentSeason: any } = await fetchGraphQL(token, query);
+
+        if (res.getMostRecentSeason) {
+            setSeason(res.getMostRecentSeason);
+        } else {
+            createSeason();
+        }
+    }
+
+    async function createSeason() {
+        const storage = localStorage.getItem("selected");
+
+        if (!storage) {
+            console.error("No battletag ID available, something went creating a new season.");
             return
         }
 
         let selected: { _id: string, name: string } = JSON.parse(storage);
 
         const query: string = `mutation{
-            createSeason(input: {_battletag: "${selected._id}", damageSR: 1111, tankSR: 1111, supportSR: 1111}) {
+            createSeason(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
             _id
             damageSR
             tankSR
@@ -65,10 +101,11 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             scope: "read:current_user",
         });
 
-        const res: { createSeason: any } = await fetchGraphQL(token, query);
+        await fetchGraphQL(token, query);
 
-        console.log(res.createSeason)
-        //return fetch latest season here. 
+        getMostRecentSeason();
+
+        setOpen(false);
     }
 
     return (
@@ -82,17 +119,17 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                 <Grid item xs={4}>
                     <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'tank' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={"4001"} subtitle={"Tank"} />
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={season.tankSR.toString()} subtitle={"Tank"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
                     <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'damage' } }} >
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={"4266"} subtitle={"Damage"} />
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={season.damageSR.toString()} subtitle={"Damage"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
                     <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'support' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={"3209"} subtitle={"Support"} />
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={season.supportSR.toString()} subtitle={"Support"} />
                     </Link>
                 </Grid>
                 <Grid item xs={12}>

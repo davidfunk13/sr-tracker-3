@@ -41,7 +41,13 @@ const resolvers = {
       return await battletag.save();
     },
     async createSeason(_, { input }) {
-      let season = new Season(input);
+      const newSeason = {
+        ...input,
+        startingTankSR: input.tankSR,
+        startingSupportSR: input.supportSR,
+        startingDamageSR: input.damageSR
+      }
+      let season = new Season(newSeason);
 
       season = await season.save();
 
@@ -57,7 +63,7 @@ const resolvers = {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      return mostRecentSeason[0]
+      return mostRecentSeason[0];
     },
     async deleteBattletag(_, { _id }) {
       await Season.deleteMany({ _battletag: _id }).then((deletedSeasons) => console.log({ deletedSeasons }));

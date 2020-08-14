@@ -11,7 +11,13 @@ import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
-    const filtered = heroDictionary.filter(hero => hero.roleName === role);
+    const filtered = heroDictionary.filter((hero,i) => {
+        if (i === 0) {
+            return;
+        }
+        
+        return hero.roleName === role;
+    });
 
     useEffect(() => {
         filtered.map(hero => {

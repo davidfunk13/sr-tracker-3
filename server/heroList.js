@@ -1,22 +1,11 @@
-import { RoleKey, RoleName } from '../App.Types';
-
-export interface HeroEntry {
-    name: string,
-    heroKey: string,
-    roleKey: RoleKey,
-    roleName: RoleName,
-    icon: NodeRequire,
-    subCategory: string,
-};
-
-const heroDictionary: HeroEntry[] = [
+export const heroDictionary = [
     {
         name: "All Heroes",
         heroKey: '0x02E00000FFFFFFFF',
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'All Heroes',
-        icon: require('../assets/icons/heroes/Ana.png'),
+        icon: require(''),
     },
     {
         name: 'Ana',
@@ -132,7 +121,7 @@ const heroDictionary: HeroEntry[] = [
     },
     {
         name: 'Mercy',
-        heroKey: '0x02E0000000000004',
+        heroKey: '0x02E0000000000004'
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
@@ -212,7 +201,7 @@ const heroDictionary: HeroEntry[] = [
     },
     {
         name: 'Symmetra',
-        heroKey: '0x02E0000000000016',
+        heroKey: '0x02E0000000000016'
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Builder DPS',

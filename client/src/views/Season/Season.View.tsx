@@ -56,15 +56,13 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         let selected: { _id: string } = JSON.parse(storage);
 
         const query: string = `{
-            getMostRecentSeason(_battletag: "${selected._id}") {
-              startingTankSR
-              startingSupportSR
-              startingDamageSR
-              tankSR
-              supportSR
-              damageSR
-            }
-          }` ;
+        getMostRecentSeason(_battletag: "${selected._id}") {
+            _id
+            tankSR
+            supportSR
+            damageSR
+        }
+    }` ;
 
         const token = await getTokenSilently({
             audience: "AuthAPI",
@@ -73,9 +71,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         const res: { getMostRecentSeason: any } = await fetchGraphQL(token, query);
 
-        if (res.getMostRecentSeason) {
-            localStorage.setItem("season", res.getMostRecentSeason);
-            console.log(res.getMostRecentSeason)
+        if (res.getMostRecentSeason && res.getMostRecentSeason._id) {
+            let str = JSON.stringify({ _season: res.getMostRecentSeason._id });
+            localStorage.setItem("_season", str);
             setSeason(res.getMostRecentSeason);
         } else {
             createSeason();

@@ -36,6 +36,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
       }
     }
     `
+    console.log(query)
     setData([]);
 
     setLoading(true);
@@ -48,7 +49,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
     const res = await fetchGraphQL(token, query);
 
     setLoading(false);
-
+console.log(res)
     setData(res.getAllBattletags);
   }
 

@@ -16,6 +16,45 @@ type Battletag {
     updatedAt: String
 }
 
+type Hero {
+    name: String!
+    heroKey: String!
+    roleKey: Int!
+    roleName: String!
+    subCategory: String!
+    icon: String!
+}
+
+input HeroInput {
+    name: String!
+    heroKey: String!
+    roleKey: Int!
+    roleName: String!
+    subCategory: String!
+    icon: String!
+}
+
+type Game {
+    _id: ID!
+    _season: ID!
+    role: Int!
+    mapPlayed: String!
+    heroesPlayed: [Hero]
+    outcome: Int!
+    rankIn: Int!
+    rankOut: Int!
+}
+
+input GameInput {
+    _season: ID!
+    role: Int!
+    mapPlayed: String!
+    heroesPlayed: [HeroInput]
+    outcome: Int!
+    rankIn: Int!
+    rankOut: Int!
+}
+
 type Season {
     _id:ID!
     _battletag: ID!
@@ -49,17 +88,21 @@ input BattletagInput {
 }
 
 type Query {
-    getOneBattletag(_id: ID!): Battletag
-    getOneSeason(_id: ID!): Season
-    getMostRecentSeason(_battletag: ID!): Season
-    getAllBattletags(_user: ID!): [Battletag]
-    getAllSeasons(_battletag: ID!): [Season]
     searchBattletags(battletag: String): [Battletag]
+    getOneBattletag(_id: ID!): Battletag
+    getAllBattletags(_user: ID!): [Battletag]
+    getOneSeason(_id: ID!): Season
+    getAllSeasons(_battletag: ID!): [Season]
+    getMostRecentSeason(_battletag: ID!): Season
+    getAllGames(_season: ID!): [Game]
+    getAllGamesOfType(_season: ID!, role: Int!): [Game]
 }
 
 type Mutation {
     createBattletag(input:BattletagInput!) : Battletag
     createSeason(input:SeasonInput!) : Season
+    createGame(input:GameInput!) : Game
     deleteBattletag(_id: ID!) : Battletag
     deleteSeason(_id: ID!) : Season
 }`;
+

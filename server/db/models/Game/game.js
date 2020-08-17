@@ -6,13 +6,14 @@ const Schema = mongoose.Schema;
 const HeroSchema = new Schema({
     name: { type: String, require: true },
     heroKey: { type: String, require: true },
-    roleKey: { type: Number, required: true },
+    roleKey: { type: Number, required: true, enum: [0, 1, 2, 3] },
     roleName: { type: String, required: true },
     subCategory: { type: String, required: true },
     icon: { type: String, required: true },
 });
 
 const GameSchema = new Schema({
+    role: { type: Number, required: true, enum: [0, 1, 2, 3] },
     mapPlayed: { type: String, required: true },
     heroesPlayed: { type: [HeroSchema], maxlength: 3 },
     outcome: { type: Number, required: true },

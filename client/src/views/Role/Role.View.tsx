@@ -14,7 +14,7 @@ import GameForm from '../../forms/AddGame'
 const Role: FunctionComponent<RoleTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
 
-    const [season, setSeason] = useState<any>({ games: [], startingSR: 0, currentSR: 0, });
+    const [season, setSeason] = useState<{ _season: string }>({ _season: '' });
 
     const location = useLocation();
 
@@ -28,22 +28,20 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
-    const seasonStorage = localStorage.getItem('season');
+    const seasonStorage = localStorage.getItem('_season');
 
     useEffect(() => {
         if (!seasonStorage) {
             return;
         }
 
-        const seasonParsed = JSON.parse(seasonStorage);
-        // setSeason(seasonParsed)
-    }, [])
+        const seasonParsed: { _season: string } = JSON.parse(seasonStorage);
 
-    // function createGame() {
-    //     const query = `mutation{
-    //         createGame(_season: ${})
-    //     }`;
-    // }
+
+        // FETCH ALL GAMES HERE!@!!!@W!@!@!@
+        
+        // const seasonReq = fetch('GAMES')
+    }, [])
 
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
@@ -51,13 +49,6 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 <Typography gutterBottom variant={'h4'}>
                     {title} Season
                 </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <Button>
-                    <Typography gutterBottom variant={'button'}>
-                        Create Test Game
-                </Typography>
-                </Button>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={'h5'}>

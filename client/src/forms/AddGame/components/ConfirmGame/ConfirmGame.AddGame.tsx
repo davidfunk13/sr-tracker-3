@@ -14,6 +14,21 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({setOpen}) => {
 
   const rank: YourRank = useGetRank(state.skillRating);
 
+  function createGame(game: any, refreshGames: ()=> void) {
+    //     const { _season } = season;
+    //     const query = `mutation{
+    //         createGame(_season: "${_season}"){
+    //             role: ${game.role}
+    //             mapPlayed: "${game.mapPlayed}",
+    //             heroesPlayed: ${game.heroesPlayed},
+    //             outcome: ${game.outcome},
+    //             rankIn: ${game.rankIn}
+    //             rankOut: ${game.rankOut}
+    //         }
+    //     }`;
+    //     console.log(query)
+    }
+
   return (
     <StepButtons setOpen={setOpen} disabled={false}>
       <Grid container spacing={2}>

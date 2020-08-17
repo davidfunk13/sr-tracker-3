@@ -1,19 +1,23 @@
 const Battletag = require("../db/models/Battletag/battletag");
 const Season = require("../db/models/Season/season");
+const Game = require("../db/models/Game/game");
 const searchBattletags = require('../graphql/resolverFunctions/searchBattletags');
 
 // parent, args, ctx, info
 
 const resolvers = {
   Query: {
+    async searchBattletags(parent, { battletag }) {
+      return await searchBattletags(battletag);
+    },
     async getOneBattletag(_, { _id }) {
       return await Battletag.findById(_id);
     },
-    async getOneSeason(_, { _id }) {
-      return await Season.findById(_id);
-    },
     async getAllBattletags(_, { _user }) {
       return await Battletag.find({ _user: _user });
+    },
+    async getOneSeason(_, { _id }) {
+      return await Season.findById(_id);
     },
     async getAllSeasons(_, { _battletag }) {
       const populated = await Battletag.findById(_battletag).populate('_seasons');
@@ -22,16 +26,19 @@ const resolvers = {
     },
     async getMostRecentSeason(_, { _battletag }) {
       const seasons = await Season.find({ _battletag: _battletag });
-      console.log(seasons)
+
       const mostRecentSeason = seasons.sort(function (a, b) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
       return mostRecentSeason[0];
     },
-    async searchBattletags(parent, { battletag }) {
-      return await searchBattletags(battletag);
+    async getAllGames(_, { _season }) {
+      return await Game.find({ _season: _season });
     },
+    async getAllGamesOfType(_, { _season, role }) {
+      return await Game.find({ _season: _season, role: role });
+    }
   },
   Mutation: {
     async createBattletag(_, { input }) {
@@ -47,7 +54,7 @@ const resolvers = {
         startingSupportSR: input.supportSR,
         startingDamageSR: input.damageSR
       }
-      
+
       let season = new Season(newSeason);
 
       season = await season.save();
@@ -65,6 +72,9 @@ const resolvers = {
       });
 
       return mostRecentSeason[0];
+    },
+    async createGame(_, { _id }) {
+      return { _season: _id };
     },
     async deleteBattletag(_, { _id }) {
       await Season.deleteMany({ _battletag: _id }).then((deletedSeasons) => console.log({ deletedSeasons }));

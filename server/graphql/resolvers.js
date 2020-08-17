@@ -22,7 +22,7 @@ const resolvers = {
     },
     async getMostRecentSeason(_, { _battletag }) {
       const seasons = await Season.find({ _battletag: _battletag });
-
+      console.log(seasons)
       const mostRecentSeason = seasons.sort(function (a, b) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
@@ -47,10 +47,11 @@ const resolvers = {
         startingSupportSR: input.supportSR,
         startingDamageSR: input.damageSR
       }
+      
       let season = new Season(newSeason);
 
       season = await season.save();
-
+      console.log(season)
       const battletag = await Battletag.findById(season._battletag);
 
       battletag._seasons.push(season._id);

@@ -71,6 +71,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         const res: { getMostRecentSeason: any } = await fetchGraphQL(token, query);
 
         if (res.getMostRecentSeason) {
+            console.log({getMostRecentSeason: res.getMostRecentSeason})
             setSeason(res.getMostRecentSeason);
         } else {
             createSeason();

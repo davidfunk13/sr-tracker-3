@@ -21,13 +21,10 @@ type Season {
     _battletag: ID!
     tankSR: Int!
     startingTankSR: Int!
-    preferredTanks: []
     damageSR: Int!
     startingDamageSR: Int!
-    preferredDamage: []
     supportSR: Int!
     startingSupportSR: Int!
-    preferredSupport: []
     createdAt: String!
     updatedAt: String
 }
@@ -35,11 +32,8 @@ type Season {
 input SeasonInput {
     _battletag: ID!
     tankSR: Int!
-    preferredTanks: []
     damageSR: Int!
-    preferredDamage: []
     supportSR: Int!
-    preferredSupport: []
 }
 
 input BattletagInput {

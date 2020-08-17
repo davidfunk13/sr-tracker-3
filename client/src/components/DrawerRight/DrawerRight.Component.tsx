@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DrawerRightProps } from "./DrawerRight.Component.Types";
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -13,10 +13,17 @@ import history from '../../utils/history';
 import DrawerItem from './DrawerItem/DrawerItem.Component';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { ListItem } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
+
 
 const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
+
+    const [battletag, setBattletag] = useState<string>("");
 
     const theme = useTheme();
 
@@ -34,6 +41,13 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
         }
     }
 
+    useEffect(() => {
+        if (selected) {
+            const parsedSelected = JSON.parse(selected);
+            setBattletag(parsedSelected.name);
+        }
+
+    }, [selected]);
 
     return (
         <Drawer
@@ -54,13 +68,19 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/stats'} listItemKey={'Profile Statistics'} listItemText={'Profile Statistics'} />
                 <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/track'} listItemKey={'Track Skill Rating'} listItemText={'Track Skill Rating'} />
-                {!selected ? null : <ListItem>
-                    <Button fullWidth onClick={removeSelected} variant={'contained'} color={'secondary'}>
-                        <Typography variant={'button'}>Select New Battletag</Typography>
-                    </Button>
-                </ListItem>}
             </List>
             <Divider />
+                {!selected ? null : <ListItem>
+                    <MediaCard title="Battletag:" subtitle={battletag}>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Button fullWidth onClick={removeSelected} variant={'contained'} color={'secondary'}>
+                                    <Typography variant={'button'}>Select New Battletag</Typography>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </MediaCard>
+                </ListItem>}
         </Drawer>
     );
 }

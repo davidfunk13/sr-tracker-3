@@ -38,12 +38,12 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                 null}
 
             <CardContent>
-                <Typography variant="h5" component="h2">
+                <Typography gutterBottom variant="h5" component="h2">
                     {title}
                 </Typography>
 
                 {!subtitle ? null :
-                    <Typography gutterBottom variant={"subtitle2"} component={"p"}>
+                    <Typography gutterBottom variant={"subtitle1"} component={"p"}>
                         {subtitle}
                     </Typography>
                 }

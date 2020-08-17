@@ -1,4 +1,4 @@
-export const heroDictionary = [
+const heroDictionary = [
     {
         name: "All Heroes",
         heroKey: '0x02E00000FFFFFFFF',
@@ -121,7 +121,7 @@ export const heroDictionary = [
     },
     {
         name: 'Mercy',
-        heroKey: '0x02E0000000000004'
+        heroKey: '0x02E0000000000004',
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
@@ -201,7 +201,7 @@ export const heroDictionary = [
     },
     {
         name: 'Symmetra',
-        heroKey: '0x02E0000000000016'
+        heroKey: '0x02E0000000000016',
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Builder DPS',
@@ -265,4 +265,4 @@ export const heroDictionary = [
     }
 ];
 
-export default heroDictionary;
+module.exports = heroDictionary;

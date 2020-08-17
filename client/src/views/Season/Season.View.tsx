@@ -57,6 +57,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         const query: string = `{
             getMostRecentSeason(_battletag: "${selected._id}") {
+              startingTankSR
+              startingSupportSR
+              startingDamageSR
               tankSR
               supportSR
               damageSR
@@ -71,7 +74,8 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         const res: { getMostRecentSeason: any } = await fetchGraphQL(token, query);
 
         if (res.getMostRecentSeason) {
-            console.log({getMostRecentSeason: res.getMostRecentSeason})
+            localStorage.setItem("season", res.getMostRecentSeason);
+            console.log(res.getMostRecentSeason)
             setSeason(res.getMostRecentSeason);
         } else {
             createSeason();

@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useState, FunctionComponent, useEffect } from 'react';
 import RoleTypes from './Role.View.Types';
 import { useLocation } from 'react-router-dom';
 import { LocationState } from './Role.View.Types';
@@ -12,7 +12,12 @@ import { useHistory } from 'react-router-dom';
 import GameForm from '../../forms/AddGame'
 
 const Role: FunctionComponent<RoleTypes> = () => {
+    const [open, setOpen] = useState<boolean>(false);
+
+    const [season, setSeason] = useState<any>({ games: [], startingSR: 0, currentSR: 0, });
+
     const location = useLocation();
+
     const history = useHistory();
 
     if (!location) {
@@ -23,7 +28,22 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
-    const [open, setOpen] = useState<boolean>(false);
+    const seasonStorage = localStorage.getItem('season');
+
+    useEffect(() => {
+        if (!seasonStorage) {
+            return;
+        }
+
+        const seasonParsed = JSON.parse(seasonStorage);
+        // setSeason(seasonParsed)
+    }, [])
+
+    // function createGame() {
+    //     const query = `mutation{
+    //         createGame(_season: ${})
+    //     }`;
+    // }
 
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
@@ -31,6 +51,13 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 <Typography gutterBottom variant={'h4'}>
                     {title} Season
                 </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <Button>
+                    <Typography gutterBottom variant={'button'}>
+                        Create Test Game
+                </Typography>
+                </Button>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={'h5'}>

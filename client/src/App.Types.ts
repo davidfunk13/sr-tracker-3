@@ -1,3 +1,4 @@
+
 export type Platform = "playstation" | "xbl" | "pc" | "nintendo-switch";
 
 export enum RoleEnum {
@@ -6,7 +7,16 @@ export enum RoleEnum {
 
 export type RoleName = "tank" | "damage" | "support";
 
-export type RoleKey = 0 | 1 | 2;
+export type RoleKey = 0 | 1 | 2 | 3;
+
+export interface Game {
+  role: 0 | 1 | 2
+  mapPlayed: string
+  heroesPlayed: [string, string?, string?]
+  outcome: 0 | 1 | 2
+  rankIn: number
+  rankOut: number
+}
 
 export interface Battletag {
   _id: string,

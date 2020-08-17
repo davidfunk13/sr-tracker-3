@@ -38,7 +38,7 @@ const resolvers = {
     },
     async getAllGamesOfType(_, { _season, role }) {
       return await Game.find({ _season: _season, role: role });
-    }
+    },
   },
   Mutation: {
     async createBattletag(_, { input }) {
@@ -58,7 +58,7 @@ const resolvers = {
       let season = new Season(newSeason);
 
       season = await season.save();
-      console.log(season)
+
       const battletag = await Battletag.findById(season._battletag);
 
       battletag._seasons.push(season._id);
@@ -73,8 +73,25 @@ const resolvers = {
 
       return mostRecentSeason[0];
     },
-    async createGame(_, { _id }) {
-      return { _season: _id };
+    async createGame(_, { input }) {
+      let game = new Game(input);
+
+      game = await game.save();
+
+      const season = await Season.findById(input._season);
+
+      season._games.push(game._id);
+
+      season.save();
+      console.log(game)
+      
+      return game;
+    },
+    async updateGame(_, { _id, updatedGame }) {
+      return await Game.findByIdAndUpdate(_id, updatedGame);
+    },
+    async deleteGame(_, { _id }) {
+      return await Game.findByIdAndRemove(_id);
     },
     async deleteBattletag(_, { _id }) {
       await Season.deleteMany({ _battletag: _id }).then((deletedSeasons) => console.log({ deletedSeasons }));

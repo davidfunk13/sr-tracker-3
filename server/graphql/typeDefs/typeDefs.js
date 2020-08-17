@@ -1,5 +1,4 @@
 module.exports = typeDefs = `
-
 type Battletag {
     _id: ID!
     _user: ID!
@@ -16,30 +15,12 @@ type Battletag {
     updatedAt: String
 }
 
-type Hero {
-    name: String!
-    heroKey: String!
-    roleKey: Int!
-    roleName: String!
-    subCategory: String!
-    icon: String!
-}
-
-input HeroInput {
-    name: String!
-    heroKey: String!
-    roleKey: Int!
-    roleName: String!
-    subCategory: String!
-    icon: String!
-}
-
 type Game {
     _id: ID!
     _season: ID!
     role: Int!
     mapPlayed: String!
-    heroesPlayed: [Hero]
+    heroesPlayed: [String]!
     outcome: Int!
     rankIn: Int!
     rankOut: Int!
@@ -49,7 +30,7 @@ input GameInput {
     _season: ID!
     role: Int!
     mapPlayed: String!
-    heroesPlayed: [HeroInput]
+    heroesPlayed: [String]!
     outcome: Int!
     rankIn: Int!
     rankOut: Int!
@@ -100,9 +81,11 @@ type Query {
 
 type Mutation {
     createBattletag(input:BattletagInput!) : Battletag
-    createSeason(input:SeasonInput!) : Season
-    createGame(input:GameInput!) : Game
     deleteBattletag(_id: ID!) : Battletag
+    createSeason(input:SeasonInput!) : Season
     deleteSeason(_id: ID!) : Season
+    createGame(input: GameInput!) : Game
+    updateGame(_id: ID!, updatedGames: GameInput!) : Game
+    deleteGame(_id: ID!) : Game
 }`;
 

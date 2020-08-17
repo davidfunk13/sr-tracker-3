@@ -4,54 +4,48 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import clsx from 'clsx';
+import Grid from '@material-ui/core/Grid';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
 import Paper from '@material-ui/core/Paper';
 import useStyles from './GameTable.Component.Styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-function createData(mapLocation: string, heroes: [string, string?, string?], winLoss: 0 | 1 | 2, srAfter: number) {
-    return { mapLocation, heroes, winLoss, srAfter };
-}
-
-const rows = [
-    createData('Hanamura', ['Ana', 'Lucio'], 0, 3245),
-    createData('Paris', ['Brigitte', 'Moira', 'Ana'], 2, 3245),
-    createData('Lijang Tower', ['Mercy', 'Brigitte', 'Zenyatta'], 1, 3345),
-    createData('Hanamura', ['Baptiste', 'Brigitte', 'Zenyatta'], 0, 3233),
-    createData('Hanamura', ['Ana', 'Lucio'], 1, 3322),
-    createData('Hanamura', ['Baptiste', 'Mercy'], 1, 3399),
-];
-
-const GameTable: FunctionComponent<GameTableTypes> = ({ setOpen }) => {
+const GameTable: FunctionComponent<GameTableTypes> = ({ isLoading, games, setOpen }) => {
     const classes = useStyles();
 
     return (
-        <TableContainer className={clsx(classes.tablePadding, classes.tableWidth)} component={Paper}>
-            <Table size={'small'} aria-label={'Games Table'}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell className={classes.tablePadding} align={'left'} >Map</TableCell>
-                        <TableCell className={classes.tablePadding} align={'left'} >Heore(s)</TableCell>
-                        <TableCell className={classes.tablePadding} align={'left'} >W/L</TableCell>
-                        <TableCell className={classes.tablePadding} align={'left'} >SR</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row, i) => (
-                        <TableRow key={row.mapLocation + i}>
-                            <TableCell className={classes.tablePadding} align={'left'} component="th" scope="row">
-                                {row.mapLocation}
-                            </TableCell>
-                            <TableCell className={classes.tablePadding} align={'left'}>{row.heroes.map(str => str + ', ')}</TableCell>
-                            <TableCell className={classes.tablePadding} align={'left'}>{row.winLoss}</TableCell>
-                            <TableCell className={clsx(classes.tablePadding, { paddingRight: '0' })} align={'left'}>{row.srAfter}</TableCell>
+        <Grid container spacing={2} justify={"center"} >
+
+            {isLoading ? <CircularProgress style={{ margin: "5vh 0" }} size={100} />: 
+            <TableContainer className={clsx(classes.tablePadding, classes.tableWidth)} component={Paper}>
+                <Table size={'small'} aria-label={'Games Table'}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className={classes.tablePadding} align={'left'} >Map</TableCell>
+                            <TableCell className={classes.tablePadding} align={'left'} >Heore(s)</TableCell>
+                            <TableCell className={classes.tablePadding} align={'left'} >W/L</TableCell>
+                            <TableCell className={classes.tablePadding} align={'left'} >SR</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+
+                        {!isLoading && games.map((row, i) => (
+                            <TableRow key={row.mapPlayed + i}>
+                                <TableCell className={classes.tablePadding} align={'left'} component="th" scope="row">
+                                    {row.mapPlayed}
+                                </TableCell>
+                                <TableCell className={classes.tablePadding} align={'left'}>{row.heroesPlayed.map(str => str + ', ')}</TableCell>
+                                <TableCell className={classes.tablePadding} align={'left'}>{row.outcome}</TableCell>
+                                <TableCell className={clsx(classes.tablePadding, { paddingRight: '0' })} align={'left'}>{row.rankOut}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>}
+
+        </Grid>
     );
 }
 

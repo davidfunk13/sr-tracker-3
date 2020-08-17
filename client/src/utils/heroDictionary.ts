@@ -9,6 +9,7 @@ export interface HeroEntry {
     subCategory: string,
 };
 
+//this is not a dictionary. refactor this to be used as an actual dictionary to improve fetch times.
 const heroDictionary: HeroEntry[] = [
     {
         name: "All Heroes",

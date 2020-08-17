@@ -10,11 +10,18 @@ import Button from '@material-ui/core/Button';
 import GameFormProvider from '../../contexts/GameFormContext/GameFormContext.Context';
 import { useHistory } from 'react-router-dom';
 import GameForm from '../../forms/AddGame'
+import { RoleEnum, RoleKey, RoleName, Game } from '../../App.Types';
+import fetchGraphQL from '../../utils/fetchGraphQL';
+import { useAuth0 } from '../../react-auth0-spa';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
+    
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const [season, setSeason] = useState<{ _season: string }>({ _season: '' });
+    const [games, setGames] = useState<Game[]>([]);
+
+    const { getTokenSilently } = useAuth0();
 
     const location = useLocation();
 
@@ -30,6 +37,49 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const seasonStorage = localStorage.getItem('_season');
 
+    async function getGamesOfType(_season: string) {
+        setIsLoading(true);
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        function convertRole() {
+            switch (role) {
+                case RoleEnum.Tank:
+                    return 0;
+                case RoleEnum.Damage:
+                    return 1;
+                case RoleEnum.Support:
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+
+        let roleInt: RoleKey = convertRole();
+
+        const query: string = `
+        query{
+            getAllGamesOfType(_season: "${_season}", role: ${roleInt}){
+                role
+                mapPlayed
+                heroesPlayed
+                outcome
+                rankIn
+                rankOut
+          }
+        }
+    `;
+        const games = await fetchGraphQL(token, query);
+        console.log({ games: games.getAllGamesOfType });
+        if (games && games.getAllGamesOfType){
+            setGames(games.getAllGamesOfType)
+            setIsLoading(false);
+        }
+    }
+
     useEffect(() => {
         if (!seasonStorage) {
             return;
@@ -37,11 +87,8 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         const seasonParsed: { _season: string } = JSON.parse(seasonStorage);
 
-
-        // FETCH ALL GAMES HERE!@!!!@W!@!@!@
-        
-        // const seasonReq = fetch('GAMES')
-    }, [])
+        getGamesOfType(seasonParsed._season);
+    }, []);
 
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
@@ -56,7 +103,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <GameTable setOpen={setOpen} />
+                <GameTable isLoading={isLoading} games={games} setOpen={setOpen} />
             </Grid>
             <Grid item xs={12}>
                 <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setOpen(true)}>

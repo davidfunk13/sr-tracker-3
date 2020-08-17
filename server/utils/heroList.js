@@ -5,7 +5,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'All Heroes',
-        icon: require(''),
+        icon: '',
     },
     {
         name: 'Ana',
@@ -13,7 +13,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
-        icon: require('../assets/icons/heroes/Ana.png'),
+        icon: '../assets/icons/heroes/Ana.png',
     },
     {
         name: 'Ashe',
@@ -21,7 +21,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Ranged DPS',
-        icon: require('../assets/icons/heroes/Ashe.png'),
+        icon: '../assets/icons/heroes/Ashe.png',
     },
     {
         name: 'Baptiste',
@@ -29,7 +29,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
-        icon: require('../assets/icons/heroes/Baptiste.png'),
+        icon: '../assets/icons/heroes/Baptiste.png',
     },
     {
         name: 'Bastion',
@@ -37,7 +37,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Builder DPS',
-        icon: require('../assets/icons/heroes/Bastion.png'),
+        icon: '../assets/icons/heroes/Bastion.png',
     },
     {
         name: 'Brigitte',
@@ -45,7 +45,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Secondary Support',
-        icon: require('../assets/icons/heroes/Brigitte.png'),
+        icon: '../assets/icons/heroes/Brigitte.png',
     },
     {
         name: 'Doomfist',
@@ -53,7 +53,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flanker DPS',
-        icon: require('../assets/icons/heroes/Doomfist.png'),
+        icon: '../assets/icons/heroes/Doomfist.png',
     },
     {
         name: 'D.VA',
@@ -61,7 +61,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Off Tank',
-        icon: require('../assets/icons/heroes/Dva.png'),
+        icon: '../assets/icons/heroes/Dva.png',
     },
     {
         name: 'Echo',
@@ -69,7 +69,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flank DPS',
-        icon: require('../assets/icons/heroes/Echo.png'),
+        icon: '../assets/icons/heroes/Echo.png',
     },
     {
         name: 'Genji',
@@ -77,7 +77,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flanker DPS',
-        icon: require('../assets/icons/heroes/Genji.png'),
+        icon: '../assets/icons/heroes/Genji.png',
     },
     {
         name: 'Hanzo',
@@ -85,7 +85,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Ranged DPS',
-        icon: require('../assets/icons/heroes/Hanzo.png'),
+        icon: '../assets/icons/heroes/Hanzo.png',
     },
     {
         name: 'Junkrat',
@@ -93,7 +93,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Defensive DPS',
-        icon: require('../assets/icons/heroes/Junkrat.png'),
+        icon: '../assets/icons/heroes/Junkrat.png',
     },
     {
         name: 'Lucio',
@@ -101,7 +101,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Secondary Support',
-        icon: require('../assets/icons/heroes/Lucio.png'),
+        icon: '../assets/icons/heroes/Lucio.png',
     },
     {
         name: 'McCree',
@@ -109,7 +109,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: "Midrange DPS",
-        icon: require('../assets/icons/heroes/McCree.png'),
+        icon: '../assets/icons/heroes/McCree.png',
     },
     {
         name: 'Mei',
@@ -117,7 +117,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Defensive DPS',
-        icon: require('../assets/icons/heroes/Mei.png'),
+        icon: '../assets/icons/heroes/Mei.png',
     },
     {
         name: 'Mercy',
@@ -125,7 +125,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
-        icon: require('../assets/icons/heroes/Mercy.png'),
+        icon: '../assets/icons/heroes/Mercy.png',
     },
     {
         name: 'Moira',
@@ -133,7 +133,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Main Support',
-        icon: require('../assets/icons/heroes/Moira.png'),
+        icon: '../assets/icons/heroes/Moira.png',
     },
     {
         name: 'Orisa',
@@ -141,7 +141,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Main Tank',
-        icon: require('../assets/icons/heroes/Orisa.png'),
+        icon: '../assets/icons/heroes/Orisa.png',
     },
     {
         name: 'Phara',
@@ -149,7 +149,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Ranged DPS',
-        icon: require('../assets/icons/heroes/Phara.png'),
+        icon: '../assets/icons/heroes/Phara.png',
     },
     {
         name: 'Reaper',
@@ -157,7 +157,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flanker DPS',
-        icon: require('../assets/icons/heroes/Reaper.png'),
+        icon: '../assets/icons/heroes/Reaper.png',
     },
     {
         name: 'Reinhardt',
@@ -165,7 +165,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Main Tank',
-        icon: require('../assets/icons/heroes/Reinhardt.png'),
+        icon: '../assets/icons/heroes/Reinhardt.png',
     },
     {
         name: 'Roadhog',
@@ -173,7 +173,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Off Tank',
-        icon: require('../assets/icons/heroes/Roadhog.png'),
+        icon: '../assets/icons/heroes/Roadhog.png',
     },
     {
         name: 'Sigma',
@@ -181,7 +181,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Off Tank',
-        icon: require('../assets/icons/heroes/Sigma.png'),
+        icon: '../assets/icons/heroes/Sigma.png',
     },
     {
         name: 'Soldier: 76',
@@ -189,7 +189,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: "Midrange DPS",
-        icon: require('../assets/icons/heroes/Soldier_76.png'),
+        icon: '../assets/icons/heroes/Soldier_76.png',
     },
     {
         name: 'Sombra',
@@ -197,7 +197,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flanker DPS',
-        icon: require('../assets/icons/heroes/Sombra.png'),
+        icon: '../assets/icons/heroes/Sombra.png',
     },
     {
         name: 'Symmetra',
@@ -205,7 +205,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Builder DPS',
-        icon: require('../assets/icons/heroes/Symmetra.png'),
+        icon: '../assets/icons/heroes/Symmetra.png',
     },
     {
         name: 'Torbjorn',
@@ -213,7 +213,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Builder DPS',
-        icon: require('../assets/icons/heroes/Torbjorn.png'),
+        icon: '../assets/icons/heroes/Torbjorn.png',
     },
     {
         name: 'Tracer',
@@ -221,7 +221,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Flanker DPS',
-        icon: require('../assets/icons/heroes/Tracer.png'),
+        icon: '../assets/icons/heroes/Tracer.png',
     },
     {
         name: 'Widowmaker',
@@ -229,7 +229,7 @@ const heroDictionary = [
         roleKey: 1,
         roleName: 'damage',
         subCategory: 'Ranged DPS',
-        icon: require('../assets/icons/heroes/Widowmaker.png'),
+        icon: '../assets/icons/heroes/Widowmaker.png',
     },
     {
         name: 'Winston',
@@ -237,7 +237,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Main Tank',
-        icon: require('../assets/icons/heroes/Winston.png'),
+        icon: '../assets/icons/heroes/Winston.png',
     },
     {
         name: 'Wrecking Ball',
@@ -245,7 +245,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Main Tank',
-        icon: require('../assets/icons/heroes/WreckingBall.png'),
+        icon: '../assets/icons/heroes/WreckingBall.png',
     },
     {
         name: 'Zarya',
@@ -253,7 +253,7 @@ const heroDictionary = [
         roleKey: 0,
         roleName: 'tank',
         subCategory: 'Off Tank',
-        icon: require('../assets/icons/heroes/Zarya.png'),
+        icon: '../assets/icons/heroes/Zarya.png',
     },
     {
         name: 'Zenyatta',
@@ -261,7 +261,7 @@ const heroDictionary = [
         roleKey: 2,
         roleName: 'support',
         subCategory: 'Secondary Support',
-        icon: require('../assets/icons/heroes/Zenyatta.png'),
+        icon: '../assets/icons/heroes/Zenyatta.png',
     }
 ];
 

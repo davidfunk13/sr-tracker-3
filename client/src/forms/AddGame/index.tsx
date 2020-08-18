@@ -8,11 +8,12 @@ import { RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 
 interface GameFormProps {
+    createGame: (game: any) => void
     role: RoleEnum
     setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const GameForm: FunctionComponent<GameFormProps> = ({ role, setOpen }) => {
+const GameForm: FunctionComponent<GameFormProps> = ({ createGame, role, setOpen }) => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const [state, setState]: GameContext = useContext(GameFormContext); 
 
@@ -27,7 +28,7 @@ const GameForm: FunctionComponent<GameFormProps> = ({ role, setOpen }) => {
             case 3:
                 return <SkillRating />
             case 4:
-                return <ConfirmGame setOpen={setOpen} />
+                return <ConfirmGame createGame={createGame} setOpen={setOpen} />
             default:
                 return <h4>Something went wrong</h4>;
         }

@@ -74,6 +74,7 @@ const resolvers = {
       return mostRecentSeason[0];
     },
     async createGame(_, { input }) {
+      console.log(input)
       let game = new Game(input);
 
       game = await game.save();

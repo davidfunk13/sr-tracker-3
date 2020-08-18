@@ -13,10 +13,11 @@ import GameForm from '../../forms/AddGame'
 import { RoleEnum, RoleKey, RoleName, Game } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useAuth0 } from '../../react-auth0-spa';
+import { HeroEntry } from '../../utils/heroDictionary';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
-    
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [games, setGames] = useState<Game[]>([]);
@@ -37,6 +38,58 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const seasonStorage = localStorage.getItem('_season');
 
+    // function to convert string used for title on role page to a role key the api understands
+    
+    function convertRole() {
+        switch (role) {
+            case RoleEnum.Tank:
+                return 0;
+            case RoleEnum.Damage:
+                return 1;
+            case RoleEnum.Support:
+                return 2;
+            default:
+                return 3;
+        }
+    };
+
+    // start create game function
+    async function createGame(game: any, refreshGames?: () => void) {
+        if (!seasonStorage) {
+            return;
+        }
+
+        const seasonParsed: { _season: string } = JSON.parse(seasonStorage);
+
+        const { _season } = seasonParsed;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        let heroesPlayed = game.heroesPlayed.map((hero: HeroEntry) => hero.name).toString();
+        console.log(heroesPlayed)
+        
+        const role: RoleKey = convertRole();
+
+        // const query = `mutation{
+        //   createGame(input: { _season: "${_season}", role: ${role}, heroesPlayed: ${heroesPlayed}, mapPlayed: "${game.mapPlayed.name}", rankIn: ${0}, rankOut: ${game.skillRating}, outcome: ${game.outcome} }){
+        //     _season
+        //   }
+        // }`;
+
+        // console.log(query, token)
+
+        // const res = await fetchGraphQL(token, query);
+
+        // console.log(res);        
+
+        // getGamesOfType(_season);
+    }
+    //end create game function
+
+    //start fetch games
     async function getGamesOfType(_season: string) {
         setIsLoading(true);
 
@@ -45,24 +98,11 @@ const Role: FunctionComponent<RoleTypes> = () => {
             scope: "read:current_user",
         });
 
-        function convertRole() {
-            switch (role) {
-                case RoleEnum.Tank:
-                    return 0;
-                case RoleEnum.Damage:
-                    return 1;
-                case RoleEnum.Support:
-                    return 2;
-                default:
-                    return 3;
-            }
-        }
-
-        let roleInt: RoleKey = convertRole();
+        let role: RoleKey = convertRole();
 
         const query: string = `
         query{
-            getAllGamesOfType(_season: "${_season}", role: ${roleInt}){
+            getAllGamesOfType(_season: "${_season}", role: ${role}){
                 role
                 mapPlayed
                 heroesPlayed
@@ -73,13 +113,15 @@ const Role: FunctionComponent<RoleTypes> = () => {
         }
     `;
         const games = await fetchGraphQL(token, query);
-        console.log({ games: games.getAllGamesOfType });
-        if (games && games.getAllGamesOfType){
-            setGames(games.getAllGamesOfType)
+
+        if (games && games.getAllGamesOfType) {
+            setGames(games.getAllGamesOfType);
             setIsLoading(false);
         }
     }
+    //End Fetch Games
 
+    //start effect to parse localstorage string if it exists
     useEffect(() => {
         if (!seasonStorage) {
             return;
@@ -89,7 +131,10 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         getGamesOfType(seasonParsed._season);
     }, []);
+    //end effect to parse localstorage string if it exists
 
+
+    
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
             <Grid item xs={12}>
@@ -112,7 +157,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <Modal setOpen={setOpen} title={'Add New Game'} open={open}>
                 <GameFormProvider >
-                    <GameForm setOpen={setOpen} role={role} />
+                    <GameForm createGame={createGame} setOpen={setOpen} role={role} />
                 </GameFormProvider>
             </Modal>
         </Grid>

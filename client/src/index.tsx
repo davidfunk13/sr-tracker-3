@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
@@ -21,7 +21,8 @@ const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
 };
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <Fragment>
     <ReactNotification isMobile={true} />
     <Auth0Provider
       domain={config.domain}
@@ -34,7 +35,8 @@ ReactDOM.render(
         <App />
       </ThemeProvider>
     </Auth0Provider>
-  </React.StrictMode>,
+    </Fragment>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

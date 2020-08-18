@@ -4,7 +4,7 @@ import { GameFormContext, initialGameFormState } from "../../../contexts/GameFor
 import StepButtonsProps from './StepButtons.UITypes';
 import Grid from '@material-ui/core/Grid';
 
-const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, setOpen }) => {
+const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, createGame, disabled, setOpen }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
     const handleNext: () => void = () => {
@@ -21,30 +21,15 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, disabled, 
         setState(initialGameFormState);
     };
 
-    // function createGame(game: any) {
-    //     const { _season } = season;
-    //     const query = `mutation{
-    //         createGame(_season: "${_season}"){
-    //             role: ${game.role}
-    //             mapPlayed: "${game.mapPlayed}",
-    //             heroesPlayed: ${game.heroesPlayed},
-    //             outcome: ${game.outcome},
-    //             rankIn: ${game.rankIn}
-    //             rankOut: ${game.rankOut}
-    //         }
-    //     }`;
-    //     console.log(query)
-    // }
-
     function handleSubmit(): void {
         console.log('submitting Form!', { state });
-       
-        if(setOpen){
-            console.log('asss')
-           setOpen(false);
-       }
-    }
 
+        if (setOpen && createGame) {
+            createGame(state);
+            setOpen(false);
+        }
+    }
+    
     return (
         <Grid container style={{ marginBottom: '.75em' }} spacing={2}>
             <Grid item xs={12} style={{ height: '60vh', overflowY: 'auto' }}>

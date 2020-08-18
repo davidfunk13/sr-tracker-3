@@ -7,30 +7,16 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
+import { HeroEntry } from '../../../../utils/heroDictionary';
 
-const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({setOpen}) => {
+const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({createGame,  setOpen }) => {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [state, setState]: GameContext = useContext<GameContext>(GameFormContext);
 
   const rank: YourRank = useGetRank(state.skillRating);
 
-  function createGame(game: any, refreshGames: ()=> void) {
-    //     const { _season } = season;
-    //     const query = `mutation{
-    //         createGame(_season: "${_season}"){
-    //             role: ${game.role}
-    //             mapPlayed: "${game.mapPlayed}",
-    //             heroesPlayed: ${game.heroesPlayed},
-    //             outcome: ${game.outcome},
-    //             rankIn: ${game.rankIn}
-    //             rankOut: ${game.rankOut}
-    //         }
-    //     }`;
-    //     console.log(query)
-    }
-
   return (
-    <StepButtons setOpen={setOpen} disabled={false}>
+    <StepButtons createGame={createGame} setOpen={setOpen} disabled={false}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant={"subtitle2"} >

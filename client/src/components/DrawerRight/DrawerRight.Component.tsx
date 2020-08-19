@@ -17,6 +17,11 @@ import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import HomeIcon from '@material-ui/icons/Home';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
 
 
@@ -63,24 +68,22 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
             </div>
             <Divider />
             <List>
-                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/'} listItemKey={'Home'} listItemText={'Home'} />
-                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
-                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
-                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/stats'} listItemKey={'Profile Statistics'} listItemText={'Profile Statistics'} />
-                <DrawerItem IconComponent={InboxIcon} navigate={navigate} path={'/track'} listItemKey={'Track Skill Rating'} listItemText={'Track Skill Rating'} />
+                <DrawerItem IconComponent={HomeIcon} navigate={navigate} path={'/'} listItemKey={'Home'} listItemText={'Home'} />
+                <DrawerItem IconComponent={AccountBoxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
+                <DrawerItem IconComponent={AddBoxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
+                <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Profile Statistics'} listItemText={'Profile Statistics'} />
+                <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/track'} listItemKey={'Track Skill Rating'} listItemText={'Track Skill Rating'} />
             </List>
             <Divider />
-                {!selected ? null : <ListItem>
-                    <MediaCard title="Battletag:" subtitle={battletag}>
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <Button fullWidth onClick={removeSelected} variant={'contained'} color={'secondary'}>
-                                    <Typography variant={'button'}>Select New Battletag</Typography>
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </MediaCard>
-                </ListItem>}
+            {!selected ? null : <ListItem>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography gutterBottom variant={"h6"}>Currently:</Typography>
+                        <Typography gutterBottom variant={"subtitle1"}>{battletag}</Typography>
+                        <Typography onClick={removeSelected} gutterBottom color={'secondary'} variant={"button"}>Select New</Typography>
+                    </Grid>
+                </Grid>
+            </ListItem>}
         </Drawer>
     );
 }

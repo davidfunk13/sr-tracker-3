@@ -39,7 +39,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
     const seasonStorage = localStorage.getItem('_season');
 
     // function to convert string used for title on role page to a role key the api understands
-    
+
     function convertRole() {
         switch (role) {
             case RoleEnum.Tank:
@@ -68,24 +68,25 @@ const Role: FunctionComponent<RoleTypes> = () => {
             scope: "read:current_user",
         });
 
-        let heroesPlayed = game.heroesPlayed.map((hero: HeroEntry) => hero.name).toString();
-        console.log(heroesPlayed)
-        
+        let heroesPlayed = game.heroesPlayed.map((hero: HeroEntry) => {
+            const q = '"'
+            return q + hero.name + q
+        }).toString();
+
+console.log(heroesPlayed)
         const role: RoleKey = convertRole();
+        console.log(role)
+        const query = `mutation{
+          createGame(input: { _season: "${_season}", role: ${role}, heroesPlayed: [${heroesPlayed}], mapPlayed: "${game.mapPlayed.name}", rankIn: ${0}, rankOut: ${game.skillRating}, outcome: ${game.outcome} }){
+            _season
+          }
+        }`;
 
-        // const query = `mutation{
-        //   createGame(input: { _season: "${_season}", role: ${role}, heroesPlayed: ${heroesPlayed}, mapPlayed: "${game.mapPlayed.name}", rankIn: ${0}, rankOut: ${game.skillRating}, outcome: ${game.outcome} }){
-        //     _season
-        //   }
-        // }`;
+        const res = await fetchGraphQL(token, query);
 
-        // console.log(query, token)
+        console.log(res);        
 
-        // const res = await fetchGraphQL(token, query);
-
-        // console.log(res);        
-
-        // getGamesOfType(_season);
+        getGamesOfType(_season);
     }
     //end create game function
 
@@ -134,7 +135,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
     //end effect to parse localstorage string if it exists
 
 
-    
+
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
             <Grid item xs={12}>

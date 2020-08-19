@@ -99,6 +99,10 @@ const resolvers = {
       await Battletag.findByIdAndDelete(_id).then((deletedBattletag) => console.log({ deletedBattletag }));
     },
     async deleteSeason(_, { _id }) {
+      await Game.deleteMany({_season: _id}).then(deletedGames => {
+        console.log("Games deleted:" + deletedGames)
+      });
+      
       return await Season.findByIdAndDelete(_id);
     },
   },

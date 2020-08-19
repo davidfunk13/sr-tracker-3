@@ -32,7 +32,7 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
 
             {multiImage && multiImage.length ?
                 <div className={classes.heroCardFlex}>
-                    {multiImage.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)}
+                    {multiImage.map((hero: HeroEntry) => <img key={hero.heroKey} className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)}
                 </div>
                 :
                 null}

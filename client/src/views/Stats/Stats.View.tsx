@@ -8,8 +8,11 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { CircularProgress } from '@material-ui/core';
 import { heroDictionary } from '../../utils/dictionaries';
+import { useAuth0 } from '../../react-auth0-spa';
+import fetchGraphQL from '../../utils/fetchGraphQL';
 
 const Stats: React.FC<StatsProps> = () => {
+    const { getTokenSilently } = useAuth0();
 
     interface Options {
         hero: string,
@@ -21,7 +24,7 @@ const Stats: React.FC<StatsProps> = () => {
         Competitive = 1,
     }
 
-    const [isOn, setIsOn] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [options, setOptions] = useState<Options>({
         hero: '',
@@ -36,6 +39,64 @@ const Stats: React.FC<StatsProps> = () => {
             [name]: event.target.value,
         });
     };
+
+    async function getStats() {
+        setIsLoading(true);
+        const selectedStorage = localStorage.getItem('selected');
+
+        if (!selectedStorage) {
+            setIsLoading(false);
+            return;
+        }
+
+        const selected: { _id: string, name: string } = JSON.parse(selectedStorage);
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const query: string = `
+                query{
+                    getBattletagStats(input:{
+                        hero: "${options.hero}"
+                        _battletag: "${selected._id}"
+                        ruleset:"${options.ruleset}"
+                    }){
+                    Best {
+                        all_damage_done
+                        barrier_damage_done
+                        defensive_assists
+                        eliminations
+                        environmental_kills
+                        final_blows
+                        healing_done
+                        hero_damage_done
+                        kill_streak
+                        melee_final_blows
+                        multikill
+                        objective_kills
+                        objective_time
+                        offensive_assists
+                        recon_assists
+                        solo_kills
+                        teleporter_pad_destroyed
+                        time_spent_on_fire
+                        turrets_destroyed
+                    }
+                    Info {
+                        ruleset
+                        hero
+                    }
+                    }
+            }`;
+
+            console.log(query);
+
+        const stats = await fetchGraphQL(token, query);
+
+        console.log(stats);
+    }
 
     return (
         <Grid container spacing={4}>
@@ -75,24 +136,21 @@ const Stats: React.FC<StatsProps> = () => {
                     >
                         <option aria-label="None" value={''}></option>
                         <option aria-label="None" value={'All Heroes'}>All Heroes</option>
-                        {heroDictionary.map(hero => {
-                            return <option key={hero.name} value={hero.name}>{hero.name}</option>
+                        {heroDictionary.map((hero, i) => {
+                            return <option key={hero.name} value={i}>{hero.name}</option>
                         })}
                     </Select>
                 </FormControl>
             </Grid>
             <Grid item xs={12}>
-                <Button onClick={() => {
-                    const newIsOn = !isOn;
-                    setIsOn(newIsOn);
-                }} variant="contained" color="primary">
+                <Button onClick={() => getStats()} variant="contained" color="primary">
                     Search
                 </Button>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={"h5"}>Stats</Typography>
-                <Grid container justify={isOn ? 'center' : 'flex-start'}>
-                    {!isOn ? null : <CircularProgress style={{ marginTop: '10vh' }} size={100} />}
+                <Grid container justify={isLoading ? 'center' : 'flex-start'}>
+                    {!isLoading ? null : <CircularProgress style={{ marginTop: '10vh' }} size={100} />}
                 </Grid>
             </Grid>
 

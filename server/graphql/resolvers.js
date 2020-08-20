@@ -2,6 +2,7 @@ const Battletag = require("../db/models/Battletag/battletag");
 const Season = require("../db/models/Season/season");
 const Game = require("../db/models/Game/game");
 const searchBattletags = require('../graphql/resolverFunctions/searchBattletags');
+const getBattletagStats = require("./resolverFunctions/getBattletagStats");
 
 // parent, args, ctx, info
 
@@ -9,6 +10,9 @@ const resolvers = {
   Query: {
     async searchBattletags(parent, { battletag }) {
       return await searchBattletags(battletag);
+    },
+    async getBattletagStats(parent, { hero, id, battletag }) {
+      return await getBattletagStats(hero, id, battletag);
     },
     async getOneBattletag(_, { _id }) {
       return await Battletag.findById(_id);
@@ -74,18 +78,45 @@ const resolvers = {
       return mostRecentSeason[0];
     },
     async createGame(_, { input }) {
-      console.log(input)
       let game = new Game(input);
 
       game = await game.save();
 
       const season = await Season.findById(input._season);
 
+      if (!game) {
+        if (game.role === undefined || game.role === null || !game.rankOut === undefined || !game.rankOut === null) {
+          console.log('game not saved successfully');
+          return;
+        }
+      }
+
+      console.log({ role: game.role }, { rankOut: game.rankOut });
+
+      switch (game.role) {
+        case 0:
+          console.log("Updating tank SR...");
+          season.tankSR = game.rankOut;
+          break;
+        case 1:
+          console.log("Updating damage SR...");
+          season.damageSR = game.rankOut;
+          break;
+        case 2:
+          console.log("Updating support SR...");
+          season.supportSR = game.rankOut;
+          break;
+        default:
+          console.log("something went wrong with game role");
+          break;
+      }
+
+      console.log(season)
+
       season._games.push(game._id);
 
       season.save();
-      console.log(game)
-      
+
       return game;
     },
     async updateGame(_, { _id, updatedGame }) {
@@ -99,10 +130,10 @@ const resolvers = {
       await Battletag.findByIdAndDelete(_id).then((deletedBattletag) => console.log({ deletedBattletag }));
     },
     async deleteSeason(_, { _id }) {
-      await Game.deleteMany({_season: _id}).then(deletedGames => {
+      await Game.deleteMany({ _season: _id }).then(deletedGames => {
         console.log("Games deleted:" + deletedGames)
       });
-      
+
       return await Season.findByIdAndDelete(_id);
     },
   },

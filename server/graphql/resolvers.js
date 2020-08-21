@@ -11,8 +11,8 @@ const resolvers = {
     async searchBattletags(parent, { battletag }) {
       return await searchBattletags(battletag);
     },
-    async getBattletagStats(parent, { hero, id, battletag }) {
-      return await getBattletagStats(hero, id, battletag);
+    async getBattletagStats(parent, { input }) {
+      return await getBattletagStats(input);
     },
     async getOneBattletag(_, { _id }) {
       return await Battletag.findById(_id);

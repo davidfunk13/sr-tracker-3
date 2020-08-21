@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StatsProps from './Stats.View.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,8 +15,8 @@ const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
 
     interface Options {
-        hero: string,
-        ruleset: string,
+        hero: number,
+        ruleset: number,
     }
 
     enum Ruleset {
@@ -27,13 +27,14 @@ const Stats: React.FC<StatsProps> = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [options, setOptions] = useState<Options>({
-        hero: '',
-        ruleset: '',
+        hero: 0,
+        ruleset: 0,
     })
+    useEffect(()=>{console.log(options)},[options]);
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
-
+        console.log({val: event.target.value})
         setOptions({
             ...options,
             [name]: event.target.value,
@@ -42,6 +43,7 @@ const Stats: React.FC<StatsProps> = () => {
 
     async function getStats() {
         setIsLoading(true);
+        
         const selectedStorage = localStorage.getItem('selected');
 
         if (!selectedStorage) {
@@ -88,14 +90,12 @@ const Stats: React.FC<StatsProps> = () => {
                         ruleset
                         hero
                     }
-                    }
+                }
             }`;
-
-            console.log(query);
 
         const stats = await fetchGraphQL(token, query);
 
-        console.log(stats);
+        return stats;
     }
 
     return (
@@ -117,7 +117,6 @@ const Stats: React.FC<StatsProps> = () => {
                         label="Ruleset"
                         name="ruleset"
                     >
-                        <option aria-label="None" value={''}></option>
                         <option value={Ruleset.QuickPlay}>Quick Play</option>
                         <option value={Ruleset.Competitive}>Competitive</option>
                     </Select>
@@ -134,8 +133,6 @@ const Stats: React.FC<StatsProps> = () => {
                         label="Hero"
                         name="hero"
                     >
-                        <option aria-label="None" value={''}></option>
-                        <option aria-label="None" value={'All Heroes'}>All Heroes</option>
                         {heroDictionary.map((hero, i) => {
                             return <option key={hero.name} value={i}>{hero.name}</option>
                         })}

@@ -1,4 +1,4 @@
-const heroList = [
+module.exports = [
     {
         name: "All Heroes",
         heroKey: '0x02E00000FFFFFFFF',
@@ -264,6 +264,3 @@ const heroList = [
         icon: '../assets/icons/heroes/Zenyatta.png',
     }
 ];
-
-console.log({what: heroList[0]})
-module.exports = heroList;

@@ -69,18 +69,18 @@ input BattletagInput {
 }
 
 input StatsInput{
-    hero: String!,
-    id: ID!
+    hero: String!
+    _battletag: ID!
     ruleset: String!
 }
 
 
 type Info {
-    ruleset: String,
-    hero: String
+    ruleset: String!,
+    hero: String!
 }
 
-type best {
+type Best {
     all_damage_done: String,
     barrier_damage_done: String,
     defensive_assists: String,
@@ -102,19 +102,19 @@ type best {
     turrets_destroyed: String
 }
 
-type assists {
+type Assists {
     defensive_assists: String,
     healing_done: String,
     offensive_assists: String,
     recon_assists: String
 }
 
-type match_awards {
+type Match_Awards {
     cards: String,
     medals: String
 }
 
-type combat {
+type Combat {
     all_damage_done: String,
     barrier_damage_done: String,
     damage_done: String,
@@ -131,7 +131,7 @@ type combat {
     time_spent_on_fire: String
 }
 
-type game {
+type GameStats {
     games_lost: String,
     games_played: String,
     games_tied: String,
@@ -139,12 +139,12 @@ type game {
     time_played: String
 },
 
-type miscellaneous {
+type Miscellaneous {
     teleporter_pads_destroyed: String,
     turrets_destroyed: String
 },
 
-type average {
+type Average {
     all_damage_done: String,
     barrier_damage_done: String,
     deaths: String,
@@ -160,13 +160,13 @@ type average {
 
 type Stats {
     Info : Info
-    Best : best
-    Assists : assists
-    Match_Awards : match_awards
-    Combat: combat
-    Game : game
-    Miscellaneous : miscellaneous 
-    Average : average
+    Best : Best
+    Assists : Assists
+    Match_Awards : Match_Awards
+    Combat: Combat
+    Game : GameStats
+    Miscellaneous : Miscellaneous 
+    Average : Average
 }
 
 type Query {

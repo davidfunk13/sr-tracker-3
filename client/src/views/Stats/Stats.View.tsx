@@ -10,6 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 import { heroDictionary } from '../../utils/dictionaries';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
+import { Response } from './Stats.View.Types';
 
 const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
@@ -29,12 +30,15 @@ const Stats: React.FC<StatsProps> = () => {
     const [options, setOptions] = useState<Options>({
         hero: 0,
         ruleset: 0,
-    })
-    useEffect(()=>{console.log(options)},[options]);
+    });
+
+    const [statistics, setStatistics] = useState<Response>({} as Response);
+
+    useEffect(() => { console.log(options) }, [options]);
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
-        console.log({val: event.target.value})
+        console.log({ val: event.target.value })
         setOptions({
             ...options,
             [name]: event.target.value,
@@ -43,7 +47,7 @@ const Stats: React.FC<StatsProps> = () => {
 
     async function getStats() {
         setIsLoading(true);
-        
+
         const selectedStorage = localStorage.getItem('selected');
 
         if (!selectedStorage) {
@@ -94,7 +98,7 @@ const Stats: React.FC<StatsProps> = () => {
             }`;
 
         const stats = await fetchGraphQL(token, query);
-
+            console.log({stats})
         return stats;
     }
 
@@ -148,6 +152,9 @@ const Stats: React.FC<StatsProps> = () => {
                 <Typography variant={"h5"}>Stats</Typography>
                 <Grid container justify={isLoading ? 'center' : 'flex-start'}>
                     {!isLoading ? null : <CircularProgress style={{ marginTop: '10vh' }} size={100} />}
+                    <Grid item xs={12}>
+
+                    </Grid>
                 </Grid>
             </Grid>
 

@@ -20,7 +20,7 @@ async function getBattletagStats(input) {
 
     const selectedHero = heroes[hero];
 
-    const selectedRuleset = ['competitive', 'quickplay'][ruleset];
+    const selectedRuleset = ['quickplay', 'competitive'][ruleset];
 
     const info = {
         ruleset: selectedRuleset.charAt(0).toUpperCase() + selectedRuleset.slice(1),
@@ -30,10 +30,11 @@ async function getBattletagStats(input) {
     try {
         const bodyString = await (await axios.get(`https://playoverwatch.com/en-us/career/pc/${currentBattletag.urlName}`)).data;
 
+        console.log({bodyString});
+
         const { document } = new JSDOM(bodyString).window;
 
         const compDiv = document.querySelector('#' + selectedRuleset);
-        console.log({compDiv})
 
         const compStats = compDiv.querySelectorAll("[data-category-id='" + selectedHero.heroKey + "']")[0];
 
@@ -59,7 +60,9 @@ async function getBattletagStats(input) {
             statsObj[categoryName] = innerObj;
         }
 
-        console.log({ Info: info, ...statsObj });
+        console.log({Info: info, ...statsObj});
+
+        return { Info: info, ...statsObj };
 
         // await currentBattletag.$relatedQuery('dataNodes')
         //     .insert({ userId: user.id, battletagId, scrape: allStats })

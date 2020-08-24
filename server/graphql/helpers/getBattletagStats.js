@@ -5,12 +5,12 @@ const jsdom = require('jsdom');
 const Battletag = require('../../db/models/Battletag/battletag');
 
 const heroes = require('../../utils/heroDictionary');
-console.log(heroes)
+
 const { JSDOM } = jsdom;
 
 async function getBattletagStats(input) {
-    const {hero, _battletag, ruleset} = input;
-    
+    const { hero, _battletag, ruleset } = input;
+
     const currentBattletag = await Battletag.findById(_battletag);
 
     if (!currentBattletag) {
@@ -30,7 +30,7 @@ async function getBattletagStats(input) {
     try {
         const bodyString = await (await axios.get(`https://playoverwatch.com/en-us/career/pc/${currentBattletag.urlName}`)).data;
 
-        console.log({bodyString});
+        console.log({ bodyString });
 
         const { document } = new JSDOM(bodyString).window;
 
@@ -60,18 +60,9 @@ async function getBattletagStats(input) {
             statsObj[categoryName] = innerObj;
         }
 
-        console.log({Info: info, ...statsObj});
+        console.log({ Info: info, ...statsObj });
 
-        return { Info: info, ...statsObj };
-
-        // await currentBattletag.$relatedQuery('dataNodes')
-        //     .insert({ userId: user.id, battletagId, scrape: allStats })
-        //     .then(data => {
-        //         res.json(`Successfully inserted dataNode into User's Battletag`);
-        //     }).catch(err => {
-        //         console.log(err)
-        //         return res.json("There was an error inserting the dataNode into this battletag.");
-        //     })
+        return { info: info, ...statsObj };
 
     } catch (err) {
         res.json({

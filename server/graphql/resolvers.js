@@ -1,8 +1,8 @@
 const Battletag = require("../db/models/Battletag/battletag");
 const Season = require("../db/models/Season/season");
 const Game = require("../db/models/Game/game");
-const searchBattletags = require('../graphql/resolverFunctions/searchBattletags');
-const getBattletagStats = require("./resolverFunctions/getBattletagStats");
+const searchBattletags = require('./helpers/searchBattletags');
+const getBattletagStats = require("./helpers/getBattletagStats");
 
 // parent, args, ctx, info
 

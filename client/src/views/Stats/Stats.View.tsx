@@ -69,7 +69,7 @@ const Stats: React.FC<StatsProps> = () => {
                         _battletag: "${selected._id}"
                         ruleset:"${options.ruleset}"
                     }){
-                    Best {
+                    best {
                         all_damage_done
                         barrier_damage_done
                         defensive_assists
@@ -90,7 +90,7 @@ const Stats: React.FC<StatsProps> = () => {
                         time_spent_on_fire
                         turrets_destroyed
                     }
-                    Info {
+                    info {
                         ruleset
                         hero
                     }

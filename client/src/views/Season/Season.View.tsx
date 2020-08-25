@@ -73,7 +73,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         if (res.getMostRecentSeason && res.getMostRecentSeason._id) {
             let str = JSON.stringify({ _season: res.getMostRecentSeason._id });
+            
             localStorage.setItem("_season", str);
+            
             setSeason(res.getMostRecentSeason);
         } else {
             createSeason();

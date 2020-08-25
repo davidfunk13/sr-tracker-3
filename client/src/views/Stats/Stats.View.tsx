@@ -11,19 +11,24 @@ import { heroDictionary } from '../../utils/dictionaries';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { Response } from './Stats.View.Types';
+import SelectBattletag from '../SelectBattletag/SelectBattletag.View';
+import {useHistory} from 'react-router-dom';
+interface Options {
+    hero: number
+    ruleset: number
+}
+
+enum Ruleset {
+    QuickPlay = 0,
+    Competitive = 1,
+}
 
 const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
-
-    interface Options {
-        hero: number,
-        ruleset: number,
-    }
-
-    enum Ruleset {
-        QuickPlay = 0,
-        Competitive = 1,
-    }
+    
+    const history = useHistory();
+    
+    console.log(history);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,11 +39,19 @@ const Stats: React.FC<StatsProps> = () => {
 
     const [statistics, setStatistics] = useState<Response>({} as Response);
 
-    useEffect(() => { console.log(options) }, [options]);
+    // checks localStorage for selected SelectBattletag, if it isnt there, you get the boot my dude.
+    useEffect(() => {
+        const selected = localStorage.getItem('selected');
+
+        if (!selected) {
+            history.push('/track');
+        }
+
+    }, [history]);
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
-        console.log({ val: event.target.value })
+    
         setOptions({
             ...options,
             [name]: event.target.value,
@@ -98,9 +111,9 @@ const Stats: React.FC<StatsProps> = () => {
             }`;
 
         const stats = await fetchGraphQL(token, query);
-            console.log({stats})
+        console.log({ stats });
         return stats;
-    }
+    };
 
     return (
         <Grid container spacing={4}>

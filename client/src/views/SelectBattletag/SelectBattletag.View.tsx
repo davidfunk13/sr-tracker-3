@@ -4,26 +4,41 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
 import { Battletag } from "../../App.Types";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useAuth0 } from "../../react-auth0-spa";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button } from "@material-ui/core";
 import fetchGraphQL from "../../utils/fetchGraphQL";
-import Modal from "../../UI/Modal/Modal.UI";
+// import Modal from "../../UI/Modal/Modal.UI";
 
 const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
+  // use these to get where to send the user when they select a tag.
   const history = useHistory();
 
+  const location = useLocation();
+
+  // auth0 hooks
   const { getTokenSilently, user } = useAuth0();
 
+  // when data arrives from the api it is stored here
   const [data, setData] = useState<Array<Battletag>>([]);
 
+  // handles application loading state 
   const [loading, setLoading] = useState<boolean>();
 
-  const [open, setOpen] = useState<boolean>(false);
+  //handles modal state
+  // const [open, setOpen] = useState<boolean>(false);
+  
+  //reusable instance of grabbing a token to send to the api.
+  function getToken() {
+    return getTokenSilently({
+      audience: "AuthAPI",
+      scope: "read:current_user",
+    });
+  }
 
+  // function to fetch all battletags associated with a user currently.
   async function fetchBattletags() {
-    
     if (!user.sub) {
       console.log('error getting user sub');
       return;
@@ -36,34 +51,28 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
       }
     }
     `
-    console.log(query)
     setData([]);
 
     setLoading(true);
 
-    const token = await getTokenSilently({
-      audience: "AuthAPI",
-      scope: "read:current_user",
-    });
+    const token = await getToken();
 
     const res = await fetchGraphQL(token, query);
 
     setLoading(false);
-console.log(res)
+
     setData(res.getAllBattletags);
   }
-
+  
+  // function to set the battletag you select into localstorage to be parsed again on the battletag page.
   function setSelected(selected: Battletag) {
     localStorage.setItem("selected", JSON.stringify(selected));
     history.push("/season");
   }
 
+  //delete battletag function
   async function deleteBattletag(_id: string) {
-
-    const token = await getTokenSilently({
-      audience: "AuthAPI",
-      scope: "read:current_user",
-    });
+    const token = await getToken();
 
     const query: string = `mutation{
       deleteBattletag(_id: "${_id}") {
@@ -72,6 +81,7 @@ console.log(res)
     }`;
 
     await fetchGraphQL(token, query).then(data => console.log(data));
+    
     fetchBattletags();
   }
 

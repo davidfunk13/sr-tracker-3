@@ -265,5 +265,4 @@ const heroList = [
     }
 ];
 
-console.log({what: heroList[0]})
 module.exports = heroList;

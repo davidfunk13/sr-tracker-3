@@ -3,6 +3,7 @@ const Season = require("../db/models/Season/season");
 const Game = require("../db/models/Game/game");
 const searchBattletags = require('./helpers/searchBattletags');
 const getBattletagStats = require("./helpers/getBattletagStats");
+const season = require("../db/models/Season/season");
 
 // parent, args, ctx, info
 
@@ -126,8 +127,19 @@ const resolvers = {
       return await Game.findByIdAndRemove(_id);
     },
     async deleteBattletag(_, { _id }) {
-      await Season.deleteMany({ _battletag: _id }).then((deletedSeasons) => console.log({ deletedSeasons }));
-      await Battletag.findByIdAndDelete(_id).then((deletedBattletag) => console.log({ deletedBattletag }));
+      //get array of seasons
+      const seasons = await Season.find({ _battletag: _id });
+
+      //loop through and delete any games that belong to each season using the season's ID.
+      seasons.map(season => {
+        return Game.deleteMany({ _season: season._id }).then(deleted => console.log("Deleted Games", deleted));
+      });
+
+      //delete all the seasons with the battletag id
+      await Season.deleteMany({ _battletag: _id }).then(deletedSeasons => console.log('seasons deleted', deletedSeasons));
+
+      //delete battletag
+      await Battletag.findByIdAndDelete(_id).then(deletedBattletag => console.log("Battletag deleted", deletedBattletag));
     },
     async deleteSeason(_, { _id }) {
       await Game.deleteMany({ _season: _id }).then(deletedGames => {

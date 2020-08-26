@@ -16,7 +16,6 @@ import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
-
     const [open, setOpen] = useState<boolean>(false);
 
     const history = useHistory();
@@ -29,21 +28,18 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     useEffect(() => {
         const selected = localStorage.getItem('selected');
-
+        
+        if (!selected) {
+            history.push('/select', 'Track');
+        }
+    
         if (selected) {
             const parsed: BlizzAPIBattletag = JSON.parse(selected);
             setBattletag(parsed);
+            getMostRecentSeason();
         }
 
-        if (!selected) {
-            history.push('/track');
-        }
-
-    }, [history]);
-
-    useEffect(() => {
-        getMostRecentSeason();
-    }, [])
+    }, []);
 
     async function getMostRecentSeason() {
         const storage = localStorage.getItem("selected");

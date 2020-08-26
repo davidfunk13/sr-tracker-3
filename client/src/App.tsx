@@ -45,7 +45,7 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/link" component={Link} />
             <PrivateRoute path="/stats" component={Stats} />
-            <PrivateRoute path="/track" component={SelectBattletag} />
+            <PrivateRoute path="/select" component={SelectBattletag} />
             <PrivateRoute path="/season/role" component={Role} />
             <PrivateRoute path="/season" component={Season} />
           </Switch>

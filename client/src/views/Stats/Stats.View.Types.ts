@@ -25,8 +25,14 @@ interface Info {
     hero: string
 }
 
-interface StatsOptionalProps {
+export interface Options {
+    hero: number
+    ruleset: number
+}
 
+export enum Ruleset {
+    QuickPlay = 0,
+    Competitive = 1,
 }
 
 export interface BattletagStatsInput {
@@ -37,6 +43,6 @@ export interface BattletagStatsInput {
 
 export interface Response extends Best, Info { };
 
-export default interface StatsProps extends Partial<StatsOptionalProps> {
+export default interface StatsProps {
 
 }

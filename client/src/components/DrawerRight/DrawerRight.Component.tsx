@@ -42,7 +42,7 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
     function removeSelected() {
         if (selected) {
             localStorage.removeItem('selected');
-            navigate('/track')
+            navigate('/select')
         }
     }
 
@@ -67,12 +67,13 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
                 </IconButton>
             </div>
             <Divider />
-            <List>
-                <DrawerItem IconComponent={HomeIcon} navigate={navigate} path={'/'} listItemKey={'Home'} listItemText={'Home'} />
-                <DrawerItem IconComponent={AccountBoxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
                 <DrawerItem IconComponent={AddBoxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
-                <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Profile Statistics'} listItemText={'Profile Statistics'} />
-                <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/track'} listItemKey={'Track Skill Rating'} listItemText={'Track Skill Rating'} />
+            <Divider />
+            <List>
+                <DrawerItem IconComponent={HomeIcon} navigate={navigate} path={'/'} listItemKey={'Dashboard'} listItemText={'Dashboard'} />
+                <DrawerItem IconComponent={AccountBoxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
+                <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Statistics'} listItemText={'Statistics'} />
+                <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/season'} listItemKey={'Skill Rating Tracker'} listItemText={'Skill Rating Tracker'} />
             </List>
             <Divider />
             {!selected ? null : <ListItem>

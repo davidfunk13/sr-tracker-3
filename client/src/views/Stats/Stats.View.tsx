@@ -11,24 +11,16 @@ import { heroDictionary } from '../../utils/dictionaries';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { Response } from './Stats.View.Types';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Options, Ruleset } from './Stats.View.Types';
 import SelectBattletag from '../SelectBattletag/SelectBattletag.View';
-import {useHistory} from 'react-router-dom';
-interface Options {
-    hero: number
-    ruleset: number
-}
-
-enum Ruleset {
-    QuickPlay = 0,
-    Competitive = 1,
-}
 
 const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
-    
+
     const history = useHistory();
     
-    console.log(history);
+    const location = useLocation();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -44,14 +36,16 @@ const Stats: React.FC<StatsProps> = () => {
         const selected = localStorage.getItem('selected');
 
         if (!selected) {
-            history.push('/track');
+            history.push('/select', 'Stats');
         }
 
     }, [history]);
+    
+    
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
-    
+
         setOptions({
             ...options,
             [name]: event.target.value,

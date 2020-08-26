@@ -4,8 +4,6 @@ import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
 import DashboardViewProps from './Dashboard.View.Types';
 import Typography from '@material-ui/core/Typography';
 
-
-
 const Dashboard: React.FC<DashboardViewProps> = () => {
 
     return (

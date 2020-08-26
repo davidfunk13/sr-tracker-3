@@ -9,12 +9,10 @@ import { useAuth0 } from "../../react-auth0-spa";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Button } from "@material-ui/core";
 import fetchGraphQL from "../../utils/fetchGraphQL";
-// import Modal from "../../UI/Modal/Modal.UI";
 
 const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   // use these to get where to send the user when they select a tag.
   const history = useHistory();
-
   const location = useLocation();
 
   // auth0 hooks
@@ -26,9 +24,38 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   // handles application loading state 
   const [loading, setLoading] = useState<boolean>();
 
-  //handles modal state
-  // const [open, setOpen] = useState<boolean>(false);
+  enum PrevLocation {
+    Track = 'Track',
+    Stats = 'Stats'
+  }
+
+  function passthrough () {
+    const prevLocation = location.state;
+
+    switch (prevLocation) {
+      case PrevLocation.Track:
+        history.push('/season');
+        break;
+      case PrevLocation.Stats:
+        history.push('/stats');
+        break;
+      default:
+        history.push('/');
+        break;
+    }
+  }
   
+  //when component mounts, if user checks out fetch their battletags.
+  useEffect(() => {
+    if (user && user.sub) {
+      fetchBattletags();
+    }
+
+    return () => {
+      setData([]);
+    };
+  }, [user]);
+
   //reusable instance of grabbing a token to send to the api.
   function getToken() {
     return getTokenSilently({
@@ -63,11 +90,12 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
     setData(res.getAllBattletags);
   }
-  
+
   // function to set the battletag you select into localstorage to be parsed again on the battletag page.
   function setSelected(selected: Battletag) {
     localStorage.setItem("selected", JSON.stringify(selected));
-    history.push("/season");
+
+    passthrough();
   }
 
   //delete battletag function
@@ -80,28 +108,11 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
       }
     }`;
 
-    await fetchGraphQL(token, query).then(data => console.log(data));
-    
+    await fetchGraphQL(token, query);
+
     fetchBattletags();
   }
 
-  useEffect(() => {
-    const selected = localStorage.getItem("selected");
-
-    if (selected) {
-      history.push("/season");
-    }
-  }, [history]);
-
-  useEffect(() => {
-    if (user && user.sub) {
-      fetchBattletags();
-    }
-
-    return () => {
-      setData([]);
-    };
-  }, [user]);
 
   return (
     <Fragment>

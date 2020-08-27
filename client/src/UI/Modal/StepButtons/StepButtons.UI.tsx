@@ -32,7 +32,7 @@ const StepButtons: FunctionComponent<StepButtonsProps> = ({ children, createGame
     
     return (
         <Grid container style={{ marginBottom: '.75em' }} spacing={2}>
-            <Grid item xs={12} style={{ height: '60vh', overflowY: 'auto' }}>
+            <Grid item xs={12}>
                 {children}
             </Grid>
             <Grid item xs={6}>

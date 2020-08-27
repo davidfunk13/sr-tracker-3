@@ -23,19 +23,15 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
 
     return (
         <StepButtons disabled={!!!state.outcome !== undefined}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={4}>
-                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(1)} title={"Win"} image={Win} />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(0)} title={"Loss"} image={Loss} />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(2)} title={"Draw"} image={Draw} />
-                        </Grid>
-                    </Grid>
+            <Grid style={{ overflow: "hidden", height: '60vh' }} container spacing={2}>
+                <Grid item xs={12} sm={4}>
+                    <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(1)} title={"Win"} image={Win} />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(0)} title={"Loss"} image={Loss} />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} onClick={() => selectOutcome(2)} title={"Draw"} image={Draw} />
                 </Grid>
             </Grid>
         </StepButtons>

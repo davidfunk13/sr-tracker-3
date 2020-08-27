@@ -72,7 +72,7 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
             <List>
                 <DrawerItem IconComponent={HomeIcon} navigate={navigate} path={'/'} listItemKey={'Dashboard'} listItemText={'Dashboard'} />
                 <DrawerItem IconComponent={AccountBoxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
-                <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Statistics'} listItemText={'Statistics'} />
+                {/* <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Statistics'} listItemText={'Statistics'} /> */}
                 <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/season'} listItemKey={'Skill Rating Tracker'} listItemText={'Skill Rating Tracker'} />
             </List>
             <Divider />

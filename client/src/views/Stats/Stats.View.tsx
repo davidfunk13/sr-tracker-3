@@ -97,6 +97,7 @@ const Stats: React.FC<StatsProps> = () => {
                         time_spent_on_fire
                         turrets_destroyed
                     }
+                    
                     info {
                         ruleset
                         hero

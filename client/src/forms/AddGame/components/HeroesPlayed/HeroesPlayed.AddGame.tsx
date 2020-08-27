@@ -11,18 +11,18 @@ import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     const [state, setState]: any = useContext(GameFormContext);
 
-    const filtered = heroDictionary.filter((hero,i) => {
+    const filtered = heroDictionary.filter((hero, i) => {
         if (i === 0) {
             return;
         }
-        
+
         return hero.roleName === role;
     });
 
     useEffect(() => {
         filtered.map(hero => {
             const img = new Image();
-           return img.src = hero.icon.toString();
+            return img.src = hero.icon.toString();
         });
 
     }, [filtered, role]);
@@ -56,27 +56,37 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
 
     return (
         <StepButtons disabled={!!!state.heroesPlayed.length}>
-            <Typography variant={"subtitle2"}>
-                Selected
-                </Typography>
-            <div style={{ minHeight: "13vh", display: 'flex', justifyContent: 'flex-start' }}>
-                {/* please replace all of this with material ui spacing and components */}
-                {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
-            </div>
-            <Typography gutterBottom variant={"subtitle2"}>
-                Main Heroes
-                </Typography>
-            <Grid container spacing={1}>
-                {filtered.map(hero => {
-                    return (
-                        <Grid key={hero.name} item xs={3}>
-                            <img style={{ width: '100%' }} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
-                        </Grid>
-                    )
-                })}
+            <Grid style={{ overflow: 'hidden' }} container spacing={1}>
+                <Grid item xs={12}>
+                    <Typography variant={"subtitle2"}>
+                        Selected
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <div style={{ minHeight: "15vh", display: 'flex', justifyContent: 'flex-start' }}>
+                        {/* please replace all of this with material ui spacing and components */}
+                        {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography gutterBottom variant={"subtitle2"}>
+                        Main Heroes
+                    </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <Grid style={{ height: '40vh', overflowY: 'auto' }} container spacing={1}>
+                        {filtered.map(hero => {
+                            return (
+                                <Grid key={hero.name} item xs={3}>
+                                    <img style={{ width: '100%' }} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
+                </Grid>
             </Grid>
         </StepButtons>
     )
 };
 
-export default HeroesPlayed;  
+export default HeroesPlayed;    

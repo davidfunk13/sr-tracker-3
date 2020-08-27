@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ReactEventHandler, ChangeEvent } from "react";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
@@ -23,6 +23,8 @@ const Link: React.FC<LinkProps> = () => {
 
   const [data, setData] = useState<[] | [BlizzAPIBattletag]>([]);
 
+  const [inputError, setInputError] = useState<boolean>(false);
+
   function getToken() {
     return getTokenSilently({
       audience: "AuthAPI",
@@ -44,6 +46,16 @@ const Link: React.FC<LinkProps> = () => {
           }`;
 
   async function fetchBattletags() {
+
+    if (!search.length) {
+      setInputError(true);
+      return;
+    }
+
+    if (inputError) {
+      setInputError(false)
+    }
+
     const token = await getToken();
 
     setData([]);
@@ -90,13 +102,18 @@ const Link: React.FC<LinkProps> = () => {
     dispatchNotification({ type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
   }
 
+  function changeInput(e:ChangeEvent<HTMLInputElement>) {
+    if (inputError) {
+      setInputError(false);
+    }
+
+    setSearch(e.target.value)
+  }
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={12}>
         <Typography variant={"h4"}>Link New Battletag</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Button onClick={() => testNotification()}>Send Test Notification</Button>
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -104,9 +121,10 @@ const Link: React.FC<LinkProps> = () => {
           fullWidth
           required
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e:ChangeEvent<HTMLInputElement>) => changeInput(e)}
           label="Search for Battletag"
           type="search"
+          error={inputError}
           variant="outlined"
         />
       </Grid>

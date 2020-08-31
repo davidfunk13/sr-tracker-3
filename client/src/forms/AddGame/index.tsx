@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, Dispatch, SetStateAction } from 'react';
+import React, { FunctionComponent, useContext, Dispatch, SetStateAction, Fragment } from 'react';
 import SelectMap from './components/SelectMap/SelectMap.AddGame';
 import HeroesPlayed from './components/HeroesPlayed/HeroesPlayed.AddGame';
 import Outcome from './components/Outcome/Outcome.AddGame';
@@ -15,7 +15,7 @@ interface GameFormProps {
 
 const GameForm: FunctionComponent<GameFormProps> = ({ createGame, role, setOpen }) => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
-    const [state, setState]: GameContext = useContext(GameFormContext); 
+    const [state, setState]: GameContext = useContext(GameFormContext);
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {
@@ -34,7 +34,7 @@ const GameForm: FunctionComponent<GameFormProps> = ({ createGame, role, setOpen 
         }
     }
 
-    return renderComponent(state.currentStep);
+    return (<div style={{ height: '70vh', display: 'flex'}}>{renderComponent(state.currentStep)}</div>);
 };
 
 export default GameForm;

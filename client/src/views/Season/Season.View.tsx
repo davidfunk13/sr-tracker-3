@@ -14,6 +14,8 @@ import { BlizzAPIBattletag } from '../../App.Types';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -137,6 +139,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                     <Button onClick={() => setOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
                 </Grid>
             </Grid>
+            {/* <Fab color={'primary'} href={''}>
+                <AddIcon/>
+            </Fab> */}
             <Modal setOpen={setOpen} open={open} title={'Create New Season'} >
                 <ConfirmSeason createSeason={createSeason} setOpen={setOpen} />
             </Modal>

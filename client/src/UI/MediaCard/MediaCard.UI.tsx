@@ -27,7 +27,7 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
     const classes = useStyles();
 
     return (
-        <Card onClick={onClick} className={classes.root}>
+        <Card elevation={0} variant={'outlined'} onClick={onClick} className={classes.root}>
             {!image ? null : <CardMedia style={cardMediaStyle} className={classes.media} image={image.toString()} title={title} />}
 
             {multiImage && multiImage.length ?

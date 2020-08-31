@@ -7,11 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
 import Button from '@material-ui/core/Button';
-import GameFormProvider from '../../contexts/GameFormContext/GameFormContext.Context';
+// import GameFormProvider from '../../contexts/GameFormContext/GameFormContext.Context';
+import GameFormProvider, { GameFormContext } from '../../contexts/GameFormContextV2/GameFormContext';
 import { useHistory } from 'react-router-dom';
-import GameForm from '../../forms/AddGame'
+// import GameForm from '../../forms/AddGame';
 import { RoleEnum, RoleKey, RoleName, Game } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
+import FormWithSteps from '../../forms/FormWithSteps/FormWithSteps';
 import { useAuth0 } from '../../react-auth0-spa';
 import { HeroEntry } from '../../utils/heroDictionary';
 
@@ -73,7 +75,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             return q + hero.name + q
         }).toString();
 
-console.log(heroesPlayed)
+        console.log(heroesPlayed)
         const role: RoleKey = convertRole();
         console.log(role)
         const query = `mutation{
@@ -84,7 +86,7 @@ console.log(heroesPlayed)
 
         const res = await fetchGraphQL(token, query);
 
-        console.log(res);        
+        console.log(res);
 
         getGamesOfType(_season);
     }
@@ -158,7 +160,7 @@ console.log(heroesPlayed)
             </Grid>
             <Modal setOpen={setOpen} title={'Add New Game'} open={open}>
                 <GameFormProvider >
-                    <GameForm createGame={createGame} setOpen={setOpen} role={role} />
+                    <FormWithSteps context={GameFormContext} />
                 </GameFormProvider>
             </Modal>
         </Grid>

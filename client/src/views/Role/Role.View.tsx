@@ -16,6 +16,7 @@ import fetchGraphQL from '../../utils/fetchGraphQL';
 import FormWithSteps from '../../forms/FormWithSteps/FormWithSteps';
 import { useAuth0 } from '../../react-auth0-spa';
 import { HeroEntry } from '../../utils/heroDictionary';
+import GameForm from '../../forms/AddGame';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [open, setOpen] = useState<boolean>(false);
@@ -139,7 +140,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
 
     return (
-        <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
+        <Grid className="fuck" container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {title} Season
@@ -160,7 +161,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <Modal setOpen={setOpen} title={'Add New Game'} open={open}>
                 <GameFormProvider >
-                    <FormWithSteps context={GameFormContext} />
+                    <FormWithSteps componentDependencies={{createGame: createGame, role: role, setOpen: setOpen}} formComponent={GameForm} context={GameFormContext} />
                 </GameFormProvider>
             </Modal>
         </Grid>

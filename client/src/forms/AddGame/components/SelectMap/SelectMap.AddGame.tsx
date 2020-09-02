@@ -25,24 +25,22 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
     }, []);
 
     return (
-        <StepButtons disabled={!(Object.keys(state.mapPlayed).length > 0)}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant={"subtitle2"}>
-                        What map are you playing?
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <Typography variant={"subtitle2"}>
+                    What map are you playing?
                     </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid style={{ height: '60vh', overflowY: 'auto' }} container spacing={2}>
-                        {mapDictionary.map(map => {
-                            return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
-                                <MediaCard image={map.icon.toString()} title={map.name} />
-                            </Grid>;
-                        })}
-                    </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid style={{ height: '60vh', overflowY: 'auto' }} container spacing={2}>
+                    {mapDictionary.map(map => {
+                        return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
+                            <MediaCard image={map.icon.toString()} title={map.name} />
+                        </Grid>;
+                    })}
                 </Grid>
             </Grid>
-        </StepButtons>
+        </Grid>
     )
 }
 

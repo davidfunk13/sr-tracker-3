@@ -1,3 +1,9 @@
+import {Dispatch, SetStateAction} from 'react';
+
+export interface FormComponentTypes {
+  step: number,
+  setStep: Dispatch<SetStateAction<number>>
+}
 
 export type Platform = "playstation" | "xbl" | "pc" | "nintendo-switch";
 

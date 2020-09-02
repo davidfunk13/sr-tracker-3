@@ -28,35 +28,39 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     }, [filtered, role]);
 
     function selectHero(hero: HeroEntry) {
-        return () => {
             let newState: GameForm;
 
             const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
+            console.log({exists})
 
             const selected: HeroEntry[] = state.heroesPlayed;
 
             if (selected.length === 3 && !exists) {
+                console.log('hit error')
                 //return error message above component.
                 return
             }
 
             if (exists) {
+                console.log("hit exists block")
                 const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
-
+            
+                console.log({removeItem})
+            
                 newState = { ...state, heroesPlayed: removeItem }
 
                 return setState(newState);
             }
 
             newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
-
+            
+            console.log({newState})
+            
             setState(newState);
-        }
     }
 
     return (
-        <StepButtons disabled={!!!state.heroesPlayed.length}>
-            <Grid style={{ overflow: 'hidden' }} container spacing={1}>
+            <Grid container spacing={1}>
                 <Grid item xs={12}>
                     <Typography variant={"subtitle2"}>
                         Selected
@@ -78,14 +82,13 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                         {filtered.map(hero => {
                             return (
                                 <Grid key={hero.name} item xs={3}>
-                                    <img style={{ width: '100%' }} key={hero.name} onClick={selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
+                                    <img style={{ width: '100%' }} key={hero.name} onClick={()=> selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
                                 </Grid>
                             )
                         })}
                     </Grid>
                 </Grid>
             </Grid>
-        </StepButtons>
     )
 };
 

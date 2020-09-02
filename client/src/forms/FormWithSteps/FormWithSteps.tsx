@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const FormWithSteps: React.FC<FormWithStepsTypes> = ({ context }) => {
+const FormWithSteps: React.FC<FormWithStepsTypes> = ({ componentDependencies, formComponent, context, styles }) => {
     const formContext = useContext(context);
 
     const [step, setStep] = useState<number>(0);
@@ -23,9 +23,16 @@ const FormWithSteps: React.FC<FormWithStepsTypes> = ({ context }) => {
         setStep(previousStep);
     }
 
+    const testComponents = [
+        'One',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+    ];
+
+
     useEffect(() => {
-        console.log(formContext, formContext.length)
-        
         if (step === 0) {
             setPrevDisabled(true);
         }
@@ -42,24 +49,32 @@ const FormWithSteps: React.FC<FormWithStepsTypes> = ({ context }) => {
             setNextDisabled(false);
         }
 
-        if( step === formContext[0].length - 1) {
+        if (step === formContext[0].length - 1) {
             setNextDisabled(true);
         }
 
     }, [prevDisabled, nextDisabled, step]);
 
+    useEffect(() => console.log(step), [step]);
+
+    const FormComponent = formComponent;
+
     return (
         <Grid container spacing={2} >
-            {step}
-            <div style={{ display: 'flex', width: '100%', marginBottom: '1em' }}>
-                <Button disabled={prevDisabled} onClick={() => previousStep()} style={{ width: '50%', marginRight: '1em' }} variant={'contained'}>
+            <Grid style={styles} item xs={12}>
+                <FormComponent step={step} componentDependencies={componentDependencies} />
+            </Grid>
+            <Grid style={styles} item xs={6}>
+                <Button fullWidth disabled={prevDisabled} onClick={() => previousStep()} style={{ marginRight: '1em' }} variant={'contained'}>
                     <Typography variant={'button'}>Previous</Typography>
                 </Button>
-                <Button disabled={nextDisabled} onClick={() => nextStep()} style={{ width: '50%' }} variant={'contained'} color={'primary'}>
-                    <Typography variant={'button'}>Next</Typography>
+            </Grid>
+            <Grid item xs={6}>
+                <Button fullWidth disabled={nextDisabled} onClick={() => nextStep()} variant={'contained'} color={'primary'}>
+                    <Typography variant={'button'}>{step === formContext[0].length - 1 ? 'Finish' : 'Next'}</Typography>
                 </Button>
-            </div>
-        </Grid>
+            </Grid>
+        </Grid >
     )
 }
 

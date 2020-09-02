@@ -1,5 +1,5 @@
-import { RoleEnum } from "../../../../App.Types";
+import { RoleEnum, FormComponentTypes } from "../../../../App.Types";
 
-export default interface SelectMapProps {
+export default interface SelectMapProps extends FormComponentTypes {
     role: RoleEnum,
 }

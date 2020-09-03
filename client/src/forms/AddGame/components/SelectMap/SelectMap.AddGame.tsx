@@ -7,13 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 
-const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
+const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls, role }) => {
     const [state, setState]: GameContext = useContext(GameFormContext);
 
     //enum for maps use here
     function selectMap(val: MapEntry) {
-        const newState = { ...state, currentStep: state.currentStep + 1, mapPlayed: val };
+        const newState = { ...state, mapPlayed: val };
         setState(newState);
+        const newStep = step + 1;
+        setStep(newStep);
     }
 
     useEffect(() => {
@@ -24,12 +26,13 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ role }) => {
 
     }, []);
 
+    const { step, setStep } = formControls;
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     What map are you playing?
-                    </Typography>
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 <Grid style={{ height: '60vh', overflowY: 'auto' }} container spacing={2}>

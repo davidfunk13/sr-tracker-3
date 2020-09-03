@@ -17,6 +17,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
             ...state,
             outcome: val
         };
+        
         setState(newState);
     }
 

@@ -62,7 +62,7 @@ const FormWithSteps: React.FC<FormWithStepsTypes> = ({ componentDependencies, fo
     return (
         <Grid container spacing={2} >
             <Grid style={styles} item xs={12}>
-                <FormComponent step={step} componentDependencies={componentDependencies} />
+                <FormComponent formControls={{ step: step, setStep: setStep }} step={step} componentDependencies={componentDependencies} />
             </Grid>
             <Grid style={styles} item xs={6}>
                 <Button fullWidth disabled={prevDisabled} onClick={() => previousStep()} style={{ marginRight: '1em' }} variant={'contained'}>

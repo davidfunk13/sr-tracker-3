@@ -16,6 +16,7 @@ export interface ComponentDependenciesTypes {
 export interface GameFormProps {
     componentDependencies: ComponentDependenciesTypes
     step: number
+    formControls: any
 }
 
 const GameForm: FunctionComponent<GameFormProps> = ({ formControls, componentDependencies }) => {
@@ -29,15 +30,15 @@ const GameForm: FunctionComponent<GameFormProps> = ({ formControls, componentDep
     function renderComponent(step: number): JSX.Element {
         switch (step) {
             case 0:
-                return <SelectMap step={step} setStep={setStep} role={role} />
-            case 1:
-                return <HeroesPlayed step={step} setStep={setStep}  role={role} />
-            case 2:
-                return <Outcome step={step} setStep={setStep}  />
-            case 3:
-                return <SkillRating step={step} setStep={setStep}  />
-            case 4:
-                return <ConfirmGame step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
+                return <SelectMap formControls={formControls} step={step} setStep={setStep} role={role} />
+            // case 1:
+            //     return <HeroesPlayed step={step} setStep={setStep}  role={role} />
+            // case 2:
+            //     return <Outcome step={step} setStep={setStep}  />
+            // case 3:
+            //     return <SkillRating step={step} setStep={setStep}  />
+            // case 4:
+            //     return <ConfirmGame step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
             default:
                 return <h4>Something went wrong</h4>;
         }

@@ -27,28 +27,28 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
     }, [filtered, role]);
 
     function selectHero(hero: HeroEntry) {
-            let newState: GameFormTypes;
+        let newState: GameFormTypes;
 
-            const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
+        const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
 
-            const selected: HeroEntry[] = state.heroesPlayed;
+        const selected: HeroEntry[] = state.heroesPlayed;
 
-            if (selected.length === 3 && !exists) {
-                //return error message above component.
-                return
-            }
+        if (selected.length === 3 && !exists) {
+            //return error message above component.
+            return
+        }
 
-            if (exists) {
-                const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
+        if (exists) {
+            const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
 
-                newState = { ...state, heroesPlayed: removeItem }
+            newState = { ...state, heroesPlayed: removeItem }
 
-                return setState(newState);
-            }
+            return setState(newState);
+        }
 
-            newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
+        newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
 
-            setState(newState);
+        setState(newState);
     }
 
     return (
@@ -59,15 +59,17 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <div style={{ minHeight: "15vh", display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ minHeight: "10em", display: 'flex', justifyContent: 'flex-start' }}>
                     {/* please replace all of this with material ui spacing and components */}
-                    {state.heroesPlayed.map((hero: HeroEntry) => <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />)}
+                    {state.heroesPlayed.map((hero: HeroEntry) =>
+                        <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
+                    )}
                 </div>
             </Grid>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={"subtitle2"}>
                     Main Heroes
-                    </Typography>
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 <Grid style={{ height: '40vh', overflowY: 'auto' }} container spacing={1}>

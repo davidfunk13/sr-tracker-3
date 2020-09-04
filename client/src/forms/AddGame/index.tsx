@@ -30,15 +30,20 @@ const GameForm: FunctionComponent<GameFormProps> = ({ formControls, componentDep
     function renderComponent(step: number): JSX.Element {
         switch (step) {
             case 0:
-                return <SelectMap formControls={formControls} step={step} setStep={setStep} role={role} />
+                return <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }}><h4>1</h4></div>;
+            // return <SelectMap formControls={formControls} step={step} setStep={setStep} role={role} />
             case 1:
-                return <HeroesPlayed formControls={formControls} step={step} setStep={setStep} role={role} />
+                return <div style={{ height: '100%', width: '100%', backgroundColor: 'blue' }}><h4>2</h4></div>;
+            // return <HeroesPlayed formControls={formControls} step={step} setStep={setStep} role={role} />
             case 2:
-                return <Outcome formControls={formControls} step={step} setStep={setStep}  />
+                return <div style={{ height: '100%', width: '100%', backgroundColor: 'green' }}><h4>3</h4></div>;
+            // return <Outcome formControls={formControls} step={step} setStep={setStep}  />
             case 3:
-                return <SkillRating formControls={formControls} step={step} setStep={setStep}  />
+                return <div style={{ height: '100%', width: '100%', backgroundColor: 'purple' }}><h4>4</h4></div>;
+            // return <SkillRating formControls={formControls} step={step} setStep={setStep}  />
             case 4:
-                return <ConfirmGame formControls={formControls} step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
+                return <div style={{ height: '100%', width: '100%', backgroundColor: 'orange' }}><h4>5</h4></div>;
+            // return <ConfirmGame formControls={formControls} step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
             default:
                 return <h4>Something went wrong</h4>;
         }

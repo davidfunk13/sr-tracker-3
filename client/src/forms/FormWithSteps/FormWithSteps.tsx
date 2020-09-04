@@ -3,6 +3,7 @@ import FormWithStepsTypes from './FormWithStepsTypes';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CSS from 'csstype';
 
 const FormWithSteps: React.FC<FormWithStepsTypes> = ({ componentDependencies, formComponent, context, styles }) => {
     const formContext = useContext(context);
@@ -64,7 +65,7 @@ const FormWithSteps: React.FC<FormWithStepsTypes> = ({ componentDependencies, fo
             <Grid style={styles} item xs={12}>
                 <FormComponent formControls={{ step: step, setStep: setStep }} step={step} componentDependencies={componentDependencies} />
             </Grid>
-            <Grid style={styles} item xs={6}>
+            <Grid item xs={6}>
                 <Button fullWidth disabled={prevDisabled} onClick={() => previousStep()} style={{ marginRight: '1em' }} variant={'contained'}>
                     <Typography variant={'button'}>Previous</Typography>
                 </Button>

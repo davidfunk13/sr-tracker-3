@@ -25,7 +25,7 @@ const Outcome: FunctionComponent<OutcomeProps> = ({ formControls }) => {
         setState(newState);
 
         setStep(newStep);
-    }
+    };
 
     const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
 

@@ -1,3 +1,4 @@
+import CSS from 'csstype';
 import React, { useState, FunctionComponent, useEffect } from 'react';
 import RoleTypes from './Role.View.Types';
 import { useLocation } from 'react-router-dom';
@@ -134,7 +135,11 @@ const Role: FunctionComponent<RoleTypes> = () => {
         getGamesOfType(seasonParsed._season);
     }, []);
     //end effect to parse localstorage string if it exists
-
+    const containerStyles: CSS.Properties = {
+        display: 'flex',
+        height: '75vh',
+        alignItems: 'flex-end',
+    }
 
 
     return (
@@ -159,7 +164,12 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <Modal setOpen={setOpen} title={'Add New Game'} open={open}>
                 <GameFormProvider >
-                    <FormWithSteps componentDependencies={{createGame: createGame, role: role, setOpen: setOpen}} formComponent={GameForm} context={GameFormContext} />
+                    <FormWithSteps
+                        styles={containerStyles}
+                        componentDependencies={{ createGame: createGame, role: role, setOpen: setOpen }}
+                        formComponent={GameForm}
+                        context={GameFormContext}
+                    />
                 </GameFormProvider>
             </Modal>
         </Grid>

@@ -1,5 +1,4 @@
-
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
+import CSS from 'csstype';
 import { GameFormProps } from '../../forms/AddGame';
 import { GameContextTypes } from '../../contexts/GameFormContextV2/GameFormContextTypes';
 
@@ -7,7 +6,7 @@ import { GameContextTypes } from '../../contexts/GameFormContextV2/GameFormConte
 // add more contexts to this as needed, seperate with pipes.
 export default interface FormWithStepsTypes {
     context: React.Context<GameContextTypes>
-    styles?: CSSProperties
+    styles?: CSS.Properties
     formComponent: React.FunctionComponent<GameFormProps>
     componentDependencies: any;
 }

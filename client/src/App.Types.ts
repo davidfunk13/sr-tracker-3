@@ -3,6 +3,7 @@ import {Dispatch, SetStateAction} from 'react';
 export interface FormComponentTypes {
   step: number,
   setStep: Dispatch<SetStateAction<number>>
+  formControls: any
 }
 
 export type Platform = "playstation" | "xbl" | "pc" | "nintendo-switch";

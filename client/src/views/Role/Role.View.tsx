@@ -7,10 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
 import Button from '@material-ui/core/Button';
-// import GameFormProvider from '../../contexts/GameFormContext/GameFormContext.Context';
 import GameFormProvider, { GameFormContext } from '../../contexts/GameFormContextV2/GameFormContext';
 import { useHistory } from 'react-router-dom';
-// import GameForm from '../../forms/AddGame';
 import { RoleEnum, RoleKey, RoleName, Game } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import FormWithSteps from '../../forms/FormWithSteps/FormWithSteps';
@@ -140,7 +138,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
 
     return (
-        <Grid className="fuck" container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
+        <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {title} Season

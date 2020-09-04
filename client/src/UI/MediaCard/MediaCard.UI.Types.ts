@@ -1,5 +1,6 @@
 import { HeroEntry } from "../../utils/heroDictionary";
 import { CSSProperties } from "@material-ui/core/styles/withStyles";
+import CSS from 'csstype';
 
 export default interface MediaCardProps {
     title: string
@@ -7,5 +8,5 @@ export default interface MediaCardProps {
     subtitle?: string
     multiImage?: HeroEntry[]
     onClick?: ()=> void
-    cardMediaStyle?: CSSProperties
+    cardMediaStyle?: CSS.Properties
 }

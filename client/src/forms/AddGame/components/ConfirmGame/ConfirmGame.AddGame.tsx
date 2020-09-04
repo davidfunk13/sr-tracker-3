@@ -2,37 +2,58 @@ import React, { useContext, FunctionComponent } from 'react';
 import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
-import { GameFormContext, GameContext } from '../../../../contexts/GameFormContext/GameFormContext.Context';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
-import StepButtons from '../../../../UI/Modal/StepButtons/StepButtons.UI';
-import { HeroEntry } from '../../../../utils/heroDictionary';
+import CSS from 'csstype';
+import { GameContextTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
+import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, setOpen }) => {
+
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  const [state, setState]: GameContext = useContext<GameContext>(GameFormContext);
+  const [state, setState]: GameContextTypes = useContext<GameContextTypes>(GameFormContext);
 
   const rank: YourRank = useGetRank(state.skillRating);
+
+  const role: string = state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1);
+
+  const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant={"subtitle2"} >
           Confirm New Game Addition
-          </Typography>
+        </Typography>
       </Grid>
       <Grid item xs={12}>
-        <MediaCard title={state.mapPlayed.name} image={state.mapPlayed.icon} />
+        <MediaCard
+          title={state.mapPlayed.name}
+          image={state.mapPlayed.icon}
+        />
       </Grid>
       <Grid item xs={12}>
-        <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1)} multiImage={state.heroesPlayed} />
+        <MediaCard
+          cardMediaStyle={cardPictureStyles}
+          title={role}
+          multiImage={state.heroesPlayed}
+        />
       </Grid>
       <Grid item xs={12}>
-        <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={generateOutcomeString(state.outcome)} image={generateOutcomeIcon(state.outcome)} />
+        <MediaCard
+          cardMediaStyle={cardPictureStyles}
+          title={generateOutcomeString(state.outcome)}
+          image={generateOutcomeIcon(state.outcome)}
+        />
       </Grid>
       <Grid item xs={12}>
-        <MediaCard cardMediaStyle={{ backgroundSize: "contain" }} title={rank.skillRating.toString()} subtitle={rank.name} image={rank.icon} />
+        <MediaCard
+          cardMediaStyle={{ backgroundSize: "contain" }}
+          title={rank.skillRating.toString()}
+          subtitle={rank.name}
+          image={rank.icon}
+        />
       </Grid>
     </Grid>
   );

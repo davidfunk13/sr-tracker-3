@@ -1,6 +1,6 @@
 import { FormComponentTypes } from "../../../../App.Types";
 
-export default interface SkillratingProps extends FormComponentTypes {
+export default interface SkillRatingProps extends FormComponentTypes {
 
     
 }

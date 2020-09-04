@@ -24,21 +24,21 @@ const GameForm: FunctionComponent<GameFormProps> = ({ formControls, componentDep
     const [state, setState]: GameContext = useContext(GameFormContext);
 
     const { createGame, role, setOpen } = componentDependencies
-    
+
     const { setStep, step } = formControls;
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {
             case 0:
                 return <SelectMap formControls={formControls} step={step} setStep={setStep} role={role} />
-            // case 1:
-            //     return <HeroesPlayed step={step} setStep={setStep}  role={role} />
-            // case 2:
-            //     return <Outcome step={step} setStep={setStep}  />
-            // case 3:
-            //     return <SkillRating step={step} setStep={setStep}  />
-            // case 4:
-            //     return <ConfirmGame step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
+            case 1:
+                return <HeroesPlayed formControls={formControls} step={step} setStep={setStep} role={role} />
+            case 2:
+                return <Outcome formControls={formControls} step={step} setStep={setStep}  />
+            case 3:
+                return <SkillRating formControls={formControls} step={step} setStep={setStep}  />
+            case 4:
+                return <ConfirmGame formControls={formControls} step={step} setStep={setStep} createGame={createGame} setOpen={setOpen} />
             default:
                 return <h4>Something went wrong</h4>;
         }

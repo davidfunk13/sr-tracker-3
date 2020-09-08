@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { FormComponentTypes } from "../../../../App.Types";
+import { ModalControls, FormComponentTypes } from "../../../../App.Types";
 
 export default interface ConfirmGameTypes extends FormComponentTypes {
-    setOpen: Dispatch<SetStateAction<boolean>>
+    modalControls: ModalControls
     createGame?: (game: any) =>  void
 }

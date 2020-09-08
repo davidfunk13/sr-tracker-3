@@ -4,7 +4,7 @@ import { MapEntry } from '../../utils/mapDictionary';
 
 //will be used as a reference any time the game form needs to be typed
 export const initialGameFormState: GameFormTypes = {
-    mapPlayed: {} as MapEntry,
+    mapPlayed: undefined,
     heroesPlayed: [],
     outcome: undefined,
     skillRating: 0,

@@ -1,9 +1,20 @@
-import {Dispatch, SetStateAction} from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-export interface FormComponentTypes {
+export interface ModalControls {
+  modalOpen: boolean,
+  setModalOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export interface FormControls { 
   step: number,
   setStep: Dispatch<SetStateAction<number>>
+  isDisabled: boolean
+  setIsDisabled:Dispatch<SetStateAction<boolean>>
+}
+
+export interface FormComponentTypes {
   formControls: any
+  modalControls: ModalControls
 }
 
 export type Platform = "playstation" | "xbl" | "pc" | "nintendo-switch";

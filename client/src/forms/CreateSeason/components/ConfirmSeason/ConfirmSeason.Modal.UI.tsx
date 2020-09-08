@@ -3,7 +3,8 @@ import React, { FunctionComponent, useEffect, Fragment, useState } from 'react';
 import ConfirmSeasonTypes from './ConfirmSeason.Modal.UI.Types';
 import { Typography, Button, DialogActions } from '@material-ui/core';
 
-const ConfirmSeason: FunctionComponent<ConfirmSeasonTypes> = ({ createSeason, setOpen }) => {
+const ConfirmSeason: FunctionComponent<ConfirmSeasonTypes> = ({ createSeason, modalControls }) => {
+    const { setModalOpen, modalOpen } = modalControls;
 
     return (
         <Fragment>
@@ -16,7 +17,7 @@ const ConfirmSeason: FunctionComponent<ConfirmSeasonTypes> = ({ createSeason, se
                         Create
                 </Typography>
                 </Button>
-                <Button onClick={() => setOpen(false)} color={'secondary'} fullWidth>
+                <Button onClick={() => setModalOpen(false)} color={'secondary'} fullWidth>
                     <Typography align={"center"} variant={'button'}>
                         Close
                     </Typography>

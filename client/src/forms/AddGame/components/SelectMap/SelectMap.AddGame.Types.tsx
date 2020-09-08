@@ -1,6 +1,5 @@
-import { RoleEnum, FormComponentTypes } from "../../../../App.Types";
+import { FormComponentTypes } from "../../../../App.Types";
+import { Dispatch, SetStateAction } from "react";
 
 export default interface SelectMapProps extends FormComponentTypes {
-    role: RoleEnum,
-    formControls: any
 }

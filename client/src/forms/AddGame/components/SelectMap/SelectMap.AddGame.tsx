@@ -6,11 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import { GameContextTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
 import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
+import { FormControls } from '../../../../App.Types';
 
-const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls, role }) => {
+const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
     const [state, setState]: GameContextTypes = useContext(GameFormContext);
 
-    const { step, setStep } = formControls;
+    const { step, setStep, isDisabled, setIsDisabled }: FormControls = formControls;
 
     //enum for maps use here
     function selectMap(val: MapEntry) {
@@ -25,8 +26,16 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls, role }) =>
             const img = new Image();
             return img.src = map.icon.toString();
         });
-
     }, []);
+
+    useEffect(() => {
+        if (!state.mapPlayed) {
+            return setIsDisabled(true);
+        }
+
+        return () => setIsDisabled(false);
+        
+    }, [state]);
 
     return (
         <Grid container spacing={2}>

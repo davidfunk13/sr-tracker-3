@@ -1,5 +1,5 @@
 import { FunctionComponent, Dispatch, SetStateAction } from "react";
-import { RoleEnum } from "../../App.Types";
+import { RoleEnum, ModalControls } from "../../App.Types";
 
 export interface FormComponentObject {
     label: string,
@@ -9,8 +9,7 @@ export interface FormComponentObject {
 
 export default interface Modal {
     children: any,
-    open: boolean,
-    setOpen: Dispatch<SetStateAction<boolean>>
+    modalControls: ModalControls
     title?: string,
     isFullScreen?: boolean | null,
 }

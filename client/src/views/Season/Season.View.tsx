@@ -18,7 +18,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
-    const [open, setOpen] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const history = useHistory();
 
@@ -30,11 +30,11 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
     useEffect(() => {
         const selected = localStorage.getItem('selected');
-        
+
         if (!selected) {
             history.push('/select', 'Track');
         }
-    
+
         if (selected) {
             const parsed: BlizzAPIBattletag = JSON.parse(selected);
             setBattletag(parsed);
@@ -71,9 +71,9 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         if (res.getMostRecentSeason && res.getMostRecentSeason._id) {
             let str = JSON.stringify({ _season: res.getMostRecentSeason._id });
-            
+
             localStorage.setItem("_season", str);
-            
+
             setSeason(res.getMostRecentSeason);
         } else {
             createSeason();
@@ -108,7 +108,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         getMostRecentSeason();
 
-        setOpen(false);
+        setModalOpen(false);
     }
 
     return (
@@ -136,14 +136,14 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                     </Link>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button onClick={() => setOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
+                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
                 </Grid>
             </Grid>
             {/* <Fab color={'primary'} href={''}>
                 <AddIcon/>
             </Fab> */}
-            <Modal setOpen={setOpen} open={open} title={'Create New Season'} >
-                <ConfirmSeason createSeason={createSeason} setOpen={setOpen} />
+            <Modal modalControls={{modalOpen, setModalOpen}} title={'Create New Season'} >
+                <ConfirmSeason createSeason={createSeason} modalControls={{ modalOpen, setModalOpen }} />
             </Modal>
         </Fragment>
     );

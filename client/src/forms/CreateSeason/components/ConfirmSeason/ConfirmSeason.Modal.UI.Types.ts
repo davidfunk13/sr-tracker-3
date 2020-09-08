@@ -1,6 +1,7 @@
 import {SetStateAction, Dispatch} from 'react';
+import { ModalControls } from '../../../../App.Types';
 
 export default interface ConfirmSeasonTypes{
-    setOpen: Dispatch<SetStateAction<boolean>>
     createSeason: () => void;
+    modalControls: ModalControls
 };

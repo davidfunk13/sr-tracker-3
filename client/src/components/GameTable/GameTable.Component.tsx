@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import useStyles from './GameTable.Component.Styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const GameTable: FunctionComponent<GameTableTypes> = ({ isLoading, games, setOpen }) => {
+const GameTable: FunctionComponent<GameTableTypes> = ({ isLoading, games }) => {
     const classes = useStyles();
 
     return (

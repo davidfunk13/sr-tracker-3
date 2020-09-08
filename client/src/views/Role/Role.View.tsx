@@ -18,7 +18,7 @@ import { HeroEntry } from '../../utils/heroDictionary';
 import GameForm from '../../forms/AddGame';
 
 const Role: FunctionComponent<RoleTypes> = () => {
-    const [open, setOpen] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -75,9 +75,8 @@ const Role: FunctionComponent<RoleTypes> = () => {
             return q + hero.name + q
         }).toString();
 
-        console.log(heroesPlayed)
         const role: RoleKey = convertRole();
-        console.log(role)
+
         const query = `mutation{
           createGame(input: { _season: "${_season}", role: ${role}, heroesPlayed: [${heroesPlayed}], mapPlayed: "${game.mapPlayed.name}", rankIn: ${0}, rankOut: ${game.skillRating}, outcome: ${game.outcome} }){
             _season
@@ -85,8 +84,6 @@ const Role: FunctionComponent<RoleTypes> = () => {
         }`;
 
         const res = await fetchGraphQL(token, query);
-
-        console.log(res);
 
         getGamesOfType(_season);
     }
@@ -134,13 +131,13 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         getGamesOfType(seasonParsed._season);
     }, []);
+
     //end effect to parse localstorage string if it exists
     const containerStyles: CSS.Properties = {
         display: 'flex',
-        height: '75vh',
+        height: '65vh',
         alignItems: 'flex-end',
     }
-
 
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
@@ -155,23 +152,24 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <GameTable isLoading={isLoading} games={games} setOpen={setOpen} />
+                <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
             </Grid>
             <Grid item xs={12}>
-                <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setOpen(true)}>
+                <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
                     <Typography variant={'button'}>Add A Game</Typography>
                 </Button>
             </Grid>
-            <Modal setOpen={setOpen} title={'Add New Game'} open={open}>
-                <GameFormProvider >
+            <GameFormProvider >
+                <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
                     <FormWithSteps
                         styles={containerStyles}
-                        componentDependencies={{ createGame: createGame, role: role, setOpen: setOpen }}
+                        modalControls={{ modalOpen, setModalOpen }}
+                        componentDependencies={{ createGame, role }}
                         formComponent={GameForm}
                         context={GameFormContext}
                     />
-                </GameFormProvider>
-            </Modal>
+                </Modal>
+            </GameFormProvider>
         </Grid>
     )
 }

@@ -9,7 +9,7 @@ import CSS from 'csstype';
 import { GameContextTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
 import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
 
-const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, setOpen }) => {
+const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const [state, setState]: GameContextTypes = useContext<GameContextTypes>(GameFormContext);
@@ -20,6 +20,9 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, setOpen 
 
   const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
 
+  const mapName = state.mapPlayed && state.mapPlayed.name ? state.mapPlayed.name : 'loading...'
+  const mapIcon = state.mapPlayed && state.mapPlayed.icon ? state.mapPlayed.icon : 'loading...'
+  
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -29,8 +32,8 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, setOpen 
       </Grid>
       <Grid item xs={12}>
         <MediaCard
-          title={state.mapPlayed.name}
-          image={state.mapPlayed.icon}
+          title={mapName}
+          image={mapIcon}
         />
       </Grid>
       <Grid item xs={12}>

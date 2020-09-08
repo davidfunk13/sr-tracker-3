@@ -3,7 +3,7 @@ import { HeroEntry } from '../../utils/heroDictionary';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface GameFormTypes {
-    mapPlayed: MapEntry
+    mapPlayed: MapEntry | undefined
     heroesPlayed: HeroEntry[]
     outcome: 0 | 1 | 2 | undefined
     skillRating: number

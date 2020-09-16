@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
@@ -6,10 +6,11 @@ import { heroDictionary } from '../../../../utils/dictionaries';
 import { HeroEntry } from '../../../../utils/heroDictionary';
 import { GameContextTypes, GameFormTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
 import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role }) => {
     const [state, setState]: GameContextTypes = useContext(GameFormContext);
-
+    const [imagesReady, setImagesReady] = useState<boolean>(false);
     const filtered = heroDictionary.filter((hero, i) => {
         if (i === 0) {
             return;
@@ -19,9 +20,18 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
     });
 
     useEffect(() => {
-        filtered.map(hero => {
+        filtered.map((hero, index) => {
             const img = new Image();
-            return img.src = hero.icon.toString();
+            
+            img.src = hero.icon.toString();
+            
+            img.onload = function () {
+                console.log('image loaded...');
+            }
+
+            if (index === filtered.length - 1) {
+                return setImagesReady(true);
+            }
         });
 
     }, [filtered, role]);
@@ -60,8 +70,8 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
             </Grid>
             <Grid item xs={12}>
                 <div style={{ minHeight: "10em", display: 'flex', justifyContent: 'flex-start' }}>
-                    {/* please replace all of this with material ui spacing and components */}
-                    {state.heroesPlayed.map((hero: HeroEntry) =>
+                    {/* please replace all of this with material ui spacing and components */} 
+                    {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
                         <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
                     )}
                 </div>

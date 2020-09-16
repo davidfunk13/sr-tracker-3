@@ -32,12 +32,9 @@ mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUn
 
 const schema = require('./graphql/schema').default;
 
-// app.use(checkJwt);
+app.use(checkJwt);
 
-app.use('/api', graphqlHTTP({
-  schema: schema,
-  graphiql: true,
-}));
+let useGraphiQL = process.env.NODE_ENV === 'production' ? false : true;
 
 if (process.env.NODE_ENV === 'production') {
   //if you have weird errors with storing images etc in static dir this is why. back out a dir.
@@ -47,6 +44,11 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, './client/build/index.html'));
   });
 }
+
+app.use('/api', graphqlHTTP({
+  schema: schema,
+  graphiql: useGraphiQL,
+}));
 
 app.listen(PORT, () => {
   console.log('API listening on 3001');

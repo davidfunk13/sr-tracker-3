@@ -32,8 +32,6 @@ mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUn
 
 const schema = require('./graphql/schema').default;
 
-app.use(checkJwt);
-
 let useGraphiQL = process.env.NODE_ENV === 'production' ? false : true;
 
 if (process.env.NODE_ENV === 'production') {
@@ -45,9 +43,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+const context = () => app.use(checkJwt);
+
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
+  context,
 }));
 
 app.listen(PORT, () => {

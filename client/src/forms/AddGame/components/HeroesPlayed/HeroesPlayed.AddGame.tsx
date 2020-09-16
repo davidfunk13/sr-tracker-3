@@ -22,9 +22,9 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
     useEffect(() => {
         filtered.map((hero, index) => {
             const img = new Image();
-            
+
             img.src = hero.icon.toString();
-            
+
             img.onload = function () {
                 console.log('image loaded...');
             }
@@ -35,6 +35,8 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
         });
 
     }, [filtered, role]);
+
+    useEffect(() => console.log(imagesReady), []);
 
     function selectHero(hero: HeroEntry) {
         let newState: GameFormTypes;
@@ -70,7 +72,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
             </Grid>
             <Grid item xs={12}>
                 <div style={{ minHeight: "10em", display: 'flex', justifyContent: 'flex-start' }}>
-                    {/* please replace all of this with material ui spacing and components */} 
+                    {/* please replace all of this with material ui spacing and components */}
                     {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
                         <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
                     )}
@@ -83,13 +85,15 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
             </Grid>
             <Grid item xs={12}>
                 <Grid style={{ height: '40vh', overflowY: 'auto' }} container spacing={1}>
-                    {filtered.map(hero => {
+                        <CircularProgress style={{ transform: 'translate(-50%, -50%)', margin: "50%" }} size={100} />
+
+                    {/* {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : filtered.map(hero => {
                         return (
                             <Grid key={hero.name} item xs={3}>
                                 <img style={{ width: '100%' }} key={hero.name} onClick={() => selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
                             </Grid>
                         )
-                    })}
+                    })} */}
                 </Grid>
             </Grid>
         </Grid>

@@ -43,12 +43,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const context = () => app.use(checkJwt);
 
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
-  context,
+  context: app.use(checkJwt),
 }));
 
 app.listen(PORT, () => {

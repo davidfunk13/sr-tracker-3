@@ -4,13 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
 import { HeroEntry } from '../../../../utils/heroDictionary';
-import { GameContextTypes, GameFormTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
-import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role }) => {
-    const [state, setState]: GameContextTypes = useContext(GameFormContext);
+    // const [state, setState]: GameContextTypes = useContext(GameFormContext);
+
     const [imagesReady, setImagesReady] = useState<boolean>(false);
+
     const filtered = heroDictionary.filter((hero, i) => {
         if (i === 0) {
             return;
@@ -38,30 +38,30 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
 
     useEffect(() => console.log(imagesReady), []);
 
-    function selectHero(hero: HeroEntry) {
-        let newState: GameFormTypes;
+    // function selectHero(hero: HeroEntry) {
+    //     let newState: GameFormTypes;
 
-        const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
+    //     const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
 
-        const selected: HeroEntry[] = state.heroesPlayed;
+    //     const selected: HeroEntry[] = state.heroesPlayed;
 
-        if (selected.length === 3 && !exists) {
-            //return error message above component.
-            return
-        }
+    //     if (selected.length === 3 && !exists) {
+    //         //return error message above component.
+    //         return
+    //     }
 
-        if (exists) {
-            const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
+    //     if (exists) {
+    //         const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
 
-            newState = { ...state, heroesPlayed: removeItem }
+    //         newState = { ...state, heroesPlayed: removeItem }
 
-            return setState(newState);
-        }
+    //         return setState(newState);
+    //     }
 
-        newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
+    //     newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
 
-        setState(newState);
-    }
+    //     setState(newState);
+    // }
 
     return (
         <Grid container spacing={1}>
@@ -73,9 +73,9 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role
             <Grid item xs={12}>
                 <div style={{ minHeight: "10em", display: 'flex', justifyContent: 'flex-start' }}>
                     {/* please replace all of this with material ui spacing and components */}
-                    {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
+                    {/* {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
                         <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
-                    )}
+                    )} */}
                 </div>
             </Grid>
             <Grid item xs={12}>

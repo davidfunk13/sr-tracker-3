@@ -4,22 +4,20 @@ import SelectMapProps from './SelectMap.AddGame.Types';
 import mapDictionary, { MapEntry } from '../../../../utils/mapDictionary';
 import Grid from '@material-ui/core/Grid';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
-import { GameContextTypes } from '../../../../contexts/GameFormContextV2/GameFormContextTypes';
-import { GameFormContext } from '../../../../contexts/GameFormContextV2/GameFormContext';
 import { FormControls } from '../../../../App.Types';
 
 const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
-    const [state, setState]: GameContextTypes = useContext(GameFormContext);
+    // const [state, setState]: GameContextTypes = useContext(GameFormContext);
 
     const { step, setStep, isDisabled, setIsDisabled }: FormControls = formControls;
 
     //enum for maps use here
-    function selectMap(val: MapEntry) {
-        const newState = { ...state, mapPlayed: val };
-        setState(newState);
-        const newStep = step + 1;
-        setStep(newStep);
-    }
+    // function selectMap(val: MapEntry) {
+    //     const newState = { ...state, mapPlayed: val };
+    //     setState(newState);
+    //     const newStep = step + 1;
+    //     setStep(newStep);
+    // }
 
     useEffect(() => {
         mapDictionary.map(map => {
@@ -28,14 +26,14 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
         });
     }, []);
 
-    useEffect(() => {
-        if (!state.mapPlayed) {
-            return setIsDisabled(true);
-        }
+    // useEffect(() => {
+    //     if (!state.mapPlayed) {
+    //         return setIsDisabled(true);
+    //     }
 
-        return () => setIsDisabled(false);
+    //     return () => setIsDisabled(false);
         
-    }, [state]);
+    // }, [state]);
 
     return (
         <Grid container spacing={2}>
@@ -46,11 +44,11 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid style={{ height: '60vh', overflowY: 'auto' }} container spacing={2}>
-                    {mapDictionary.map(map => {
+                    {/* {mapDictionary.map(map => {
                         return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
                             <MediaCard image={map.icon.toString()} title={map.name} />
                         </Grid>;
-                    })}
+                    })} */}
                 </Grid>
             </Grid>
         </Grid>

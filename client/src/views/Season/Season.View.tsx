@@ -8,7 +8,6 @@ import DamageIcon from '../../assets/icons/roles/Damage.png';
 import SupportIcon from '../../assets/icons/roles/Support.png';
 import TankIcon from '../../assets/icons/roles/Tank.png';
 import Modal from '../../UI/Modal/Modal.UI';
-import ConfirmSeason from '../../forms/CreateSeason/components/ConfirmSeason/ConfirmSeason.Modal.UI';
 import { useHistory } from 'react-router-dom';
 import { BlizzAPIBattletag } from '../../App.Types';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
@@ -16,6 +15,7 @@ import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import AddSeason from '../../forms/AddSeason/AddSeason.Modal.UI';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -143,7 +143,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                 <AddIcon/>
             </Fab> */}
             <Modal modalControls={{modalOpen, setModalOpen}} title={'Create New Season'} >
-                <ConfirmSeason createSeason={createSeason} modalControls={{ modalOpen, setModalOpen }} />
+                <AddSeason createSeason={createSeason} modalControls={{ modalOpen, setModalOpen }} />
             </Modal>
         </Fragment>
     );

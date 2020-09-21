@@ -7,13 +7,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
-import { GameFormContext, initialGameFormState } from '../../contexts/GameFormContextV2/GameFormContext';
-import { GameContextTypes } from '../../contexts/GameFormContextV2/GameFormContextTypes';
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & { children?: React.ReactElement<any, any> }, ref: React.Ref<unknown>,) { return <Slide direction="up" ref={ref} {...props} />; });
 
 const Modal: React.FC<ModalTypes> = ({ children, modalControls, title, isFullScreen }) => {
-    const [state, setState]: GameContextTypes = useContext(GameFormContext);
+    // const [state, setState]: GameContextTypes = useContext(GameFormContext);
 
     const theme = useTheme();
 
@@ -23,7 +21,7 @@ const Modal: React.FC<ModalTypes> = ({ children, modalControls, title, isFullScr
 
     function resetForm () {
         setModalOpen(false);
-        setState(initialGameFormState);
+        // setState(initialGameFormState);
         return;
     }
     

@@ -1,10 +1,14 @@
-import React, { FunctionComponent, useEffect, Fragment, useState } from 'react';
-// import SeasonFormContext from '../../../contexts/SeasonFormContext/SeasonFormContext.Context';
-import ConfirmSeasonTypes from './ConfirmSeason.Modal.UI.Types';
+import React, { FunctionComponent, Fragment } from 'react';
 import { Typography, Button, DialogActions } from '@material-ui/core';
+import { ModalControls } from '../../App.Types';
 
-const ConfirmSeason: FunctionComponent<ConfirmSeasonTypes> = ({ createSeason, modalControls }) => {
-    const { setModalOpen, modalOpen } = modalControls;
+export interface AddSeasonTypes {
+    createSeason: () => void;
+    modalControls: ModalControls
+};
+
+const AddSeason: FunctionComponent<AddSeasonTypes> = ({ createSeason, modalControls }) => {
+    const { setModalOpen, modalOpen }: ModalControls = modalControls;
 
     return (
         <Fragment>
@@ -27,4 +31,4 @@ const ConfirmSeason: FunctionComponent<ConfirmSeasonTypes> = ({ createSeason, mo
     );
 }
 
-export default ConfirmSeason;
+export default AddSeason;

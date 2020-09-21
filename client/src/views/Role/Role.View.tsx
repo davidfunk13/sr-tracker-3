@@ -8,14 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
 import Button from '@material-ui/core/Button';
-import GameFormProvider, { GameFormContext } from '../../contexts/GameFormContextV2/GameFormContext';
 import { useHistory } from 'react-router-dom';
-import { RoleEnum, RoleKey, RoleName, Game } from '../../App.Types';
+import { RoleEnum, RoleKey, RoleName, Game, HeroEntry } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
-import FormWithSteps from '../../forms/FormWithSteps/FormWithSteps';
 import { useAuth0 } from '../../react-auth0-spa';
-import { HeroEntry } from '../../utils/heroDictionary';
 import GameForm from '../../forms/AddGame';
+import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -159,15 +157,9 @@ const Role: FunctionComponent<RoleTypes> = () => {
                     <Typography variant={'button'}>Add A Game</Typography>
                 </Button>
             </Grid>
-            <GameFormProvider >
+            <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
-                    <FormWithSteps
-                        styles={containerStyles}
-                        modalControls={{ modalOpen, setModalOpen }}
-                        componentDependencies={{ createGame, role }}
-                        formComponent={GameForm}
-                        context={GameFormContext}
-                    />
+                    <GameForm />
                 </Modal>
             </GameFormProvider>
         </Grid>

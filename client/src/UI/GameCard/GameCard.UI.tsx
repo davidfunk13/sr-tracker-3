@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import GameCardTypes from './GameCard.UI.Types';
 import Grid from '@material-ui/core/Grid';
-import { GameFormContext } from '../../contexts/GameFormContext/GameFormContext.Context';
 import { HeroEntry } from '../../utils/heroDictionary';
 import Win from '../../assets/icons/other/win.png';
 import Loss from '../../assets/icons/other/loss.png';
@@ -34,7 +33,7 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
 
     const classes = useStyles();
 
-    const [state, setState]: any = useContext(GameFormContext);
+    // const [state, setState]: any = useContext(GameFormContext);
 
     function generateOutcomeIcon(outcome: number) {
         switch (outcome) {
@@ -64,9 +63,9 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
         }
     }
 
-    const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
+    // const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
     
-    const outcomeString: string | undefined = generateOutcomeString(state.outcome);
+    // const outcomeString: string | undefined = generateOutcomeString(state.outcome);
 
     return (
         <Grid container spacing={2}>
@@ -89,7 +88,7 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
             <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
-                        <CardMedia
+                        {/* <CardMedia
                             className={classes.media}
                             image={iconPath}
                             title={state.outcome}
@@ -98,7 +97,7 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                             <Typography gutterBottom variant="h5" component="h2">
                             {outcomeString}
                             </Typography>
-                        </CardContent>
+                        </CardContent> */}
                     </CardActionArea>
                 </Card>
             </Grid>
@@ -106,11 +105,11 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                 <Card className={classes.root}>
                     <CardActionArea>
                         <div className={classes.heroCardFlex}>
-                            {state.heroesPlayed.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)}
+                            {/* {state.heroesPlayed.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)} */}
                         </div>
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                {state.heroesPlayed.map((hero: HeroEntry) => ' ' + hero.name)}
+                                {/* {state.heroesPlayed.map((hero: HeroEntry) => ' ' + hero.name)} */}
                             </Typography>
                             <Typography gutterBottom variant="h5" component="h2">
                                 Heroes Played

@@ -1,13 +1,4 @@
-import { RoleKey, RoleName } from '../App.Types';
-
-export interface HeroEntry {
-    name: string,
-    heroKey: string,
-    roleKey: RoleKey,
-    roleName: RoleName,
-    icon: NodeRequire,
-    subCategory: string,
-};
+import { HeroEntry } from '../App.Types';
 
 //this is not a dictionary. refactor this to be used as an actual dictionary to improve fetch times.
 const heroDictionary: HeroEntry[] = [

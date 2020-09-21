@@ -1,8 +1,4 @@
-export interface MapEntry {
-    name: string
-    type: string
-    icon: NodeRequire | string
-}
+import { MapEntry } from "../App.Types";
 
 const mapDictionary: MapEntry[] = [
     {

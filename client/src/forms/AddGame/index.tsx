@@ -6,7 +6,7 @@ import SkillRating from './components/SkillRating/SkillRating.AddGame';
 import { GameFormContextType, ModalControls, RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 import GameFormContext from '../../contexts/GameForm/GameFormContext';
-import useStyles from '../formStyles';
+
 
 export interface ComponentDependenciesTypes {
     createGame: (game: any) => void
@@ -22,8 +22,6 @@ const GameForm: FunctionComponent<GameFormProps> = ({ modalControls, componentDe
     const [state, setState] = useContext<GameFormContextType>(GameFormContext);
 
     const { createGame, role } = componentDependencies
-
-    const classes = useStyles();
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {

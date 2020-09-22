@@ -3,11 +3,12 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
-import { HeroEntry } from '../../../../utils/heroDictionary';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { GameFormContextType } from '../../../../App.Types';
+import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
 
-const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ formControls, role }) => {
-    // const [state, setState]: GameContextTypes = useContext(GameFormContext);
+const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
+    const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
     const [imagesReady, setImagesReady] = useState<boolean>(false);
 

@@ -159,7 +159,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
-                    <GameForm />
+                    <GameForm componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
                 </Modal>
             </GameFormProvider>
         </Grid>

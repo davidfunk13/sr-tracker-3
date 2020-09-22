@@ -1,5 +1,5 @@
-import { RoleEnum, FormComponentTypes } from "../../../../App.Types";
+import { RoleEnum } from "../../../../App.Types";
 
-export default interface HeroesPlayedTypes extends FormComponentTypes {
+export default interface HeroesPlayedTypes  {
     role: RoleEnum
 }

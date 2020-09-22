@@ -6,7 +6,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles'
-import { HeroEntry } from '../../utils/heroDictionary';
+import { HeroEntry } from '../../App.Types';
+
 
 const useStyles = makeStyles({
     root: {

@@ -6,15 +6,18 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import CSS from 'csstype';
+import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
+  const [state, setState] = useContext(GameFormContext);
 
-  // const rank: YourRank = useGetRank(state.skillRating);
+  const srInput = state.skillRating ? state.skillRating : 0;
 
-  // const role: string = state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1);
+  const rank: YourRank = useGetRank(srInput);
+
+  const role: string = state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1);
 
   const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
-
   
   return (
     <Grid container spacing={2}>
@@ -30,26 +33,26 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        {/* <MediaCard
+        <MediaCard
           cardMediaStyle={cardPictureStyles}
           title={role}
           multiImage={state.heroesPlayed}
-        /> */}
+        />
       </Grid>
       <Grid item xs={12}>
-        {/* <MediaCard
+        <MediaCard
           cardMediaStyle={cardPictureStyles}
           title={generateOutcomeString(state.outcome)}
           image={generateOutcomeIcon(state.outcome)}
-        /> */}
+        />
       </Grid>
       <Grid item xs={12}>
-        {/* <MediaCard
+        <MediaCard
           cardMediaStyle={{ backgroundSize: "contain" }}
           title={rank.skillRating.toString()}
           subtitle={rank.name}
           image={rank.icon}
-        /> */}
+        />
       </Grid>
     </Grid>
   );

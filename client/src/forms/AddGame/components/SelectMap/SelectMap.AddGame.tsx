@@ -1,23 +1,22 @@
-import React, { useEffect, FunctionComponent, useContext } from 'react';
+import React, { useEffect, FunctionComponent, useContext, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import SelectMapProps from './SelectMap.AddGame.Types';
-import mapDictionary, { MapEntry } from '../../../../utils/mapDictionary';
+import mapDictionary from '../../../../utils/mapDictionary';
 import Grid from '@material-ui/core/Grid';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
-import { FormControls } from '../../../../App.Types';
+import { GameFormContextType, MapEntry } from '../../../../App.Types';
+import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
 
-const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
-    // const [state, setState]: GameContextTypes = useContext(GameFormContext);
+const SelectMap: FunctionComponent<SelectMapProps> = () => {
+    const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
-    const { step, setStep, isDisabled, setIsDisabled }: FormControls = formControls;
+    const [disabled, setDisabled] = useState<boolean>(true);
 
-    //enum for maps use here
-    // function selectMap(val: MapEntry) {
-    //     const newState = { ...state, mapPlayed: val };
-    //     setState(newState);
-    //     const newStep = step + 1;
-    //     setStep(newStep);
-    // }
+    // enum for maps use here
+    function selectMap(val: MapEntry) {
+        const newState = { ...state, mapPlayed: val, step: state.step + 1 };
+        setState(newState);
+    }
 
     useEffect(() => {
         mapDictionary.map(map => {
@@ -26,14 +25,14 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
         });
     }, []);
 
-    // useEffect(() => {
-    //     if (!state.mapPlayed) {
-    //         return setIsDisabled(true);
-    //     }
+    useEffect(() => {
+        if (!state.mapPlayed) {
+            return setDisabled(true);
+        }
 
-    //     return () => setIsDisabled(false);
+        return () => setDisabled(false);
         
-    // }, [state]);
+    }, [state]);
 
     return (
         <Grid container spacing={2}>
@@ -44,11 +43,11 @@ const SelectMap: FunctionComponent<SelectMapProps> = ({ formControls }) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid style={{ height: '60vh', overflowY: 'auto' }} container spacing={2}>
-                    {/* {mapDictionary.map(map => {
+                    {mapDictionary.map(map => {
                         return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
                             <MediaCard image={map.icon.toString()} title={map.name} />
                         </Grid>;
-                    })} */}
+                    })}
                 </Grid>
             </Grid>
         </Grid>

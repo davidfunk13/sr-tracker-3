@@ -3,9 +3,10 @@ import SelectMap from './components/SelectMap/SelectMap.AddGame';
 import HeroesPlayed from './components/HeroesPlayed/HeroesPlayed.AddGame';
 import Outcome from './components/Outcome/Outcome.AddGame';
 import SkillRating from './components/SkillRating/SkillRating.AddGame';
-import { GameFormContextType, RoleEnum } from '../../App.Types'
+import { GameFormContextType, ModalControls, RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 import GameFormContext from '../../contexts/GameForm/GameFormContext';
+import useStyles from '../formStyles';
 
 export interface ComponentDependenciesTypes {
     createGame: (game: any) => void
@@ -13,45 +14,34 @@ export interface ComponentDependenciesTypes {
 }
 
 export interface GameFormProps {
-    // componentDependencies: ComponentDependenciesTypes
+    modalControls: ModalControls,
+    componentDependencies: ComponentDependenciesTypes
 }
 
-const GameForm: FunctionComponent<GameFormProps> = ({
-    // formControls,
-    // modalControls,
-    // componentDependencies
-}) => {
+const GameForm: FunctionComponent<GameFormProps> = ({ modalControls, componentDependencies }) => {
     const [state, setState] = useContext<GameFormContextType>(GameFormContext);
 
-    // const { createGame, role } = componentDependencies
+    const { createGame, role } = componentDependencies
+
+    const classes = useStyles();
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {
-            // case 0:
-            //     return <SelectMap modalControls={modalControls} formControls={formControls} />
-            // case 1:
-            //     return <HeroesPlayed modalControls={modalControls} formControls={formControls} role={role} />
-            // case 2:
-            //     return <Outcome modalControls={modalControls} formControls={formControls} />
-            // case 3:
-            //     return <SkillRating modalControls={modalControls} formControls={formControls} />
-            // case 4:
-            //     return <ConfirmGame modalControls={modalControls} formControls={formControls} createGame={createGame} />
             case 0:
-                return <p>0</p>
+                return <SelectMap />
             case 1:
-                return <p>1</p>
+                return <HeroesPlayed role={role} />
             case 2:
-                return <p>2</p>
+                return <Outcome />
             case 3:
-                return <p>3</p>
+                return <SkillRating />
             case 4:
-                return <p>4</p>
+                return <ConfirmGame modalControls={modalControls} createGame={createGame} />
             default:
                 return <h4>Something went wrong</h4>;
         }
     }
-    return renderComponent(formControls.step);
+    return renderComponent(state.step);
 };
 
 export default GameForm;

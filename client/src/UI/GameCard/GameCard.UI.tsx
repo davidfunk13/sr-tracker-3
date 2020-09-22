@@ -9,10 +9,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import GameCardTypes from './GameCard.UI.Types';
 import Grid from '@material-ui/core/Grid';
-import { HeroEntry } from '../../utils/heroDictionary';
 import Win from '../../assets/icons/other/win.png';
 import Loss from '../../assets/icons/other/loss.png';
 import Draw from '../../assets/icons/other/draw.png';
+import { GameFormContextType, HeroEntry } from '../../App.Types';
+import GameFormContext from '../../contexts/GameForm/GameFormContext';
 
 const useStyles = makeStyles({
     root: {
@@ -33,9 +34,9 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
 
     const classes = useStyles();
 
-    // const [state, setState]: any = useContext(GameFormContext);
+    const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
-    function generateOutcomeIcon(outcome: number) {
+    function generateOutcomeIcon(outcome: number | undefined) {
         switch (outcome) {
             case 0:
                 return Loss;
@@ -43,13 +44,12 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                 return Win;
             case 2:
                 return Draw
-        
             default:
                 break;
         }
     }
 
-    function generateOutcomeString(outcome: number) {
+    function generateOutcomeString(outcome: number | undefined) {
         switch (outcome) {
             case 0:
                 return 'Defeat';
@@ -57,47 +57,51 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                 return 'Victory';
             case 2:
                 return 'Draw';
-        
             default:
                 break;
         }
     }
 
-    // const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
-    
-    // const outcomeString: string | undefined = generateOutcomeString(state.outcome);
+    const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
+
+    const outcomeString: string | undefined = generateOutcomeString(state.outcome);
+
+    const mapImage = state.mapPlayed && state.mapPlayed.icon ? state.mapPlayed.icon.toString() : 'Error';
+
+    const mapName = state.mapPlayed && state.mapPlayed.name ? state.mapPlayed.name : 'Error';
 
     return (
         <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
-                            image={state.mapPlayed.icon}
-                            title={state.mapPlayed.name}
+                            image={mapImage}
+                            title={mapName}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                                {state.mapPlayed.name}
+                                {mapName}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
                 </Card>
-            </Grid> */}
+            </Grid>
             <Grid item xs={12}>
                 <Card className={classes.root}>
                     <CardActionArea>
-                        {/* <CardMedia
+                        <CardMedia
+                            component={'div'}
                             className={classes.media}
                             image={iconPath}
-                            title={state.outcome}
+                            title={outcomeString}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                            {outcomeString}
+                                {outcomeString}
                             </Typography>
-                        </CardContent> */}
+                        </CardContent>
                     </CardActionArea>
                 </Card>
             </Grid>
@@ -105,25 +109,25 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
                 <Card className={classes.root}>
                     <CardActionArea>
                         <div className={classes.heroCardFlex}>
-                            {/* {state.heroesPlayed.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)} */}
+                            {state.heroesPlayed.map((hero: HeroEntry) => <img className={classes.heroCardImg} src={hero.icon.toString()} alt={hero.name} />)}
                         </div>
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                {/* {state.heroesPlayed.map((hero: HeroEntry) => ' ' + hero.name)} */}
+                                {state.heroesPlayed.map((hero: HeroEntry) => ' ' + hero.name)}
                             </Typography>
                             <Typography gutterBottom variant="h5" component="h2">
                                 Heroes Played
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    {/* <CardActions>
+                    <CardActions>
                         <Button size="small" color="primary">
                             Submit
                         </Button>
                         <Button size="small" color="secondary">
                             Reset
                         </Button>
-                    </CardActions> */}
+                    </CardActions>
                 </Card>
             </Grid>
         </Grid>

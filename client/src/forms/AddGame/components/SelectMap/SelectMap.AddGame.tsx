@@ -32,11 +32,10 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
     }, []);
 
     useEffect(() => {
-        if (!state.mapPlayed) {
-            return setDisabled(true);
+        if (state && state.mapPlayed && state.mapPlayed.name) {
+            return setDisabled(false);
         }
 
-        return () => setDisabled(false);
 
     }, [state]);
 
@@ -54,7 +53,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
                     </Grid>;
                 })}
             </Grid>
-                <Stepper />
+            <Stepper disabled={disabled} />
         </FormComponentWrapper>
     )
 }

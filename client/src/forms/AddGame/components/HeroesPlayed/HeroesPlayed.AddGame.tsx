@@ -4,13 +4,17 @@ import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
 import { heroDictionary } from '../../../../utils/dictionaries';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { GameFormContextType } from '../../../../App.Types';
+import { GameForm, GameFormContextType, HeroEntry } from '../../../../App.Types';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
+import Stepper from '../../../Stepper';
+import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 
 const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
     const [imagesReady, setImagesReady] = useState<boolean>(false);
+
+    const [disabled, setDisabled] = useState<boolean>(true);
 
     const filtered = heroDictionary.filter((hero, i) => {
         if (i === 0) {
@@ -37,67 +41,68 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
 
     }, [filtered, role]);
 
-    useEffect(() => console.log(imagesReady), []);
+    useEffect(() => {
+        if (state.heroesPlayed.length) {
+            setDisabled(false);
+        }
 
-    // function selectHero(hero: HeroEntry) {
-    //     let newState: GameFormTypes;
+        if (!state.heroesPlayed.length) {
+            setDisabled(true);
+        }
 
-    //     const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
+    }, [state.heroesPlayed])
 
-    //     const selected: HeroEntry[] = state.heroesPlayed;
+    function selectHero(hero: HeroEntry) {
+        let newState: GameForm;
 
-    //     if (selected.length === 3 && !exists) {
-    //         //return error message above component.
-    //         return
-    //     }
+        const exists: HeroEntry = state.heroesPlayed.filter((item: HeroEntry) => item.name === hero.name)[0];
 
-    //     if (exists) {
-    //         const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
+        const selected: HeroEntry[] = state.heroesPlayed;
 
-    //         newState = { ...state, heroesPlayed: removeItem }
+        if (selected.length === 3 && !exists) {
+            //return error message above component.
+            return
+        }
 
-    //         return setState(newState);
-    //     }
+        if (exists) {
+            const removeItem: HeroEntry[] = selected.filter((item: HeroEntry) => item.name !== hero.name);
 
-    //     newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
+            newState = { ...state, heroesPlayed: removeItem }
 
-    //     setState(newState);
-    // }
+            return setState(newState);
+        }
+
+        newState = { ...state, heroesPlayed: [...state.heroesPlayed, hero] };
+
+        setState(newState);
+    }
 
     return (
-        <Grid container spacing={1}>
+        <FormComponentWrapper spacing={2}>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     Selected
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                <div style={{ minHeight: "10em", display: 'flex', justifyContent: 'flex-start' }}>
-                    {/* please replace all of this with material ui spacing and components */}
-                    {/* {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
-                        <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
-                    )} */}
-                </div>
-            </Grid>
+            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
+                    <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
+                )}
+            </div>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={"subtitle2"}>
                     Main Heroes
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                <Grid style={{ height: '40vh', overflowY: 'auto' }} container spacing={1}>
-                        <CircularProgress style={{ transform: 'translate(-50%, -50%)', margin: "50%" }} size={100} />
-
-                    {/* {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : filtered.map(hero => {
-                        return (
-                            <Grid key={hero.name} item xs={3}>
-                                <img style={{ width: '100%' }} key={hero.name} onClick={() => selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
-                            </Grid>
-                        )
-                    })} */}
-                </Grid>
+            <Grid style={{ display: 'flex', flexWrap: 'wrap', maxHeight: '50%', overflowY: 'auto' }} item xs={12}>
+                {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : filtered.map(hero => {
+                    return (
+                        <img style={{width: '25%'}} key={hero.name} onClick={() => selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
+                    )
+                })}
             </Grid>
-        </Grid>
+            <Stepper disabled={disabled} />
+        </FormComponentWrapper>
     )
 };
 

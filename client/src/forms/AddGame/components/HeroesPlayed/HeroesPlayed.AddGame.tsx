@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState, Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
@@ -78,15 +78,15 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     }
 
     return (
-        <FormComponentWrapper spacing={2}>
+        <FormComponentWrapper spacing={1}>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     Selected
                 </Typography>
             </Grid>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-start', height: '20%', width: '100%' }}>
                 {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
-                    <img key={hero.name} style={{ maxWidth: '20%', flex: '1 1 auto' }} src={hero.icon.toString()} alt={hero.name} />
+                    <img style={{ width: '23%' }} key={hero.name} src={hero.icon.toString()} alt={hero.name} />
                 )}
             </div>
             <Grid item xs={12}>
@@ -94,10 +94,10 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                     Main Heroes
                 </Typography>
             </Grid>
-            <Grid style={{ display: 'flex', flexWrap: 'wrap', maxHeight: '50%', overflowY: 'auto' }} item xs={12}>
+            <Grid style={{ display: 'flex', flexWrap: 'wrap', height: '50%', overflowY: 'auto' }} item xs={12}>
                 {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : filtered.map(hero => {
                     return (
-                        <img style={{width: '25%'}} key={hero.name} onClick={() => selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
+                        <img style={{ width: '25%' }} key={hero.name} onClick={() => selectHero(hero)} src={hero.icon.toString()} alt={hero.name} />
                     )
                 })}
             </Grid>

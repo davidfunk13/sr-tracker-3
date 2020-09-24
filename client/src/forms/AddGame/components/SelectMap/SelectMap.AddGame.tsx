@@ -35,12 +35,11 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
         if (state && state.mapPlayed && state.mapPlayed.name) {
             return setDisabled(false);
         }
-
-
+        
     }, [state]);
 
     return (
-        <FormComponentWrapper spacing={2} >
+        <FormComponentWrapper spacing={1} >
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     What map are you playing?

@@ -21,7 +21,6 @@ const Stepper: React.FC<StepperTypes> = ({ disabled }) => {
             display: 'flex',
             width: '100%',
             margin: '1em 0',
-            maxHeight: '2.5em'
         },
         item: {
             flex: 1,

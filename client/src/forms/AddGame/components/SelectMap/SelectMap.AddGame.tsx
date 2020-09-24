@@ -39,13 +39,13 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
     }, [state]);
 
     return (
-        <FormComponentWrapper spacing={1} >
+        <FormComponentWrapper >
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     What map are you playing?
                 </Typography>
             </Grid>
-            <Grid className={classes.mapContainerHeight} item xs={12}>
+            <Grid container spacing={2} className={classes.mapContainerHeight} >
                 {mapDictionary.map(map => {
                     return <Grid key={map.name} item xs={12} sm={6} onClick={() => selectMap(map)}>
                         <MediaCard image={map.icon.toString()} title={map.name} />

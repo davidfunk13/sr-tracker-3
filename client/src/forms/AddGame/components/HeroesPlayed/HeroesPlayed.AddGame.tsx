@@ -78,7 +78,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
     }
 
     return (
-        <FormComponentWrapper spacing={1}>
+        <FormComponentWrapper>
             <Grid item xs={12}>
                 <Typography variant={"subtitle2"}>
                     Selected

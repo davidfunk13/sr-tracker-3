@@ -1,5 +1,5 @@
 import CSS from 'csstype';
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import OutcomeProps from './Outcome.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
@@ -9,9 +9,12 @@ import Draw from '../../../../assets/icons/other/draw.png';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
 import { GameForm, GameFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
+import Stepper from '../../../Stepper';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
+
+    const [disabled, setDisabled] = useState<boolean>(true);
 
     function selectOutcome(val: 0 | 1 | 2) {
         const newState: GameForm = {
@@ -24,6 +27,17 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
     };
 
     const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
+
+    useEffect(()=> {
+        if(state.outcome === undefined) {
+            setDisabled(true);
+        }
+        
+        if(state.outcome !== undefined) {
+            setDisabled(false);
+        }
+
+    },[state.outcome])
 
     return (
         <FormComponentWrapper>
@@ -53,6 +67,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
                     />
                 </Grid>
             </Grid>
+            <Stepper disabled={disabled} />
         </FormComponentWrapper>
     );
 }

@@ -41,7 +41,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
 
     return (
         <FormComponentWrapper>
-            <Grid style={{ overflowY: 'auto', height: '95%' }} container spacing={2}>
+            <Grid style={{ overflowY: 'auto', height: '85%' }} container spacing={2}>
                 <Grid item xs={12} sm={4}>
                     <MediaCard
                         cardMediaStyle={cardPictureStyles}

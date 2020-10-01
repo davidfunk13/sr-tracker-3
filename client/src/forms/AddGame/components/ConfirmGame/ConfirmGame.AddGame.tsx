@@ -1,4 +1,4 @@
-import React, { useContext, FunctionComponent } from 'react';
+import React, { useState, useContext, FunctionComponent } from 'react';
 import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
@@ -7,9 +7,14 @@ import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import CSS from 'csstype';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
+import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
+import Stepper from '../../../Stepper';
+import useStyles from './ConfirmGame.AddGame.Styles';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
   const [state, setState] = useContext(GameFormContext);
+
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   const srInput = state.skillRating ? state.skillRating : 0;
 
@@ -18,43 +23,50 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
   const role: string = state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1);
 
   const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
-  
+
+  const mapName = state.mapPlayed?.name || 'loading...';
+
+  const classes = useStyles();
+
   return (
-    <Grid container spacing={2}>
+    <FormComponentWrapper>
       <Grid item xs={12}>
         <Typography variant={"subtitle2"} >
           Confirm New Game Addition
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <MediaCard
-          title={'mapName'}
-          image={'mapIcon'}
-        />
+      <Grid className={classes.innerContainer} container>
+        <Grid item xs={12}>
+          <MediaCard
+            title={mapName}
+            image={state.mapPlayed?.icon}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard
+            cardMediaStyle={cardPictureStyles}
+            title={role}
+            multiImage={state.heroesPlayed}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard
+            cardMediaStyle={cardPictureStyles}
+            title={generateOutcomeString(state.outcome)}
+            image={generateOutcomeIcon(state.outcome)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <MediaCard
+            cardMediaStyle={{ backgroundSize: "contain" }}
+            title={rank.skillRating.toString()}
+            subtitle={rank.name}
+            image={rank.icon}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <MediaCard
-          cardMediaStyle={cardPictureStyles}
-          title={role}
-          multiImage={state.heroesPlayed}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <MediaCard
-          cardMediaStyle={cardPictureStyles}
-          title={generateOutcomeString(state.outcome)}
-          image={generateOutcomeIcon(state.outcome)}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <MediaCard
-          cardMediaStyle={{ backgroundSize: "contain" }}
-          title={rank.skillRating.toString()}
-          subtitle={rank.name}
-          image={rank.icon}
-        />
-      </Grid>
-    </Grid>
+      <Stepper disabled={disabled} />
+    </FormComponentWrapper>
   );
 }
 

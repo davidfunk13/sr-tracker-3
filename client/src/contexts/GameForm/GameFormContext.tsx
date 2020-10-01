@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 import { GameForm, GameFormContextType } from "../../App.Types";
 
-
 export const initialGameFormState: GameForm = {
     step: 0,
     mapPlayed: undefined,
@@ -9,7 +8,6 @@ export const initialGameFormState: GameForm = {
     outcome: undefined,
     skillRating: undefined,
 }
-
 
 const GameFormContext = createContext<GameFormContextType>([initialGameFormState, () => null]);
 

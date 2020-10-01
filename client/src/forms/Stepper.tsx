@@ -8,9 +8,10 @@ import GameFormContext from '../contexts/GameForm/GameFormContext';
 
 interface StepperTypes {
     disabled: boolean
+    last?: boolean
 }
 
-const Stepper: React.FC<StepperTypes> = ({ disabled }) => {
+const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
 
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
@@ -28,7 +29,6 @@ const Stepper: React.FC<StepperTypes> = ({ disabled }) => {
         first: {
             marginRight: '.5em',
         }
-
     }));
 
     const classes = useStyles();

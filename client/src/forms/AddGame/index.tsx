@@ -7,7 +7,6 @@ import { GameFormContextType, ModalControls, RoleEnum } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 import GameFormContext from '../../contexts/GameForm/GameFormContext';
 
-
 export interface ComponentDependenciesTypes {
     createGame: (game: any) => void
     role: RoleEnum

@@ -21,7 +21,6 @@ const onRedirectCallback: any = (appState: { targetUrl: string; }) => {
 };
 
 ReactDOM.render(
-  // <React.StrictMode>
   <Fragment>
     <ReactNotification isMobile={true} />
     <Auth0Provider
@@ -36,7 +35,6 @@ ReactDOM.render(
       </ThemeProvider>
     </Auth0Provider>
     </Fragment>,
-  // </React.StrictMode>,
   document.getElementById('root')
 );
 

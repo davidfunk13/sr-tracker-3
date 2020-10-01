@@ -39,7 +39,7 @@ const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
         }
 
         return setPrevDisabled(false);
-        
+
     }, [state.step])
 
     function next() {
@@ -61,7 +61,7 @@ const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
             </Button>
             <Button onClick={next} className={classes.item} disabled={disabled} variant={"contained"} color={"primary"} >
                 <Typography variant={"button"}>
-                    Next
+                    {last ? 'Submit' : 'Next'}
                 </Typography>
             </Button>
         </div >

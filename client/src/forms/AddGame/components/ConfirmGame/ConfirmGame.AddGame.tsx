@@ -65,7 +65,7 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
           />
         </Grid>
       </Grid>
-      <Stepper disabled={disabled} />
+      <Stepper submit={createGame} disabled={false} />
     </FormComponentWrapper>
   );
 }

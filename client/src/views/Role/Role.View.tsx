@@ -9,10 +9,10 @@ import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import { RoleEnum, RoleKey, RoleName, Game, HeroEntry } from '../../App.Types';
+import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useAuth0 } from '../../react-auth0-spa';
-import GameForm from '../../forms/AddGame';
+import GameFormComponent from '../../forms/AddGame';
 import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
 
 const Role: FunctionComponent<RoleTypes> = () => {
@@ -39,7 +39,6 @@ const Role: FunctionComponent<RoleTypes> = () => {
     const seasonStorage = localStorage.getItem('_season');
 
     // function to convert string used for title on role page to a role key the api understands
-
     function convertRole() {
         switch (role) {
             case RoleEnum.Tank:
@@ -54,8 +53,19 @@ const Role: FunctionComponent<RoleTypes> = () => {
     };
 
     // start create game function
-    async function createGame(game: any, refreshGames?: () => void) {
+    async function createGame(form: GameForm) {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
         if (!seasonStorage) {
+            console.log('season id not found in state.')
+            return;
+        }
+
+        if (!form.mapPlayed) {
+            console.log('no map has been selected');
             return;
         }
 
@@ -63,29 +73,31 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         const { _season } = seasonParsed;
 
-        const token = await getTokenSilently({
-            audience: "AuthAPI",
-            scope: "read:current_user",
-        });
-
-        let heroesPlayed = game.heroesPlayed.map((hero: HeroEntry) => {
+        let heroesPlayed: string = form.heroesPlayed.map((hero: HeroEntry) => {
             const q = '"'
             return q + hero.name + q
         }).toString();
 
         const role: RoleKey = convertRole();
 
-        const query = `mutation{
-          createGame(input: { _season: "${_season}", role: ${role}, heroesPlayed: [${heroesPlayed}], mapPlayed: "${game.mapPlayed.name}", rankIn: ${0}, rankOut: ${game.skillRating}, outcome: ${game.outcome} }){
-            _season
-          }
+        const query: string = `mutation{
+          createGame(input: { 
+                _season: "${_season}"
+                role: ${role}
+                heroesPlayed: [${heroesPlayed}]
+                mapPlayed: "${form.mapPlayed.name}"
+                rankIn: ${0}
+                rankOut: ${form.skillRating}
+                outcome: ${form.outcome} 
+            }){
+                _season
+            }
         }`;
 
         const res = await fetchGraphQL(token, query);
 
         getGamesOfType(_season);
     }
-    //end create game function
 
     //start fetch games
     async function getGamesOfType(_season: string) {
@@ -108,8 +120,8 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 rankIn
                 rankOut
           }
-        }
-    `;
+        }`;
+
         const games = await fetchGraphQL(token, query);
 
         if (games && games.getAllGamesOfType) {
@@ -117,7 +129,6 @@ const Role: FunctionComponent<RoleTypes> = () => {
             setIsLoading(false);
         }
     }
-    //End Fetch Games
 
     //start effect to parse localstorage string if it exists
     useEffect(() => {
@@ -129,13 +140,6 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         getGamesOfType(seasonParsed._season);
     }, []);
-
-    //end effect to parse localstorage string if it exists
-    const containerStyles: CSS.Properties = {
-        display: 'flex',
-        height: '65vh',
-        alignItems: 'flex-end',
-    }
 
     return (
         <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
@@ -159,7 +163,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             </Grid>
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
-                    <GameForm componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
+                    <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
                 </Modal>
             </GameFormProvider>
         </Grid>

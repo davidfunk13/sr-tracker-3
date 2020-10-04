@@ -1,35 +1,21 @@
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import useStyles from './Stepper.Forms.Styles';
 import clsx from 'clsx';
-import { GameFormContextType } from '../App.Types';
+import { GameForm, GameFormContextType } from '../App.Types';
 import GameFormContext from '../contexts/GameForm/GameFormContext';
 
 interface StepperTypes {
     disabled: boolean
-    last?: boolean
-}
+    submit?: (form: GameForm) => void
+};
 
-const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
+const Stepper: React.FC<StepperTypes> = ({ disabled, submit }) => {
 
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
     const [prevDisabled, setPrevDisabled] = useState<boolean>(false);
-
-    const useStyles = makeStyles((theme: Theme) => ({
-        container: {
-            display: 'flex',
-            width: '100%',
-            margin: '1em 0',
-        },
-        item: {
-            flex: 1,
-        },
-        first: {
-            marginRight: '.5em',
-        }
-    }));
 
     const classes = useStyles();
 
@@ -40,9 +26,14 @@ const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
 
         return setPrevDisabled(false);
 
-    }, [state.step])
+    }, [state.step]);
 
     function next() {
+        if (submit) {
+            submit(state);
+            return;
+        }
+
         const newState = { ...state, step: state.step + 1 };
         setState(newState);
     }
@@ -61,7 +52,7 @@ const Stepper: React.FC<StepperTypes> = ({ disabled, last }) => {
             </Button>
             <Button onClick={next} className={classes.item} disabled={disabled} variant={"contained"} color={"primary"} >
                 <Typography variant={"button"}>
-                    {last ? 'Submit' : 'Next'}
+                    {submit ? 'Submit' : 'Next'}
                 </Typography>
             </Button>
         </div >

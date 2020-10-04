@@ -12,38 +12,61 @@ import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormCompon
 import Stepper from '../../../Stepper';
 
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
+    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
+
     const classes = useStyles();
 
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
     const [disabled, setDisabled] = useState<boolean>(true);
 
-    function setSkillrating(val: number) {
-        const newState = { ...state, skillRating: val };
-        setState(newState);
-    }
+    const [error, setError] = useState<boolean>(false);
+
+    const [input, setInput] = useState<string>('');
 
     const skillRating = state.skillRating || 0;
 
     const rank: YourRank = useGetRank(skillRating);
 
-    function handleChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-        const value: number = parseInt(e.target.value, 10);
-        setSkillrating(value);
-    }
-
-    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
-
+    //if undefined on mount, will be disabled by default. else, there is a previous SR value
     useEffect(() => {
         if (state.skillRating !== undefined) {
-            setDisabled(false);
+            validateInput(state.skillRating);
         }
 
         return () => {
             setDisabled(true);
         }
 
-    }, [state.skillRating]);
+    }, []);
+
+    function setSkillrating(val: number) {
+        const newState = { ...state, skillRating: val };
+        setState(newState);
+    }
+
+    function validateInput(value: number) {
+        if (isNaN(value)) {
+            setError(true)
+            setDisabled(true);
+        } else if (value > 5000) {
+            setError(true);
+            setDisabled(true);
+        } else if (value <= 0) {
+            setError(true);
+            setDisabled(true);
+        } else {
+            setError(false);
+            setDisabled(false)
+        }
+    };
+
+    function handleChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+        const value: number = parseInt(e.target.value, 10);
+        validateInput(value);
+        setInput(value.toString());
+        setSkillrating(value);
+    }
 
     return (
         <FormComponentWrapper>
@@ -62,8 +85,9 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                     type="number"
                     variant="outlined"
                     className={classes.numInputHideArrows}
-                    value={state.skillRating}
-                    inputProps={{ min: 0, max: 5000 }}
+                    value={input}
+                    error={error}
+                    inputProps={{ min: 1, max: 5000 }}
                     onChange={(e) => handleChange(e)}
                     label="New Skill Rating"
                 />

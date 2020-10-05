@@ -12,6 +12,9 @@ import { HeroEntry } from '../../App.Types';
 const useStyles = makeStyles({
     root: {
         height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingBottom: '0',
     },
     media: {
         height: 140,
@@ -38,21 +41,23 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                 :
                 null}
 
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+            <CardContent style={{ height: '20%', padding: '1em', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Typography style={{ width: '100%' }} gutterBottom={subtitle ? true : false} variant="h5" component="h2">
                     {title}
                 </Typography>
 
                 {!subtitle ? null :
-                    <Typography gutterBottom variant={"subtitle1"} component={"p"}>
+                    <Typography style={{ width: '100%' }} gutterBottom variant={"subtitle1"} component={"p"}>
                         {subtitle}
                     </Typography>
                 }
-                
+
             </CardContent>
-            <CardActionArea>
-                {children}
-            </CardActionArea>
+            {children ?
+                <CardActionArea>
+                    {children}
+                </CardActionArea> :
+                null}
         </Card>
     );
 }

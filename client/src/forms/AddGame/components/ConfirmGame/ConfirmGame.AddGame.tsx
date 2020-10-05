@@ -6,15 +6,13 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import { generateOutcomeString, generateOutcomeIcon } from '../../../../utils/utilityFunctions';
 import CSS from 'csstype';
-import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
+import GameFormContext, { initialGameFormState } from '../../../../contexts/GameForm/GameFormContext';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
 import useStyles from './ConfirmGame.AddGame.Styles';
 
-const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
+const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, modalControls }) => {
   const [state, setState] = useContext(GameFormContext);
-
-  const [disabled, setDisabled] = useState<boolean>(true);
 
   const srInput = state.skillRating ? state.skillRating : 0;
 
@@ -27,6 +25,16 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
   const mapName = state.mapPlayed?.name || 'loading...';
 
   const classes = useStyles();
+
+  function submitGame() {
+    if (createGame) {
+      createGame(state);
+    }
+
+    setState(initialGameFormState);
+
+    modalControls.setModalOpen(false);
+  }
 
   return (
     <FormComponentWrapper>
@@ -65,7 +73,7 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame }) => {
           />
         </Grid>
       </Grid>
-      <Stepper submit={createGame} disabled={false} />
+      <Stepper submit={submitGame} disabled={false} />
     </FormComponentWrapper>
   );
 }

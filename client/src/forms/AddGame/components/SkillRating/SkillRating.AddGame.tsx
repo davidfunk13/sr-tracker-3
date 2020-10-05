@@ -12,7 +12,7 @@ import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormCompon
 import Stepper from '../../../Stepper';
 
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
-    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
+    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em', height: '80%' };
 
     const classes = useStyles();
 
@@ -70,7 +70,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     return (
         <FormComponentWrapper>
-            <Grid item xs={12}>
+            <Grid style={{ height: '70%' }} item xs={12}>
                 <MediaCard
                     cardMediaStyle={cardPictureStyles}
                     title={skillRating.toString()}

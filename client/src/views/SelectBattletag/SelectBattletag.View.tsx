@@ -29,7 +29,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
     Stats = 'Stats'
   }
 
-  function passthrough () {
+  function passthrough() {
     const prevLocation = location.state;
 
     switch (prevLocation) {
@@ -44,7 +44,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
         break;
     }
   }
-  
+
   //when component mounts, if user checks out fetch their battletags.
   useEffect(() => {
     if (user && user.sub) {
@@ -116,32 +116,37 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
   return (
     <Fragment>
+
       <Typography gutterBottom variant={"h5"}>
         Select Battletag
       </Typography>
-      {loading ?
-        <Grid container justify={"center"} spacing={2}>
-          <CircularProgress style={{ marginTop: "10vh" }} size={100} />
-        </Grid> : null}
-      {data && data.map((battletag) => {
-        const battletagSplit = battletag.name.split("#");
-        const name: string = battletagSplit[0];
-        const numbers: string = "#" + battletagSplit[1];
-        const avatarLetter = Array.from(name)[0];
+      <Grid container justify={"center"} spacing={2}>
+        {loading ?
 
-        return (
-          <Grid key={battletag._id} item xs={12}>
-            <CardWithAvatar
-              avatarLetter={avatarLetter}
-              CardHeaderTitle={name}
-              CardHeaderSubtitle={numbers}
-            >
-              <Button onClick={() => setSelected(battletag)}>Select</Button>
-              <Button color={'secondary'} onClick={() => deleteBattletag(battletag._id)}>Delete</Button>
-            </CardWithAvatar>
-          </Grid>
-        );
-      })}
+          <CircularProgress style={{ marginTop: "10vh" }} size={100} />
+
+          : null}
+
+        {data && data.map((battletag) => {
+          const battletagSplit = battletag.name.split("#");
+          const name: string = battletagSplit[0];
+          const numbers: string = "#" + battletagSplit[1];
+          const avatarLetter = Array.from(name)[0];
+
+          return (
+            <Grid key={battletag._id} item xs={12}>
+              <CardWithAvatar
+                avatarLetter={avatarLetter}
+                CardHeaderTitle={name}
+                CardHeaderSubtitle={numbers}
+              >
+                <Button onClick={() => setSelected(battletag)}>Select</Button>
+                <Button color={'secondary'} onClick={() => deleteBattletag(battletag._id)}>Delete</Button>
+              </CardWithAvatar>
+            </Grid>
+          );
+        })}
+      </Grid>
     </Fragment>
   );
 };

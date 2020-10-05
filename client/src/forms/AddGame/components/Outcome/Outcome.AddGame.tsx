@@ -17,6 +17,14 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
     const [disabled, setDisabled] = useState<boolean>(true);
 
     function selectOutcome(val: 0 | 1 | 2) {
+        let next;
+
+        if (val === 2) {
+            next = state.step + 2;
+        } else {
+            next = state.step + 1
+        }
+
         const newState: GameForm = {
             ...state,
             outcome: val,
@@ -26,18 +34,18 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
         setState(newState);
     };
 
-    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain" };
+    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em' };
 
-    useEffect(()=> {
-        if(state.outcome === undefined) {
+    useEffect(() => {
+        if (state.outcome === undefined) {
             setDisabled(true);
         }
-        
-        if(state.outcome !== undefined) {
+
+        if (state.outcome !== undefined) {
             setDisabled(false);
         }
 
-    },[state.outcome])
+    }, [state.outcome])
 
     return (
         <FormComponentWrapper>

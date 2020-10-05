@@ -20,6 +20,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
         let next;
 
         if (val === 2) {
+            console.log(val);
             next = state.step + 2;
         } else {
             next = state.step + 1
@@ -28,7 +29,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
         const newState: GameForm = {
             ...state,
             outcome: val,
-            step: state.step + 1,
+            step: next,
         };
 
         setState(newState);

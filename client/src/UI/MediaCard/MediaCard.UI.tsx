@@ -47,7 +47,7 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                 </Typography>
 
                 {!subtitle ? null :
-                    <Typography style={{ width: '100%' }} gutterBottom variant={"subtitle1"} component={"p"}>
+                    <Typography style={{ width: '100%' }} variant={"subtitle1"} component={"p"}>
                         {subtitle}
                     </Typography>
                 }

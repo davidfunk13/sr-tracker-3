@@ -85,9 +85,15 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                 </Typography>
             </Grid>
             <div style={{ display: 'flex', justifyContent: 'flex-start', height: '20%', width: '100%' }}>
-                {!imagesReady ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> : state.heroesPlayed.map((hero: HeroEntry) =>
-                    <img style={{ width: '23%' }} key={hero.name} src={hero.icon.toString()} alt={hero.name} />
-                )}
+                {!imagesReady ?
+                    <CircularProgress style={{ margin: "5vh 0" }} size={100} />
+                    :
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%' }}>
+                        {state.heroesPlayed.map((hero: HeroEntry) =>
+                            <img style={{ width: '20%' }} key={hero.name} src={hero.icon.toString()} alt={hero.name} />
+                        )}
+                    </div>
+                }
             </div>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={"subtitle2"}>

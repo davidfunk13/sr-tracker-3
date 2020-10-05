@@ -47,7 +47,6 @@ const resolvers = {
   },
   Mutation: {
     async createBattletag(_, { input }) {
-      console.log(input)
       const battletag = new Battletag(input);
 
       return await battletag.save();
@@ -79,6 +78,13 @@ const resolvers = {
       return mostRecentSeason[0];
     },
     async createGame(_, { input }) {
+      let gameObj;
+
+      if (input.outcome === 2) {
+        const thisSeason = await Season.findById(input._season).populate('_games');
+        console.log(thisSeason[thisSeason.length - 1]);
+      }
+
       let game = new Game(input);
 
       game = await game.save();
@@ -91,8 +97,6 @@ const resolvers = {
           return;
         }
       }
-
-      console.log({ role: game.role }, { rankOut: game.rankOut });
 
       switch (game.role) {
         case 0:
@@ -111,8 +115,6 @@ const resolvers = {
           console.log("something went wrong with game role");
           break;
       }
-
-      console.log(season)
 
       season._games.push(game._id);
 

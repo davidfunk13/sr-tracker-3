@@ -37,13 +37,13 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, modalCon
   }
 
   return (
-    <FormComponentWrapper>
+    <FormComponentWrapper >
       <Grid item xs={12}>
         <Typography variant={"subtitle2"} >
           Confirm New Game Addition
         </Typography>
       </Grid>
-      <Grid className={classes.innerContainer} container>
+      <Grid spacing={2} className={classes.innerContainer} container>
         <Grid item xs={12}>
           <MediaCard
             title={mapName}

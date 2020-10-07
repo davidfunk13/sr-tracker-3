@@ -55,11 +55,8 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, modalCon
         rankOut
       }
     }`;
-    console.log(query)
 
     const mostRecent = await fetchGraphQL(token, query);
-
-    console.log({ mostRecent })
 
     setLastPlayed(mostRecent);
   }

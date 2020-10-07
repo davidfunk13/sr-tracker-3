@@ -7,11 +7,14 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import CSS from 'csstype';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
-import { GameFormContextType } from '../../../../App.Types';
+import { Game, GameFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
-
+import fetchGraphQL from '../../../../utils/fetchGraphQL';
+import { useAuth0 } from '../../../../react-auth0-spa';
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
+    const { getTokenSilently } = useAuth0();
+
     const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em', height: '80%' };
 
     const classes = useStyles();
@@ -24,37 +27,73 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     const [input, setInput] = useState<string>('');
 
+    const [lastPlayed, setLastPlayed] = useState<Game>({} as Game);
+
     const skillRating = state.skillRating || 0;
 
     const rank: YourRank = useGetRank(skillRating);
 
-    //if undefined on mount, will be disabled by default. else, there is a previous SR value
-    useEffect(() => {
-        if (state.skillRating !== undefined) {
-            validateInput(state.skillRating);
+    async function fetchMostRecentGame() {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const storage = localStorage.getItem('_season');
+
+        if (!storage) {
+            console.warn('no seasonId found');
+            return
         }
 
-        return () => {
-            setDisabled(true);
-        }
+        const parsed = JSON.parse(storage)._season;
 
-    }, []);
+        const query: string = `query {
+          getMostRecentGame(_season:"${parsed}"){
+            rankIn
+            rankOut
+          }
+        }`;
+
+        const mostRecent = await fetchGraphQL(token, query);
+
+        setLastPlayed(mostRecent.getMostRecentGame);
+    };
 
     function setSkillrating(val: number) {
         const newState = { ...state, skillRating: val };
         setState(newState);
     }
 
-    function validateInput(value: number) {
-        if (isNaN(value)) {
-            setError(true)
+    function validateInput(value: number, outcome?: number, previous: number = 0) {
+        console.log(value, outcome, previous, lastPlayed);
+        if (outcome === 2 && value !== previous) {
+            console.warn(`You tied. Your skill rating must be ${previous}`)
+            setError(true);
             setDisabled(true);
+            return;
+        } else if ((outcome === 1) && (value <= previous) && (previous !== 0)) {
+            console.warn(`You won. Your skill rating must be higher than ${previous}`)
+            setError(true);
+            setDisabled(true);
+            return;
+        } else if ((outcome === 0) && (value >= previous) && (previous !== 0)) {
+            console.warn(`You lost. Your skill rating must be lower than ${previous}`)
+            setError(true);
+            setDisabled(true);
+            return;
+        } else if (isNaN(value)) {
+            setError(true);
+            setDisabled(true);
+            return;
         } else if (value > 5000) {
             setError(true);
             setDisabled(true);
+            return;
         } else if (value <= 0) {
             setError(true);
             setDisabled(true);
+            return;
         } else {
             setError(false);
             setDisabled(false)
@@ -63,10 +102,25 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     function handleChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
         const value: number = parseInt(e.target.value, 10);
-        validateInput(value);
+        validateInput(value, state.outcome, lastPlayed.rankOut);
         setInput(value.toString());
         setSkillrating(value);
     }
+
+    //if undefined on mount, will be disabled by default. else, there is a previous SR value
+    useEffect(() => {
+        if (state.skillRating !== undefined) {
+            validateInput(state.skillRating);
+        }
+
+        fetchMostRecentGame();
+
+        return () => {
+            setDisabled(true);
+        }
+    }, []);
+
+    useEffect(() => console.log({ lastPlayed }), [lastPlayed])
 
     return (
         <FormComponentWrapper>

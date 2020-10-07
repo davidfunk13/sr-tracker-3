@@ -24,34 +24,6 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
         return hero.roleName === role;
     });
 
-    useEffect(() => {
-        filtered.map((hero, index) => {
-            const img = new Image();
-
-            img.src = hero.icon.toString();
-
-            img.onload = function () {
-                console.log('image loaded...');
-            }
-
-            if (index === filtered.length - 1) {
-                return setImagesReady(true);
-            }
-        });
-
-    }, [filtered, role]);
-
-    useEffect(() => {
-        if (state.heroesPlayed.length) {
-            setDisabled(false);
-        }
-
-        if (!state.heroesPlayed.length) {
-            setDisabled(true);
-        }
-
-    }, [state.heroesPlayed])
-
     function selectHero(hero: HeroEntry) {
         let newState: GameForm;
 
@@ -76,6 +48,30 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
 
         setState(newState);
     }
+
+    useEffect(() => {
+        filtered.map((hero, index) => {
+            const img = new Image();
+
+            img.src = hero.icon.toString();
+
+            if (index === filtered.length - 1) {
+                return setImagesReady(true);
+            }
+        });
+
+    }, [filtered, role]);
+
+    useEffect(() => {
+        if (state.heroesPlayed.length) {
+            setDisabled(false);
+        }
+
+        if (!state.heroesPlayed.length) {
+            setDisabled(true);
+        }
+
+    }, [state.heroesPlayed]);
 
     return (
         <FormComponentWrapper>

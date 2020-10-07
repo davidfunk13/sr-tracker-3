@@ -41,6 +41,10 @@ const rankDictionary: Rank[] = [
         name: 'Top 500',
         icon: require('../assets/icons/ranks/top500.png'),
     },
+    {
+        name: 'Error',
+        icon: require('../assets/icons/other/loss.png'),
+    },
 ];
 
 export default rankDictionary;

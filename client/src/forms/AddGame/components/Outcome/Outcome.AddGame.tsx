@@ -7,32 +7,67 @@ import Win from '../../../../assets/icons/other/win.png';
 import Loss from '../../../../assets/icons/other/loss.png';
 import Draw from '../../../../assets/icons/other/draw.png';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
-import { GameForm, GameFormContextType } from '../../../../App.Types';
+import { Game, GameForm, GameFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
+import fetchGraphQL from '../../../../utils/fetchGraphQL';
+import { useAuth0 } from '../../../../react-auth0-spa';
 
 const Outcome: FunctionComponent<OutcomeProps> = () => {
+    const { getTokenSilently } = useAuth0();
+
     const [state, setState]: GameFormContextType = useContext(GameFormContext);
 
     const [disabled, setDisabled] = useState<boolean>(true);
 
+    const [lastPlayed, setLastPlayed] = useState<Game>({} as Game);
+
     function selectOutcome(val: 0 | 1 | 2) {
-        let next;
+        let newState: GameForm;
 
         if (val === 2) {
-            console.log(val);
-            next = state.step + 2;
+            newState = {
+                ...state,
+                outcome: val,
+                step: state.step + 2,
+                skillRating: lastPlayed.rankOut
+            }
         } else {
-            next = state.step + 1
+            newState = {
+                ...state,
+                outcome: val,
+                step: state.step + 1
+            }
         }
 
-        const newState: GameForm = {
-            ...state,
-            outcome: val,
-            step: next,
-        };
-
         setState(newState);
+    };
+
+    async function fetchMostRecentGame() {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const storage = localStorage.getItem('_season');
+
+        if (!storage) {
+            console.warn('no seasonId found');
+            return
+        }
+
+        const parsed = JSON.parse(storage)._season;
+
+        const query: string = `query {
+          getMostRecentGame(_season:"${parsed}"){
+            rankIn
+            rankOut
+          }
+        }`;
+
+        const mostRecent = await fetchGraphQL(token, query);
+
+        setLastPlayed(mostRecent.getMostRecentGame);
     };
 
     const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em' };
@@ -46,7 +81,17 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
             setDisabled(false);
         }
 
-    }, [state.outcome])
+    }, [state.outcome]);
+
+    useEffect(() => {
+
+        fetchMostRecentGame();
+
+        return () => {
+        }
+    }, []);
+
+    useEffect(() => console.log({ lastPlayed }), [lastPlayed])
 
     return (
         <FormComponentWrapper>

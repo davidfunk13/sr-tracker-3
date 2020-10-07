@@ -24,12 +24,16 @@ export interface BlizzAPIBattletag {
 }
 
 export interface Game {
+  _id?: string
+  _season?: string
   role: 0 | 1 | 2
   mapPlayed: string
   heroesPlayed: [string, string?, string?]
   outcome: 0 | 1 | 2
   rankIn: number
   rankOut: number
+  createdAt?: Date,
+  updatedAt?: Date,
 }
 
 export interface GameForm {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, FunctionComponent } from 'react';
+import React, { useState, useContext, FunctionComponent, useEffect } from 'react';
 import ConfirmGameTypes from './ConfirmGame.AddGame.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
@@ -10,13 +10,23 @@ import GameFormContext, { initialGameFormState } from '../../../../contexts/Game
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
 import useStyles from './ConfirmGame.AddGame.Styles';
+import { Game } from '../../../../App.Types';
+import fetchGraphQL from '../../../../utils/fetchGraphQL';
+import { useAuth0 } from '../../../../react-auth0-spa';
 
 const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, modalControls }) => {
+  const { getTokenSilently } = useAuth0();
+
   const [state, setState] = useContext(GameFormContext);
+
+  const classes = useStyles();
 
   const srInput = state.skillRating ? state.skillRating : 0;
 
   const rank: YourRank = useGetRank(srInput);
+
+
+  const [lastPlayed, setLastPlayed] = useState<Game>({} as Game);
 
   const role: string = state.heroesPlayed[0].roleName.split('')[0].toUpperCase() + state.heroesPlayed[0].roleName.slice(1);
 
@@ -24,7 +34,41 @@ const ConfirmGame: FunctionComponent<ConfirmGameTypes> = ({ createGame, modalCon
 
   const mapName = state.mapPlayed?.name || 'loading...';
 
-  const classes = useStyles();
+  async function fetchMostRecentGame() {
+    const token = await getTokenSilently({
+      audience: "AuthAPI",
+      scope: "read:current_user",
+    });
+
+    const storage = localStorage.getItem('_season');
+
+    if (!storage) {
+      console.warn('no seasonId found');
+      return
+    }
+
+    const parsed = JSON.parse(storage)._season;
+
+    const query: string = `query {
+      getMostRecentGame(_season:"${parsed}"){
+        rankIn
+        rankOut
+      }
+    }`;
+    console.log(query)
+
+    const mostRecent = await fetchGraphQL(token, query);
+
+    console.log({ mostRecent })
+
+    setLastPlayed(mostRecent);
+  }
+
+  useEffect(() => {
+    fetchMostRecentGame();
+  }, [])
+
+  useEffect(() => console.log(lastPlayed), [lastPlayed])
 
   function submitGame() {
     if (createGame) {

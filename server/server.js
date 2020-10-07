@@ -38,15 +38,6 @@ if (process.env.NODE_ENV === 'production') {
   //if you have weird errors with storing images etc in static dir this is why. back out a dir.
   app.use(express.static("client/build"));
 
-  app.use(function (req, res, next) {
-    if (req.headers['x-forwarded-proto'] != 'https') {
-      res.redirect('https://' + req.headers.host + req.path);
-    }
-    else {
-      return next();
-    }
-  });
-
   app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, './client/build/index.html'));
   });
@@ -56,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
-  context: app.use(checkJwt),
+  // context: app.use(checkJwt),
 }));
 
 app.listen(PORT, () => {

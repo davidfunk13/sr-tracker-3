@@ -42,7 +42,9 @@ const resolvers = {
       return await Game.find({ _season: _season });
     },
     async getMostRecentGame(_, { _season }) {
-      return await Game.find({ _season: _season });
+      const gamesSorted = await Game.find({ _season: _season }, null, { sort: { 'createdAt': -1 }, limit: 1 });
+      const mostRecent = gamesSorted[0];
+      return mostRecent;
     },
     async getAllGamesOfType(_, { _season, role }) {
       return await Game.find({ _season: _season, role: role });

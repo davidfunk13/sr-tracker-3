@@ -8,6 +8,7 @@ type Query {
   getAllSeasons(_battletag: ID!): [Season]
   getMostRecentSeason(_battletag: ID!): Season
   getAllGames(_season: ID!): [Game]
+  getMostRecentGame(_season: ID!): Game
   getAllGamesOfType(_season: ID!, role: Int!): [Game]
 } 
 `;

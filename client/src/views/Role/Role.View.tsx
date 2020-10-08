@@ -14,8 +14,13 @@ import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useAuth0 } from '../../react-auth0-spa';
 import GameFormComponent from '../../forms/AddGame';
 import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
+import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
 
 const Role: FunctionComponent<RoleTypes> = () => {
+    const [value, setValue] = useState<number>(0);
+
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,6 +42,10 @@ const Role: FunctionComponent<RoleTypes> = () => {
     const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
     const seasonStorage = localStorage.getItem('_season');
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setValue(newValue);
+    };
 
     // function to convert string used for title on role page to a role key the api understands
     function convertRole() {
@@ -128,7 +137,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
             setGames(games.getAllGamesOfType);
             setIsLoading(false);
         }
-    }
+    };
 
     //start effect to parse localstorage string if it exists
     useEffect(() => {
@@ -142,24 +151,45 @@ const Role: FunctionComponent<RoleTypes> = () => {
     }, []);
 
     return (
-        <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
+        <Grid container style={{ marginBottom: '1em' }} justify={'center'}>
+
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {title} Season
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant={'h5'}>
-                    Games
-                </Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
-            </Grid>
-            <Grid item xs={12}>
-                <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
-                    <Typography variant={'button'}>Add A Game</Typography>
-                </Button>
+                <AppBar position="static">
+                    <Tabs
+                        variant="fullWidth"
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="nav tabs example"
+                    >
+                        <LinkTab label="Games" href="/drafts" {...a11yProps(0)} />
+                        <LinkTab label="Statistics" href="/trash" {...a11yProps(1)} />
+                    </Tabs>
+                </AppBar>
+                <TabPanel value={value} index={0}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography variant={'h5'}>
+                                Games
+                        </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
+                                <Typography variant={'button'}>Add A Game</Typography>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+
+                </TabPanel>
             </Grid>
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>

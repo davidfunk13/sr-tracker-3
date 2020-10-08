@@ -67,7 +67,9 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     function validateInput(value: number, outcome?: number, previous: number = 0) {
         console.log(value, outcome, previous, lastPlayed);
-        if (outcome === 2 && value !== previous) {
+        if (previous === null) {
+
+        } else if (outcome === 2 && value !== previous) {
             console.warn(`You tied. Your skill rating must be ${previous}`)
             setError(true);
             setDisabled(true);
@@ -102,7 +104,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     function handleChange(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
         const value: number = parseInt(e.target.value, 10);
-        validateInput(value, state.outcome, lastPlayed.rankOut);
+        validateInput(value, state.outcome, lastPlayed && lastPlayed.rankOut ? lastPlayed.rankOut : undefined);
         setInput(value.toString());
         setSkillrating(value);
     }

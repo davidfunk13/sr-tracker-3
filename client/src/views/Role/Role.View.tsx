@@ -17,6 +17,8 @@ import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
 import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
+import Games from '../Games/Games.View';
+import FillChart from '../../UI/Charts/PercentPie';
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [value, setValue] = useState<number>(0);
@@ -171,24 +173,10 @@ const Role: FunctionComponent<RoleTypes> = () => {
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography variant={'h5'}>
-                                Games
-                        </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
-                                <Typography variant={'button'}>Add A Game</Typography>
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-
+                    <FillChart pctComplete={0.82} />
                 </TabPanel>
             </Grid>
             <GameFormProvider>

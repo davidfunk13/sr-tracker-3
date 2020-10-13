@@ -19,7 +19,6 @@ import Role from "./views/Role/Role.View";
 import Season from './views/Season/Season.View';
 import SelectBattletag from "./views/SelectBattletag/SelectBattletag.View";
 
-
 const App: React.FC<AppProps> = () => {
   const { isAuthenticated } = useAuth0();
 
@@ -51,7 +50,6 @@ const App: React.FC<AppProps> = () => {
           </Switch>
         </Container>
       </main>
-
     </Router>
   );
 };

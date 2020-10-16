@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.16",
+    "@types/victory": "^33.1.4",
     "animate.css": "^4.1.0",
     "axios": "^0.19.2",
     "graphql": "^15.3.0",
@@ -25,8 +26,8 @@
     "react-notifications-component": "^2.4.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
-    "recharts": "^1.8.5",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "victory": "^35.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

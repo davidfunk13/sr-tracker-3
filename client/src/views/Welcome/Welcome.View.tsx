@@ -1,60 +1,65 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import { WelcomeViewProps } from './Welcome.View.Types';
+import OverwatchImg from '../../assets/images/splash.png';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core';
+
+
 
 const Welcome: React.ComponentType<WelcomeViewProps> = () => {
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+            splash: {
+                height: '100%',
+                width: '100%'
+            }
+        }),
+    );
+
+    const classes = useStyles();
+
     return (
         <Grid spacing={2} container>
             <Grid item xs={12}>
-                    <CardContent>
-
-                        <Typography variant="h5" gutterBottom>
-                            Welcome
-                </Typography>
-                        <Typography variant="subtitle1" color="textSecondary" gutterBottom>
-                            Welcome
-                </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Dictum fusce ut placerat orci nulla pellentesque dignissim enim sit. Pellentesque id nibh tortor id.
-                            Urna nunc id cursus metus aliquam
-                </Typography>
-                        <Typography variant="body2" gutterBottom>
-                            Welcome
-                </Typography>
-                        <Typography variant="button" gutterBottom>
-                            Welcome
-                </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Welcome
-                </Typography>
-                    </CardContent>
+                <img className={classes.splash} src={OverwatchImg} />
             </Grid>
             <Grid item xs={12}>
-                <Card elevation={4}  >
-                    <CardContent>
-                        <Typography variant="h5" gutterBottom>
-                            Patch Notes:
-                 </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                            Dictum fusce ut placerat orci nulla pellentesque dignissim enim sit. Pellentesque id nibh tortor id.
-                            Urna nunc id cursus metus aliquam
+                <Typography align={'center'} gutterBottom variant={'h6'}>
+                    Please log in to continue!
                 </Typography>
-                        <Typography variant="body2" gutterBottom>
-                            Welcome
+                <Typography gutterBottom variant={'h4'}>
+                    Welcome
                 </Typography>
-                        <Typography variant="button" gutterBottom>
-                            Welcome
+                <Typography gutterBottom variant={'body1'}>
+                    This app is a compaion app for Blizzard's Overwatch.
+                    Players can search for their accounts, link them to the application,
+                    and track their progress.
                 </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Welcome
+                {/* //move this shit to a Getting started page. */}
+                {/* <Typography gutterBottom variant={'h5'}>
+                    Getting Started
                 </Typography>
-                    </CardContent>
-                </Card>
+                <Typography gutterBottom variant={'body1'}>
+                    After linking a battletag and selecting it, players are greeted with an empty
+                    season with three roles.
+                </Typography>
+                <Typography gutterBottom variant={'body1'}>
+                    Creating a new season will reset the skill rating for all roles to zero.
+                    These seasons can be loaded back into the application to continue at any time.
+                </Typography>
+                <Typography gutterBottom variant={'h5'}>
+                    Adding Games
+                </Typography>
+                <Typography gutterBottom variant={'body1'}>
+                    After linking a battletag and selecting it, players are greeted with an empty
+                    season with three roles.
+                </Typography>
+                <Typography gutterBottom variant={'body1'}>
+                    Creating a new season will reset the skill rating for all roles to zero.
+                    These seasons can be loaded back into the application to continue at any time.
+                </Typography> */}
             </Grid>
         </Grid>
     );

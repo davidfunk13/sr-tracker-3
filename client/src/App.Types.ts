@@ -55,6 +55,18 @@ export interface HeroEntry {
   subCategory: string,
 };
 
+export interface Location {
+  pathname?: string
+  state: LocationStateRole
+  search?: string
+  hash?: string
+  key?: string
+}
+
+export interface LocationStateRole {
+  role: RoleEnum
+}
+
 export interface MapEntry {
   name: string
   type: string

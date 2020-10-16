@@ -18,7 +18,9 @@ import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Games from '../Games/Games.View';
-import FillChart from '../../UI/Charts/PercentPie';
+import PercentPie from '../../UI/Charts/PercentPie/PercentPie.UI';
+import SeasonStats from '../SeasonStats/SeasonStats.View';
+
 
 const Role: FunctionComponent<RoleTypes> = () => {
     const [value, setValue] = useState<number>(0);
@@ -176,7 +178,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
                     <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <FillChart pctComplete={0.82} />
+                    <SeasonStats />
                 </TabPanel>
             </Grid>
             <GameFormProvider>

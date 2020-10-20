@@ -13,8 +13,6 @@ import { BlizzAPIBattletag } from '../../App.Types';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import AddSeason from '../../forms/AddSeason/AddSeason.Modal.UI';
 
 const Season: FunctionComponent<SeasonTypes> = () => {
@@ -142,7 +140,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             {/* <Fab color={'primary'} href={''}>
                 <AddIcon/>
             </Fab> */}
-            <Modal modalControls={{modalOpen, setModalOpen}} title={'Create New Season'} >
+            <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Season'} >
                 <AddSeason createSeason={createSeason} modalControls={{ modalOpen, setModalOpen }} />
             </Modal>
         </Fragment>

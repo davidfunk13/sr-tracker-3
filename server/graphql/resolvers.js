@@ -1,12 +1,10 @@
 const Battletag = require("../db/models/Battletag/battletag");
 const Season = require("../db/models/Season/season");
 const Game = require("../db/models/Game/game");
-const searchBattletags = require('./helpers/searchBattletags');
-const getBattletagStats = require("./helpers/getBattletagStats");
-const season = require("../db/models/Season/season");
+const searchBattletags = require('./resolvers/searchBattletags');
+const getBattletagStats = require("./resolvers/getBattletagStats");
 
 // parent, args, ctx, info
-
 const resolvers = {
   Query: {
     async searchBattletags(parent, { battletag }) {
@@ -43,7 +41,9 @@ const resolvers = {
     },
     async getMostRecentGame(_, { _season }) {
       const gamesSorted = await Game.find({ _season: _season }, null, { sort: { 'createdAt': -1 }, limit: 1 });
+
       const mostRecent = gamesSorted[0];
+
       return mostRecent;
     },
     async getAllGamesOfType(_, { _season, role }) {

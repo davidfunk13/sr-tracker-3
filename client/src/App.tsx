@@ -17,6 +17,7 @@ import Stats from "./views/Stats/Stats.View";
 import AppProps from "./App.Types";
 import Role from "./views/Role/Role.View";
 import Season from './views/Season/Season.View';
+import NewSeason from './views/Season/NewSeason.View';
 import SelectBattletag from "./views/SelectBattletag/SelectBattletag.View";
 
 const App: React.FC<AppProps> = () => {
@@ -46,7 +47,8 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/select" component={SelectBattletag} />
             <PrivateRoute path="/season/role" component={Role} />
-            <PrivateRoute path="/season" component={Season} />
+            {/* <PrivateRoute path="/season" component={Season} /> */}
+            <PrivateRoute path="/season" component={NewSeason} />
           </Switch>
         </Container>
       </main>

@@ -34,7 +34,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
     switch (prevLocation) {
       case PrevLocation.Track:
-        history.push('/season');
+        history.push('/session');
         break;
       case PrevLocation.Stats:
         history.push('/stats');

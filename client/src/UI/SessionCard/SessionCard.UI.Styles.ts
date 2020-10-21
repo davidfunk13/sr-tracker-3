@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         details: {
             display: 'flex',
+            flex: '1 1 auto',
             flexDirection: 'column',
         },
         content: {

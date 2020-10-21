@@ -1,5 +1,5 @@
 const Battletag = require("../db/models/Battletag/battletag");
-const Season = require("../db/models/Season/season");
+const Session = require("../db/models/Session/session");
 const Game = require("../db/models/Game/game");
 const searchBattletags = require('./resolvers/searchBattletags');
 const getBattletagStats = require("./resolvers/getBattletagStats");
@@ -19,35 +19,35 @@ const resolvers = {
     async getAllBattletags(_, { _user }) {
       return await Battletag.find({ _user: _user });
     },
-    async getOneSeason(_, { _id }) {
-      return await Season.findById(_id);
+    async getOneSession(_, { _id }) {
+      return await Session.findById(_id);
     },
-    async getAllSeasons(_, { _battletag }) {
-      const populated = await Battletag.findById(_battletag).populate('_seasons');
+    async getAllSessions(_, { _battletag }) {
+      const populated = await Battletag.findById(_battletag).populate('_sessions');
 
-      return await populated._seasons;
+      return await populated._sessions;
     },
-    async getMostRecentSeason(_, { _battletag }) {
-      const seasons = await Season.find({ _battletag: _battletag });
+    async getMostRecentSession(_, { _battletag }) {
+      const sessions = await Session.find({ _battletag: _battletag });
 
-      const mostRecentSeason = seasons.sort(function (a, b) {
+      const mostRecentSession = sessions.sort(function (a, b) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      return mostRecentSeason[0];
+      return mostRecentSession[0];
     },
-    async getAllGames(_, { _season }) {
-      return await Game.find({ _season: _season });
+    async getAllGames(_, { _session }) {
+      return await Game.find({ _session: _session });
     },
-    async getMostRecentGame(_, { _season }) {
-      const gamesSorted = await Game.find({ _season: _season }, null, { sort: { 'createdAt': -1 }, limit: 1 });
+    async getMostRecentGame(_, { _session }) {
+      const gamesSorted = await Game.find({ _session: _session }, null, { sort: { 'createdAt': -1 }, limit: 1 });
 
       const mostRecent = gamesSorted[0];
 
       return mostRecent;
     },
-    async getAllGamesOfType(_, { _season, role }) {
-      return await Game.find({ _season: _season, role: role });
+    async getAllGamesOfType(_, { _session, role }) {
+      return await Game.find({ _session: _session, role: role });
     },
   },
   Mutation: {
@@ -56,38 +56,38 @@ const resolvers = {
 
       return await battletag.save();
     },
-    async createSeason(_, { input }) {
-      const newSeason = {
+    async createSession(_, { input }) {
+      const newSession = {
         ...input,
         startingTankSR: input.tankSR,
         startingSupportSR: input.supportSR,
         startingDamageSR: input.damageSR
       }
 
-      let season = new Season(newSeason);
+      let session = new Session(newSession);
 
-      season = await season.save();
+      session = await session.save();
 
-      const battletag = await Battletag.findById(season._battletag);
+      const battletag = await Battletag.findById(session._battletag);
 
-      battletag._seasons.push(season._id);
+      battletag._sessions.push(session._id);
 
       battletag.save();
 
-      const seasons = await Season.find({ _battletag: battletag._id });
+      const sessions = await Session.find({ _battletag: battletag._id });
 
-      const mostRecentSeason = seasons.sort(function (a, b) {
+      const mostRecentSession = sessions.sort(function (a, b) {
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
 
-      return mostRecentSeason[0];
+      return mostRecentSession[0];
     },
     async createGame(_, { input }) {
       let game = new Game(input);
 
       game = await game.save();
 
-      const season = await Season.findById(input._season);
+      const session = await Session.findById(input._session);
 
       if (!game) {
         if (game.role === undefined || game.role === null || !game.rankOut === undefined || !game.rankOut === null) {
@@ -99,24 +99,24 @@ const resolvers = {
       switch (game.role) {
         case 0:
           console.log("Updating tank SR...");
-          season.tankSR = game.rankOut;
+          session.tankSR = game.rankOut;
           break;
         case 1:
           console.log("Updating damage SR...");
-          season.damageSR = game.rankOut;
+          session.damageSR = game.rankOut;
           break;
         case 2:
           console.log("Updating support SR...");
-          season.supportSR = game.rankOut;
+          session.supportSR = game.rankOut;
           break;
         default:
           console.log("something went wrong with game role");
           break;
       }
 
-      season._games.push(game._id);
+      session._games.push(game._id);
 
-      season.save();
+      session.save();
 
       return game;
     },
@@ -127,26 +127,26 @@ const resolvers = {
       return await Game.findByIdAndRemove(_id);
     },
     async deleteBattletag(_, { _id }) {
-      //get array of seasons
-      const seasons = await Season.find({ _battletag: _id });
+      //get array of sessions
+      const sessions = await Session.find({ _battletag: _id });
 
-      //loop through and delete any games that belong to each season using the season's ID.
-      seasons.map(season => {
-        return Game.deleteMany({ _season: season._id }).then(deleted => console.log("Deleted Games", deleted));
+      //loop through and delete any games that belong to each session using the session's ID.
+      sessions.map(session => {
+        return Game.deleteMany({ _session: session._id }).then(deleted => console.log("Deleted Games", deleted));
       });
 
-      //delete all the seasons with the battletag id
-      await Season.deleteMany({ _battletag: _id }).then(deletedSeasons => console.log('seasons deleted', deletedSeasons));
+      //delete all the sessions with the battletag id
+      await Session.deleteMany({ _battletag: _id }).then(deletedSessions => console.log('sessions deleted', deletedSessions));
 
       //delete battletag
       await Battletag.findByIdAndDelete(_id).then(deletedBattletag => console.log("Battletag deleted", deletedBattletag));
     },
-    async deleteSeason(_, { _id }) {
-      await Game.deleteMany({ _season: _id }).then(deletedGames => {
+    async deleteSession(_, { _id }) {
+      await Game.deleteMany({ _session: _id }).then(deletedGames => {
         console.log("Games deleted:" + deletedGames)
       });
 
-      return await Season.findByIdAndDelete(_id);
+      return await Session.findByIdAndDelete(_id);
     },
   },
 };

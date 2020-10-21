@@ -5,15 +5,15 @@ import React, { createRef, FunctionComponent } from 'react'
 import useIsVisible from '../../hooks/isVisible/useIsVisible';
 import LineChart from '../../UI/Charts/PercentPie/LineChart/LineChart.UI';
 import PercentPie from '../../UI/Charts/PercentPie/PercentPie.UI';
-import { SeasonStatsProps } from './SeasonStats.View.Types';
+import { SessionStatsProps } from './SessionStats.View.Types';
 
-const SeasonStats: FunctionComponent<SeasonStatsProps> = () => {
+const SessionStats: FunctionComponent<SessionStatsProps> = () => {
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} >
                 <Typography variant={'h5'} >
-                    SeasonStats
+                    SessionStats
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -36,4 +36,4 @@ const SeasonStats: FunctionComponent<SeasonStatsProps> = () => {
 
 }
 
-export default SeasonStats;
+export default SessionStats;

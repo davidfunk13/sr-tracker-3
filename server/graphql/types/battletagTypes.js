@@ -10,7 +10,7 @@ type Battletag {
     playerLevel: Int!
     portrait: String!
     urlName: String!
-    _seasons: [Season]
+    _sessions: [Session]
     createdAt: String!
     updatedAt: String
 }

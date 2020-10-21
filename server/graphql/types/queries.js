@@ -4,12 +4,12 @@ type Query {
   getBattletagStats(input: StatsInput! ): Stats
   getOneBattletag(_id: ID!): Battletag
   getAllBattletags(_user: ID!): [Battletag]
-  getOneSeason(_id: ID!): Season
-  getAllSeasons(_battletag: ID!): [Season]
-  getMostRecentSeason(_battletag: ID!): Season
-  getAllGames(_season: ID!): [Game]
-  getMostRecentGame(_season: ID!): Game
-  getAllGamesOfType(_season: ID!, role: Int!): [Game]
+  getOneSession(_id: ID!): Session
+  getAllSessions(_battletag: ID!): [Session]
+  getMostRecentSession(_battletag: ID!): Session
+  getAllGames(_session: ID!): [Game]
+  getMostRecentGame(_session: ID!): Game
+  getAllGamesOfType(_session: ID!, role: Int!): [Game]
 } 
 `;
 

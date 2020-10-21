@@ -1,7 +1,7 @@
 const gameTypeDefs = `
 type Game {
     _id: ID!
-    _season: ID!
+    _session: ID!
     role: Int!
     mapPlayed: String!
     heroesPlayed: [String]!

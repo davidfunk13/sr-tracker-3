@@ -67,13 +67,13 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
                 </IconButton>
             </div>
             <Divider />
-                <DrawerItem IconComponent={AddBoxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
+            <DrawerItem IconComponent={AddBoxIcon} navigate={navigate} path={'/link'} listItemKey={'Link New Battletag'} listItemText={'Link New Battletag'} />
             <Divider />
             <List>
                 <DrawerItem IconComponent={HomeIcon} navigate={navigate} path={'/'} listItemKey={'Dashboard'} listItemText={'Dashboard'} />
                 <DrawerItem IconComponent={AccountBoxIcon} navigate={navigate} path={'/profile'} listItemKey={'Profile'} listItemText={'Profile'} />
                 {/* <DrawerItem IconComponent={EqualizerIcon} navigate={navigate} path={'/stats'} listItemKey={'Statistics'} listItemText={'Statistics'} /> */}
-                <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/season'} listItemKey={'Skill Rating Tracker'} listItemText={'Skill Rating Tracker'} />
+                <DrawerItem IconComponent={TrendingUpIcon} navigate={navigate} path={'/session'} listItemKey={'Skill Rating Tracker'} listItemText={'Skill Rating Tracker'} />
             </List>
             <Divider />
             {!selected ? null : <ListItem>

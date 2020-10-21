@@ -5,16 +5,17 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './SessionCard.UI.Styles';
 import SessionCardProps from './SessionCard.UI.Types';
+import Placeholder from '../../assets/icons/heroes/Tracer.png';
 
-const SessionCard: FunctionComponent<SessionCardProps> = () => {
+const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root} >
+        <Card onClick={onClick} className={classes.root} >
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h6" variant="h6">
-                        Info or ID Number
+                        ID Number
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         Subtitle More Info
@@ -23,7 +24,7 @@ const SessionCard: FunctionComponent<SessionCardProps> = () => {
             </div>
             <CardMedia
                 className={classes.cover}
-                image="/static/images/cards/live-from-space.jpg"
+                image={Placeholder}
                 title="Live from space album cover"
             />
         </Card>

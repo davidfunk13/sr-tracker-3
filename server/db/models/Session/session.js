@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const SeasonSchema = new Schema({
+const SessionSchema = new Schema({
     _battletag: { type: Schema.Types.ObjectId, ref: 'battletag' },
     startingTankSR: { type: Number, require: true },
     tankSR: { type: Number, require: true },
@@ -13,4 +13,4 @@ const SeasonSchema = new Schema({
     _games: [{ type: Schema.Types.ObjectId, ref: 'game' }],
 }, { timestamps: true });
 
-module.exports = mongoose.model('season', SeasonSchema);
+module.exports = mongoose.model('session', SessionSchema);

@@ -3,26 +3,26 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button'
-import SeasonTypes from './Season.View.Types';
+import SessionTypes from './Session.View.Types';
 import DamageIcon from '../../assets/icons/roles/Damage.png';
 import SupportIcon from '../../assets/icons/roles/Support.png';
 import TankIcon from '../../assets/icons/roles/Tank.png';
 import Modal from '../../UI/Modal/Modal.UI';
 import { useHistory } from 'react-router-dom';
-import { BlizzAPIBattletag } from '../../App.Types';
+import { BlizzAPIBattletag, SessionType } from '../../App.Types';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
-import AddSeason from '../../forms/AddSeason/AddSeason.Modal.UI';
+import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
 
-const Season: FunctionComponent<SeasonTypes> = () => {
+const Session: FunctionComponent<SessionTypes> = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const history = useHistory();
 
     const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
-    const [season, setSeason] = useState<{ tankSR: number, supportSR: number, damageSR: number }>({ tankSR: 0, supportSR: 0, damageSR: 0 });
+    const [session, setSession] = useState<SessionType>({ tankSR: 0, supportSR: 0, damageSR: 0 });
 
     const { getTokenSilently } = useAuth0();
 
@@ -36,23 +36,23 @@ const Season: FunctionComponent<SeasonTypes> = () => {
         if (selected) {
             const parsed: BlizzAPIBattletag = JSON.parse(selected);
             setBattletag(parsed);
-            getMostRecentSeason();
+            getMostRecentSession();
         }
 
     }, []);
 
-    async function getMostRecentSeason() {
+    async function getMostRecentSession() {
         const storage = localStorage.getItem("selected");
 
         if (!storage) {
-            console.error("No battletag ID available, something went wrong getting your most recent season.");
+            console.error("No battletag ID available, something went wrong getting your most recent session.");
             return;
         }
 
         let selected: { _id: string } = JSON.parse(storage);
 
         const query: string = `{
-        getMostRecentSeason(_battletag: "${selected._id}") {
+        getMostRecentSession(_battletag: "${selected._id}") {
             _id
             tankSR
             supportSR
@@ -65,31 +65,31 @@ const Season: FunctionComponent<SeasonTypes> = () => {
             scope: "read:current_user",
         });
 
-        const res: { getMostRecentSeason: any } = await fetchGraphQL(token, query);
+        const res: { getMostRecentSession: any } = await fetchGraphQL(token, query);
 
-        if (res.getMostRecentSeason && res.getMostRecentSeason._id) {
-            let str = JSON.stringify({ _season: res.getMostRecentSeason._id });
+        if (res.getMostRecentSession && res.getMostRecentSession._id) {
+            let str = JSON.stringify({ _session: res.getMostRecentSession._id });
 
-            localStorage.setItem("_season", str);
+            localStorage.setItem("_session", str);
 
-            setSeason(res.getMostRecentSeason);
+            setSession(res.getMostRecentSession);
         } else {
-            createSeason();
+            createSession();
         }
     }
 
-    async function createSeason() {
+    async function createSession() {
         const storage = localStorage.getItem("selected");
 
         if (!storage) {
-            console.error("No battletag ID available, something went creating a new season.");
+            console.error("No battletag ID available, something went creating a new session.");
             return
         }
 
         let selected: { _id: string, name: string } = JSON.parse(storage);
 
         const query: string = `mutation{
-            createSeason(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
+            createSession(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
             _id
             damageSR
             tankSR
@@ -104,7 +104,7 @@ const Season: FunctionComponent<SeasonTypes> = () => {
 
         await fetchGraphQL(token, query);
 
-        getMostRecentSeason();
+        getMostRecentSession();
 
         setModalOpen(false);
     }
@@ -115,36 +115,36 @@ const Season: FunctionComponent<SeasonTypes> = () => {
                 {battletag && battletag.name ? battletag.name : '...loading'}
             </Typography>
             <Typography gutterBottom variant={"h6"}>
-                Most Recent Season
+                Most Recent Session
             </Typography>
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
                 <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'tank' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={season.tankSR.toString()} subtitle={"Tank"} />
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'tank' } }}>
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={session.tankSR.toString()} subtitle={"Tank"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'damage' } }} >
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={season.damageSR.toString()} subtitle={"Damage"} />
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'damage' } }} >
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={session.damageSR.toString()} subtitle={"Damage"} />
                     </Link>
                 </Grid>
                 <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/season/role', state: { role: 'support' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={season.supportSR.toString()} subtitle={"Support"} />
+                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'support' } }}>
+                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={session.supportSR.toString()} subtitle={"Support"} />
                     </Link>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Season</Button>
+                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
                 </Grid>
             </Grid>
             {/* <Fab color={'primary'} href={''}>
                 <AddIcon/>
             </Fab> */}
-            <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Season'} >
-                <AddSeason createSeason={createSeason} modalControls={{ modalOpen, setModalOpen }} />
+            <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
+                <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
             </Modal>
         </Fragment>
     );
 }
 
-export default Season;
+export default Session;

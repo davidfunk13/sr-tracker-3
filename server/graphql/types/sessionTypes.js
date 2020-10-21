@@ -1,5 +1,5 @@
-const seasonTypeDefs = `
-type Season {
+const sessionTypeDefs = `
+type Session {
     _id:ID!
     _battletag: ID!
     tankSR: Int!
@@ -13,4 +13,4 @@ type Season {
 }
 `;
 
-module.exports = seasonTypeDefs;
+module.exports = sessionTypeDefs;

@@ -1,8 +1,8 @@
 import CSS from 'csstype';
 import React, { useState, FunctionComponent, useEffect } from 'react';
-import RoleTypes from './Role.View.Types';
+import SelectedSessionTypes from './SelectedSession.View.Types';
 import { useLocation } from 'react-router-dom';
-import { LocationState } from './Role.View.Types';
+import { LocationState } from './SelectedSession.View.Types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import GameTable from '../../components/GameTable/GameTable.Component';
@@ -19,10 +19,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Games from '../Games/Games.View';
 import PercentPie from '../../UI/Charts/PercentPie/PercentPie.UI';
-import SeasonStats from '../SeasonStats/SeasonStats.View';
+import SessionStats from '../SessionStats/SessionStats.View';
 
-
-const Role: FunctionComponent<RoleTypes> = () => {
+const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const [value, setValue] = useState<number>(0);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -45,7 +44,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
-    const seasonStorage = localStorage.getItem('_season');
+    const sessionStorage = localStorage.getItem('_session');
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -72,8 +71,8 @@ const Role: FunctionComponent<RoleTypes> = () => {
             scope: "read:current_user",
         });
 
-        if (!seasonStorage) {
-            console.log('season id not found in state.')
+        if (!sessionStorage) {
+            console.log('session id not found in state.')
             return;
         }
 
@@ -82,9 +81,9 @@ const Role: FunctionComponent<RoleTypes> = () => {
             return;
         }
 
-        const seasonParsed: { _season: string } = JSON.parse(seasonStorage);
+        const sessionParsed: { _session: string } = JSON.parse(sessionStorage);
 
-        const { _season } = seasonParsed;
+        const { _session } = sessionParsed;
 
         let heroesPlayed: string = form.heroesPlayed.map((hero: HeroEntry) => {
             const q = '"'
@@ -95,7 +94,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         const query: string = `mutation{
           createGame(input: { 
-                _season: "${_season}"
+                _session: "${_session}"
                 role: ${role}
                 heroesPlayed: [${heroesPlayed}]
                 mapPlayed: "${form.mapPlayed.name}"
@@ -103,17 +102,17 @@ const Role: FunctionComponent<RoleTypes> = () => {
                 rankOut: ${form.skillRating}
                 outcome: ${form.outcome} 
             }){
-                _season
+                _session
             }
         }`;
 
         const res = await fetchGraphQL(token, query);
 
-        getGamesOfType(_season);
+        getGamesOfType(_session);
     }
 
     //start fetch games
-    async function getGamesOfType(_season: string) {
+    async function getGamesOfType(_session: string) {
         setIsLoading(true);
 
         const token = await getTokenSilently({
@@ -125,7 +124,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
         const query: string = `
         query{
-            getAllGamesOfType(_season: "${_season}", role: ${role}){
+            getAllGamesOfType(_session: "${_session}", role: ${role}){
                 role
                 mapPlayed
                 heroesPlayed
@@ -145,13 +144,13 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
     //start effect to parse localstorage string if it exists
     useEffect(() => {
-        if (!seasonStorage) {
+        if (!sessionStorage) {
             return;
         }
 
-        const seasonParsed: { _season: string } = JSON.parse(seasonStorage);
+        const sessionParsed: { _session: string } = JSON.parse(sessionStorage);
 
-        getGamesOfType(seasonParsed._season);
+        getGamesOfType(sessionParsed._session);
     }, []);
 
     return (
@@ -159,7 +158,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
 
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
-                    {title} Season
+                    {title} Session
                 </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -178,7 +177,7 @@ const Role: FunctionComponent<RoleTypes> = () => {
                     <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <SeasonStats />
+                    <SessionStats />
                 </TabPanel>
             </Grid>
             <GameFormProvider>
@@ -190,4 +189,4 @@ const Role: FunctionComponent<RoleTypes> = () => {
     )
 }
 
-export default Role;
+export default SelectedSession;

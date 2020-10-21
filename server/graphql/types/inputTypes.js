@@ -12,7 +12,7 @@ input BattletagInput {
 }
 
 input GameInput {
-    _season: ID!
+    _session: ID!
     role: Int!
     mapPlayed: String!
     heroesPlayed: [String]!
@@ -21,7 +21,7 @@ input GameInput {
     rankOut: Int!
 }
 
-input SeasonInput {
+input SessionInput {
     _battletag: ID!
     tankSR: Int!
     damageSR: Int!

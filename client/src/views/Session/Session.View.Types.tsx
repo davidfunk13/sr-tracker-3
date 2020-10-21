@@ -1,5 +1,5 @@
 // import { SetStateAction } from 'react';
-export default interface NewSeasonTypes {
+export default interface SessionTypes {
     // setOpen: React.Dispatch<SetStateAction<boolean>>
 
 }

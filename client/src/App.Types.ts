@@ -25,7 +25,7 @@ export interface BlizzAPIBattletag {
 
 export interface Game {
   _id?: string
-  _season?: string
+  _session?: string
   role: 0 | 1 | 2
   mapPlayed: string
   heroesPlayed: [string, string?, string?]
@@ -88,11 +88,7 @@ export type RoleName = "tank" | "damage" | "support";
 
 export type RoleKey = 0 | 1 | 2 | 3;
 
-
-
-
-
-
+export type SessionType = { tankSR: number, supportSR: number, damageSR: number };
 
 export default interface AppProps {
 

@@ -9,12 +9,14 @@ import Placeholder from '../../assets/icons/heroes/Tracer.png';
 
 const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session }) => {
     const classes = useStyles();
+
     let createdAt: { date: string, time: string } = { date: '...loading', time: '...loading' };
 
     if (session.createdAt) {
         const date = new Date(parseInt(session.createdAt, 10));
         createdAt = { date: date.toLocaleDateString(), time: date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) }
     }
+
     return (
         <Card onClick={onClick} className={classes.root} >
             <div className={classes.details}>

@@ -23,8 +23,13 @@ const resolvers = {
       return await Session.findById(_id);
     },
     async getAllSessions(_, { _battletag }) {
-      const populated = await Battletag.findById(_battletag).populate('_sessions');
-      console.log(populated);
+      const populated = await Battletag.findById(_battletag).populate({
+        path: '_sessions',
+        populate: {
+          path: '_games',
+          model: 'game'
+        }
+      });
 
       return await populated._sessions;
     },

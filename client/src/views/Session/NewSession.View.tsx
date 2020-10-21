@@ -10,6 +10,8 @@ import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useStyles from './NewSession.Styles';
 import NewSessionProps from './NewSession.Types';
+import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import Placeholder from '../../assets/icons/heroes/Tracer.png';
 
 const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -143,6 +145,14 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
                 <Grid container justify={'center'} spacing={2}>
                     {sessions ? sessions.map(session => {
                         console.log(session)
+
+                        let createdAt: { date: string, time: string } = { date: '...loading', time: '...loading' };
+
+                        if (session.createdAt) {
+                            const date = new Date(parseInt(session.createdAt, 10));
+                            createdAt = { date: date.toLocaleDateString(), time: date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) }
+                        }
+
                         return <Grid key={session._id} item xs={6}>
                             <SessionCard session={session} onClick={selectSession} />
                         </Grid>

@@ -22,7 +22,7 @@ const Session: FunctionComponent<SessionTypes> = () => {
 
     const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
-    const [session, setSession] = useState<SessionType>({ tankSR: 0, supportSR: 0, damageSR: 0 });
+    const [session, setSession] = useState<SessionType>({ _games: [], tankSR: 0, supportSR: 0, damageSR: 0 });
 
     const { getTokenSilently } = useAuth0();
 

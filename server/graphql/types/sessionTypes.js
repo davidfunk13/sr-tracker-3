@@ -8,6 +8,7 @@ type Session {
     startingDamageSR: Int!
     supportSR: Int!
     startingSupportSR: Int!
+    _games: [Game]
     createdAt: String!
     updatedAt: String
 }

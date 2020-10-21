@@ -1,4 +1,4 @@
 // import { SetStateAction } from 'react';
-export default interface NewSessionTypes {
+export default interface NewSessionProps {
     // setOpen: React.Dispatch<SetStateAction<boolean>>
 }

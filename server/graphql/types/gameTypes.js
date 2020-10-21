@@ -8,6 +8,8 @@ type Game {
     outcome: Int!
     rankIn: Int!
     rankOut: Int!
+    createdAt: String!
+    updatedAt: String
 }
 `;
 

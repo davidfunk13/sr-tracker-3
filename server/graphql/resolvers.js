@@ -24,6 +24,7 @@ const resolvers = {
     },
     async getAllSessions(_, { _battletag }) {
       const populated = await Battletag.findById(_battletag).populate('_sessions');
+      console.log(populated);
 
       return await populated._sessions;
     },

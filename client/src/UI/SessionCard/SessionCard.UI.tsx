@@ -10,15 +10,11 @@ import Placeholder from '../../assets/icons/heroes/Tracer.png';
 const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session }) => {
     const classes = useStyles();
 
-    let createdAt: { date: string, time: string } = { date: '...loading', time: '...loading' };
+    const date = new Date(parseInt(session.createdAt, 10));
 
-    if (session && session.createdAt) {
-        const date = new Date(parseInt(session.createdAt, 10));
-
-        createdAt = {
-            date: date.toLocaleDateString(),
-            time: date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })
-        }
+    const createdAt: { date: string, time: string } = {
+        date: date.toLocaleDateString(),
+        time: date.toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' })
     }
 
     return (
@@ -39,7 +35,7 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session }) 
             <CardMedia
                 className={classes.cover}
                 image={Placeholder}
-                title="Live from space album cover"
+                title={"Session Feature"}
             />
         </Card>
     );

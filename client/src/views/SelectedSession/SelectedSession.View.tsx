@@ -9,7 +9,7 @@ import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm } from '../../App.Types';
+import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useAuth0 } from '../../react-auth0-spa';
 import GameFormComponent from '../../forms/AddGame';
@@ -28,7 +28,11 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const [sessionLoading, setSessionLoading] = useState<boolean>(false);
+
     const [games, setGames] = useState<Game[]>([]);
+
+    const [session, setSession] = useState<SessionType>({ _id: '', _games: [], tankSR: 0, supportSR: 0, damageSR: 0, createdAt: '' });
 
     const { getTokenSilently } = useAuth0();
 
@@ -44,11 +48,46 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
     const title: string = role.split('')[0].toUpperCase() + role.slice(1);
 
-    const sessionStorage = localStorage.getItem('_session');
+    const sessionStorage = JSON.parse(localStorage.getItem('_session') as string) as { _session: string };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
+
+    async function getSelectedSession(_session: string) {
+        setSessionLoading(true);
+
+        const query: string = `{
+        getOneSession(_id: "${_session}") {
+            _id
+            tankSR
+            supportSR
+            damageSR
+            createdAt
+            _games {
+                _id
+                _session
+                outcome
+                createdAt
+                }
+            }
+        }` ;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const res: { getOneSession: any } = await fetchGraphQL(token, query);
+
+        if (res === undefined) {
+            console.error('ALL SESSIONS RETURNED UNDEFINED');
+            return;
+        }
+
+        setSession(res.getOneSession);
+        setSessionLoading(false);
+    }
 
     // function to convert string used for title on role page to a role key the api understands
     function convertRole() {
@@ -81,9 +120,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
             return;
         }
 
-        const sessionParsed: { _session: string } = JSON.parse(sessionStorage);
 
-        const { _session } = sessionParsed;
+        const { _session } = sessionStorage;
 
         let heroesPlayed: string = form.heroesPlayed.map((hero: HeroEntry) => {
             const q = '"'
@@ -147,15 +185,12 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         if (!sessionStorage) {
             return;
         }
-
-        const sessionParsed: { _session: string } = JSON.parse(sessionStorage);
-
-        getGamesOfType(sessionParsed._session);
+        getSelectedSession(sessionStorage._session)
+        getGamesOfType(sessionStorage._session);
     }, []);
 
     return (
         <Grid container style={{ marginBottom: '1em' }} justify={'center'}>
-
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {title} Session
@@ -174,12 +209,13 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
-                    <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
+                    <Games session={session} isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <SessionStats />
                 </TabPanel>
             </Grid>
+
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
                     <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />

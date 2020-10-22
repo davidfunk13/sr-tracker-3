@@ -4,15 +4,39 @@ import Typography from '@material-ui/core/Typography';
 import GameTable from '../../components/GameTable/GameTable.Component';
 import Button from '@material-ui/core/Button';
 import GamesProps from './Games.View.Types';
+import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import DamageIcon from '../../assets/icons/roles/Damage.png';
+import SupportIcon from '../../assets/icons/roles/Support.png';
+import TankIcon from '../../assets/icons/roles/Tank.png';
+import useStyles from './Games.View.Styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Games: React.FC<GamesProps> = ({ isLoading, games, modalControls }) => {
+const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls }) => {
     const { setModalOpen } = modalControls;
+
+    const classes = useStyles();
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant={'h5'}>
                     Games
                 </Typography>
+            </Grid>
+            {isLoading && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
+            <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
+                <Grid item xs={4}>
+                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={session.tankSR.toString()} subtitle={"Tank"} />
+                </Grid>
+                <Grid item xs={4}>
+                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={session.damageSR.toString()} subtitle={"Damage"} />
+                </Grid>
+                <Grid item xs={4}>
+                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={session.supportSR.toString()} subtitle={"Support"} />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
+                </Grid>
             </Grid>
             <Grid item xs={12}>
                 <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />

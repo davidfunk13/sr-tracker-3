@@ -26,7 +26,6 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
 
     const [selectedSession, setSelectedSession] = useState<SessionType | undefined>(undefined);
 
-
     const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
     const { getTokenSilently } = useAuth0();
@@ -34,8 +33,6 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     const selected = JSON.parse(localStorage.getItem("selected") as string);
 
     const _session = JSON.parse(localStorage.getItem("_session") as string);
-
-    // let selected: { _id: string, name: string } = JSON.parse(selected);
 
     useEffect(() => {
 
@@ -48,11 +45,7 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         }
 
         if (selected) {
-            console.log('hi')
-            // const parsed: BlizzAPIBattletag = JSON.parse(selected);
-
             setBattletag(selected);
-
             getAllSessions();
         }
 
@@ -127,9 +120,8 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
             return createSession();
         }
 
-        console.log({ 'gotem': res.getAllSessions });
-
         setSessions(res.getAllSessions);
+
         setLoading(false);
     }
 

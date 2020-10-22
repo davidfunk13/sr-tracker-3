@@ -38,12 +38,18 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
     }
 
     const selected = localStorage.getItem('selected');
+    const _session = localStorage.getItem('_session');
 
     function removeSelected() {
         if (selected) {
             localStorage.removeItem('selected');
-            navigate('/select')
         }
+
+        if (_session) {
+            localStorage.removeItem('_session');
+        }
+
+        navigate('/select')
     }
 
     useEffect(() => {

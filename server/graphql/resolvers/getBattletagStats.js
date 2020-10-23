@@ -30,7 +30,7 @@ async function getBattletagStats(input) {
     try {
         const bodyString = await (await axios.get(`https://playoverwatch.com/en-us/career/pc/${currentBattletag.urlName}`)).data;
 
-        console.log({ bodyString });
+        console.log(currentBattletag.urlName);
 
         const { document } = new JSDOM(bodyString).window;
 
@@ -59,8 +59,6 @@ async function getBattletagStats(input) {
 
             statsObj[categoryName] = innerObj;
         }
-
-        console.log({ Info: info, ...statsObj });
 
         return { info: info, ...statsObj };
 

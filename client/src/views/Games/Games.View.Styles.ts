@@ -10,6 +10,13 @@ const useStyles = makeStyles((theme: Theme) =>
         loadingContainer: {
             display: 'flex',
             justifyContent: 'center'
+        },
+        iconContainer: {
+            textAlign: 'center',
+        },
+        icon: {
+            width: '100%',
+            maxWidth: '15vw'
         }
     }),
 );

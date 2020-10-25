@@ -51,7 +51,6 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                         {subtitle}
                     </Typography>
                 }
-
             </CardContent>
             {children ?
                 <CardActionArea>

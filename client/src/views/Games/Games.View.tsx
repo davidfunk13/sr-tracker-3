@@ -10,6 +10,8 @@ import SupportIcon from '../../assets/icons/roles/Support.png';
 import TankIcon from '../../assets/icons/roles/Tank.png';
 import useStyles from './Games.View.Styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls }) => {
     const { setModalOpen } = modalControls;
@@ -25,17 +27,21 @@ const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls 
             </Grid>
             {isLoading && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
             <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
-                <Grid item xs={4}>
-                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={session.tankSR.toString()} subtitle={"Tank"} />
+                <Grid className={classes.iconContainer} item xs={4}>
+                    <img className={classes.icon} src={TankIcon} alt="Tank" />
+                    <Typography align={"center"}>
+                        {session.tankSR.toString()}
+                    </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={session.damageSR.toString()} subtitle={"Damage"} />
+                <Grid className={classes.iconContainer} item xs={4}>
+                    <img className={classes.icon} src={SupportIcon} alt="Support" />
+                    <Typography align={"center"}>
+                        {session.supportSR.toString()}
+                    </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                    <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={session.supportSR.toString()} subtitle={"Support"} />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
+                <Grid className={classes.iconContainer} item xs={4}>
+                    <img className={classes.icon} src={DamageIcon} alt="Damage" />
+                    <Typography align={"center"}>{session.damageSR.toString()}</Typography>
                 </Grid>
             </Grid>
             <Grid item xs={12}>

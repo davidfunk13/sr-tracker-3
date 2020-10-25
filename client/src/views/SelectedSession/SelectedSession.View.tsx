@@ -204,8 +204,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                         onChange={handleChange}
                         aria-label="nav tabs example"
                     >
-                        <LinkTab label="Games" href="/drafts" {...a11yProps(0)} />
-                        <LinkTab label="Statistics" href="/trash" {...a11yProps(1)} />
+                        <LinkTab label="Games" {...a11yProps(0)} />
+                        <LinkTab label="Statistics" {...a11yProps(1)} />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>

@@ -8,8 +8,10 @@ import { BlizzAPIBattletag, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 import useStyles from './NewSession.Styles';
 import NewSessionProps from './NewSession.Types';
+import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
 
 const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -195,8 +197,11 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
                     </Grid>
                 }) : null}
             </Grid>
+            <Grid item xs={12}>
+                <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
+            </Grid>
             <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
-                Poop
+                <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
             </Modal>
         </Grid>
     );

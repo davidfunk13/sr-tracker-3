@@ -116,7 +116,6 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
   return (
     <Fragment>
-
       <Typography gutterBottom variant={"h5"}>
         Select Battletag
       </Typography>

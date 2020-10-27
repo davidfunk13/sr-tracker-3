@@ -44,7 +44,15 @@ export interface GameForm {
   skillRating: number | undefined
 }
 
+export interface SessionForm {
+  step: number
+  role: RoleKey
+  skillRating: number
+}
+
 export type GameFormContextType = [GameForm, Dispatch<SetStateAction<GameForm>>];
+
+export type SessionFormContextType = [SessionForm, Dispatch<SetStateAction<SessionForm>>];
 
 export interface HeroEntry {
   name: string,

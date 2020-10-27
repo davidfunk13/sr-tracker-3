@@ -60,18 +60,18 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         }
 
         const query: string = `mutation {
-            createSession(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
+            createSession(input: { _battletag: "${selected._id}", sessionRole: ${selected.sessionRole}, skillRatingStart: ${selected.skillRatingStart}, skillRatingCurrent: ${selected.skillRatingStart}) {
                 _id
-                damageSR
-                tankSR
-                supportSR
+                skillRatingStart
+                skillRatingCurrent
+                sessionRole
                 _games {
                     _id
                     outcome
                 }
             }
         }`;
-
+        console.log(query)
         const token = await getTokenSilently({
             audience: "AuthAPI",
             scope: "read:current_user",
@@ -93,9 +93,9 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         const query: string = `{
         getAllSessions(_battletag: "${selected._id}") {
             _id
-            tankSR
-            supportSR
-            damageSR
+            skillRatingStart
+            skillRatingCurrent
+            sessionRole
             createdAt
             _games {
                 _id
@@ -112,14 +112,10 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         });
 
         const res: { getAllSessions: any } = await fetchGraphQL(token, query);
-
+        console.log(res)
         if (res === undefined) {
             console.error('ALL SESSIONS RETURNED UNDEFINED');
             return;
-        }
-
-        if (!res.getAllSessions.length) {
-            return createSession();
         }
 
         setSessions(res.getAllSessions);
@@ -138,9 +134,9 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         const query: string = `{
         getOneSession(_id: "${_session}") {
             _id
-            tankSR
-            supportSR
-            damageSR
+            skillRatingStart
+            skillRatingCurrent
+            sessionRole
             createdAt
             _games {
                 _id

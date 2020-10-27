@@ -16,102 +16,102 @@ import fetchGraphQL from '../../utils/fetchGraphQL';
 import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
 
 const Session: FunctionComponent<SessionTypes> = () => {
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    // const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    const history = useHistory();
+    // const history = useHistory();
 
-    const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
+    // const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
-    const [session, setSession] = useState<SessionType>({ _id: '', _games: [], tankSR: 0, supportSR: 0, damageSR: 0, createdAt: '' });
+    // const [session, setSession] = useState<SessionType>({ _id: '', _games: [], tankSR: 0, supportSR: 0, damageSR: 0, createdAt: '' });
 
-    const { getTokenSilently } = useAuth0();
+    // const { getTokenSilently } = useAuth0();
 
-    useEffect(() => {
-        const selected = localStorage.getItem('selected');
+    // useEffect(() => {
+    //     const selected = localStorage.getItem('selected');
 
-        if (!selected) {
-            history.push('/select', 'Track');
-        }
+    //     if (!selected) {
+    //         history.push('/select', 'Track');
+    //     }
 
-        if (selected) {
-            const parsed: BlizzAPIBattletag = JSON.parse(selected);
-            setBattletag(parsed);
-            getMostRecentSession();
-        }
+    //     if (selected) {
+    //         const parsed: BlizzAPIBattletag = JSON.parse(selected);
+    //         setBattletag(parsed);
+    //         getMostRecentSession();
+    //     }
 
-    }, []);
+    // }, []);
 
-    async function getMostRecentSession() {
-        const storage = localStorage.getItem("selected");
+    // async function getMostRecentSession() {
+    //     const storage = localStorage.getItem("selected");
 
-        if (!storage) {
-            console.error("No battletag ID available, something went wrong getting your most recent session.");
-            return;
-        }
+    //     if (!storage) {
+    //         console.error("No battletag ID available, something went wrong getting your most recent session.");
+    //         return;
+    //     }
 
-        let selected: { _id: string } = JSON.parse(storage);
+    //     let selected: { _id: string } = JSON.parse(storage);
 
-        const query: string = `{
-        getMostRecentSession(_battletag: "${selected._id}") {
-            _id
-            tankSR
-            supportSR
-            damageSR
-        }
-    }` ;
+    //     const query: string = `{
+    //     getMostRecentSession(_battletag: "${selected._id}") {
+    //         _id
+    //         tankSR
+    //         supportSR
+    //         damageSR
+    //     }
+    // }` ;
 
-        const token = await getTokenSilently({
-            audience: "AuthAPI",
-            scope: "read:current_user",
-        });
+    //     const token = await getTokenSilently({
+    //         audience: "AuthAPI",
+    //         scope: "read:current_user",
+    //     });
 
-        const res: { getMostRecentSession: any } = await fetchGraphQL(token, query);
+    //     const res: { getMostRecentSession: any } = await fetchGraphQL(token, query);
 
-        if (res.getMostRecentSession && res.getMostRecentSession._id) {
-            let str = JSON.stringify({ _session: res.getMostRecentSession._id });
+    //     if (res.getMostRecentSession && res.getMostRecentSession._id) {
+    //         let str = JSON.stringify({ _session: res.getMostRecentSession._id });
 
-            localStorage.setItem("_session", str);
+    //         localStorage.setItem("_session", str);
 
-            setSession(res.getMostRecentSession);
-        } else {
-            createSession();
-        }
-    }
+    //         setSession(res.getMostRecentSession);
+    //     } else {
+    //         createSession();
+    //     }
+    // }
 
-    async function createSession() {
-        const storage = localStorage.getItem("selected");
+    // async function createSession() {
+    //     const storage = localStorage.getItem("selected");
 
-        if (!storage) {
-            console.error("No battletag ID available, something went creating a new session.");
-            return
-        }
+    //     if (!storage) {
+    //         console.error("No battletag ID available, something went creating a new session.");
+    //         return
+    //     }
 
-        let selected: { _id: string, name: string } = JSON.parse(storage);
+    //     let selected: { _id: string, name: string } = JSON.parse(storage);
 
-        const query: string = `mutation{
-            createSession(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
-            _id
-            damageSR
-            tankSR
-            supportSR
-        }
-    }`;
+    //     const query: string = `mutation{
+    //         createSession(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
+    //         _id
+    //         damageSR
+    //         tankSR
+    //         supportSR
+    //     }
+    // }`;
 
-        const token = await getTokenSilently({
-            audience: "AuthAPI",
-            scope: "read:current_user",
-        });
+    //     const token = await getTokenSilently({
+    //         audience: "AuthAPI",
+    //         scope: "read:current_user",
+    //     });
 
-        await fetchGraphQL(token, query);
+    //     await fetchGraphQL(token, query);
 
-        getMostRecentSession();
+    //     getMostRecentSession();
 
-        setModalOpen(false);
-    }
+    //     setModalOpen(false);
+    // }
 
     return (
         <Fragment>
-            <Typography gutterBottom variant={"h5"}>
+            {/* <Typography gutterBottom variant={"h5"}>
                 {battletag && battletag.name ? battletag.name : '...loading'}
             </Typography>
             <Typography gutterBottom variant={"h6"}>
@@ -137,12 +137,10 @@ const Session: FunctionComponent<SessionTypes> = () => {
                     <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
                 </Grid>
             </Grid>
-            {/* <Fab color={'primary'} href={''}>
-                <AddIcon/>
-            </Fab> */}
+
             <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
                 <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
-            </Modal>
+            </Modal> */}
         </Fragment>
     );
 }

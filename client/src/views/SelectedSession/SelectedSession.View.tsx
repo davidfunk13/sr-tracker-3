@@ -32,7 +32,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
     const [games, setGames] = useState<Game[]>([]);
 
-    const [session, setSession] = useState<SessionType>({ _id: '', _games: [], tankSR: 0, supportSR: 0, damageSR: 0, createdAt: '' });
+    const [session, setSession] = useState<SessionType>({ _id: '', _games: [], sessionRole: 3, skillRatingStart: 0, skillRatingCurrent: 0, createdAt: '' });
 
     const { getTokenSilently } = useAuth0();
 
@@ -191,7 +191,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
     return (
         <Grid container style={{ marginBottom: '1em' }} justify={'center'}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {title} Session
                 </Typography>
@@ -220,7 +220,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
                     <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
                 </Modal>
-            </GameFormProvider>
+            </GameFormProvider> */}
         </Grid>
     )
 }

@@ -88,7 +88,14 @@ export type RoleName = "tank" | "damage" | "support";
 
 export type RoleKey = 0 | 1 | 2 | 3;
 
-export type SessionType = { _id: string, tankSR: number, supportSR: number, damageSR: number, _games?: Game[], createdAt: string };
+export type SessionType = {
+  _id: string
+  sessionRole: RoleKey
+  skillRatingStart: number
+  skillRatingCurrent: number
+  _games?: Game[]
+  createdAt: string
+};
 
 export default interface AppProps {
 

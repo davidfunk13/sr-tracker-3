@@ -4,12 +4,9 @@ const Schema = mongoose.Schema;
 
 const SessionSchema = new Schema({
     _battletag: { type: Schema.Types.ObjectId, ref: 'battletag' },
-    startingTankSR: { type: Number, require: true },
-    tankSR: { type: Number, require: true },
-    startingDamageSR: { type: Number, require: true },
-    damageSR: { type: Number, require: true },
-    startingSupportSR: { type: Number, require: true },
-    supportSR: { type: Number, require: true },
+    sessionRole: { type: Number, require: true, enum: [0, 1, 2] },
+    skillRatingStart: { type: Number, require: true },
+    skillRatingCurrent: { type: Number, require: true },
     _games: [{ type: Schema.Types.ObjectId, ref: 'game' }],
 }, { timestamps: true });
 

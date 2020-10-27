@@ -23,6 +23,7 @@ const resolvers = {
       return await Session.findById(_id);
     },
     async getAllSessions(_, { _battletag }) {
+      console.log({ _battletag })
       const populated = await Battletag.findById(_battletag).populate({
         path: '_sessions',
         populate: {
@@ -30,7 +31,7 @@ const resolvers = {
           model: 'game'
         }
       });
-
+      console.log(populated)
       return await populated._sessions;
     },
     async getMostRecentSession(_, { _battletag }) {
@@ -63,15 +64,16 @@ const resolvers = {
       return await battletag.save();
     },
     async createSession(_, { input }) {
+      console.log('sup')
       const newSession = {
         ...input,
-        startingTankSR: input.tankSR,
-        startingSupportSR: input.supportSR,
-        startingDamageSR: input.damageSR
+        skillRatingStart: input.skillRatingStart,
+        skillRatingCurrent: input.skillRatingStart,
+        sessionRole: input.sessionRole,
       }
 
       let session = new Session(newSession);
-
+      console.log({ session })
       session = await session.save();
 
       const battletag = await Battletag.findById(session._battletag);

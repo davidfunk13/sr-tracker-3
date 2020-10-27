@@ -20,7 +20,7 @@ const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls 
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Typography variant={'h5'}>
                     Games
                 </Typography>
@@ -51,7 +51,7 @@ const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls 
                 <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
                     <Typography variant={'button'}>Add A Game</Typography>
                 </Button>
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 };

@@ -23,9 +23,8 @@ input GameInput {
 
 input SessionInput {
     _battletag: ID!
-    tankSR: Int!
-    damageSR: Int!
-    supportSR: Int!
+    sessionRole: Int!
+    startingSkillRating: Int!
 }
 
 input StatsInput{

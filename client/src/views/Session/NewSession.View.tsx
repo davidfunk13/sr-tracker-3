@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import useStyles from './NewSession.Styles';
 import NewSessionProps from './NewSession.Types';
 import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
+import SessionFormProvider from '../../contexts/SessionForm/SessionForm.Provider';
 
 const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -37,7 +38,6 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     const _session = JSON.parse(localStorage.getItem("_session") as string);
 
     useEffect(() => {
-
         if (_session) {
             getSelectedSession(_session._session);
         }
@@ -176,7 +176,9 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
     return (
         <Grid container spacing={2} >
             <Grid item xs={12}>
-                <Typography variant={'h5'}>Selected Session</Typography>
+                <Typography variant={'h5'}>
+                    Selected Session
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 {loadingSelected && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
@@ -196,9 +198,11 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
             <Grid item xs={12}>
                 <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
             </Grid>
-            <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
-                <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
-            </Modal>
+            <SessionFormProvider>
+                <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
+                    <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
+                </Modal>
+            </SessionFormProvider>
         </Grid>
     );
 }

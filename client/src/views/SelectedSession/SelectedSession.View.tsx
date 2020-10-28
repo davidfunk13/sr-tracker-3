@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useAuth0 } from '../../react-auth0-spa';
-import GameFormComponent from '../../forms/AddGame';
+import GameFormComponent from '../../forms/AddGame/AddGame.Modal.UI';
 import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
 import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
 import AppBar from '@material-ui/core/AppBar';

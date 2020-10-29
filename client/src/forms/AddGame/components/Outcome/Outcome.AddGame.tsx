@@ -121,7 +121,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
                     />
                 </Grid>
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

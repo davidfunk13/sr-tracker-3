@@ -72,7 +72,7 @@ const SelectRole: FunctionComponent<SelectRoleProps> = ({ }) => {
                     </Card>
                 </Grid>
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={SessionFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

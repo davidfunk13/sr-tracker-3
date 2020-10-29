@@ -35,7 +35,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
         if (state && state.mapPlayed && state.mapPlayed.name) {
             return setDisabled(false);
         }
-        
+
     }, [state]);
 
     return (
@@ -52,7 +52,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
                     </Grid>;
                 })}
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     )
 }

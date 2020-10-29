@@ -7,7 +7,7 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import CSS from 'csstype';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
-import { Game, GameFormContextType, SessionFormContextType } from '../../../../App.Types';
+import { Game, SessionFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
 import fetchGraphQL from '../../../../utils/fetchGraphQL';
@@ -15,8 +15,6 @@ import { useAuth0 } from '../../../../react-auth0-spa';
 import SessionFormContext from '../../../../contexts/SessionForm/SessionForm.Context';
 
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
-    const { getTokenSilently } = useAuth0();
-
     const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em', height: '80%' };
 
     const classes = useStyles();
@@ -29,8 +27,6 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
 
     const [input, setInput] = useState<string>('');
 
-    const [lastPlayed, setLastPlayed] = useState<Game>({} as Game);
-
     const skillRating = state.skillRating || 0;
 
     const rank: YourRank = useGetRank(skillRating);
@@ -40,6 +36,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
             ...state,
             skillRating: val
         };
+
         setState(newState);
     }
 
@@ -115,7 +112,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                     label="New Skill Rating"
                 />
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={SessionFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

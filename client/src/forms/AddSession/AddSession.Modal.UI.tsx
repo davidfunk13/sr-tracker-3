@@ -10,10 +10,11 @@ import SupportIcon from '../../assets/icons/roles/Support.png';
 import FormComponentWrapper from '../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import SelectRole from './components/SelectRole/SelectRole.AddSession';
 import SessionForm from '../../contexts/SessionForm';
-import SessionFormContext from '../../contexts/SessionForm/SessionForm.Context';
+import SessionFormContext, { initialSessionFormState } from '../../contexts/SessionForm/SessionForm.Context';
 import SkillRating from '../AddSession/components/SkillRating/SkillRating.AddSession';
 import useStyles from './AddSession.Modal.UI.Styles';
 import SessionFormProvider from '../../contexts/SessionForm/SessionForm.Provider';
+import ConfirmSession from './components/ConfirmSession/ConfirmSession.AddSession.UI';
 
 export interface AddSessionTypes {
     createSession: () => void;
@@ -27,16 +28,14 @@ const AddSession: FunctionComponent<AddSessionTypes> = ({ createSession, modalCo
 
     const [state, setState] = useContext<SessionFormContextType>(SessionFormContext);
 
-    // const { createGame, role } = componentDependencies;
-
-    useEffect(() => console.log(state), [state])
-
     function renderComponent(step: number): JSX.Element {
         switch (step) {
             case 0:
-                return <SelectRole />
+                return <SelectRole />;
             case 1:
                 return <SkillRating />;
+            case 2:
+                return <ConfirmSession createSession={createSession} />;
             default:
                 return <h4>Something went wrong</h4>;
         }

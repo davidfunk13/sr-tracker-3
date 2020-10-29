@@ -122,8 +122,6 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
         }
     }, []);
 
-    useEffect(() => console.log({ lastPlayed }), [lastPlayed])
-
     return (
         <FormComponentWrapper>
             <Grid style={{ height: '70%' }} item xs={12}>
@@ -148,7 +146,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                     label="New Skill Rating"
                 />
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

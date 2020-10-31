@@ -6,6 +6,15 @@ const useStyles = makeStyles((theme: Theme) =>
             WebkitAppearance: "none",
             margin: 0,
             MozAppearance: "textfield",
+        },
+        root: {
+            minWidth: '30%',
+        },
+        image: {
+            height: 140,
+            padding: '1em',
+            transform: 'scale(.75)',
+            backgroundSize: 'contain'
         }
     }),
 );

@@ -35,12 +35,7 @@ const SelectRole: FunctionComponent<SelectRoleProps> = ({ }) => {
 
     return (
         <FormComponentWrapper spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant={'h5'} component={'h2'}>
-                    Select Role
-                </Typography>
-            </Grid>
-            <Grid container spacing={2} style={{ height: "70%", overflow: 'auto' }}>
+            <Grid container spacing={2} style={{ height: "80%", overflow: 'auto' }}>
                 <Grid item xs={12} sm={4}>
                     <Card onClick={() => selectRole(0)} className={classes.root} variant={'outlined'}>
                         <CardActionArea>

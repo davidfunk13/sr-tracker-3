@@ -6,12 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import CSS from 'csstype';
-import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
-import { Game, SessionFormContextType } from '../../../../App.Types';
+import { SessionFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
-import fetchGraphQL from '../../../../utils/fetchGraphQL';
-import { useAuth0 } from '../../../../react-auth0-spa';
 import SessionFormContext from '../../../../contexts/SessionForm/SessionForm.Context';
 
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {

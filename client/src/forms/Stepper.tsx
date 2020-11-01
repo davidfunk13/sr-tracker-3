@@ -3,8 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import React, { useContext, useEffect, useState } from 'react';
 import useStyles from './Stepper.Forms.Styles';
-import { GameForm, GameFormContextType, SessionFormContextType } from '../App.Types';
-import GameFormContext from '../contexts/GameForm/GameFormContext';
+import { GameForm } from '../App.Types';
 
 interface StepperTypes {
     disabled: boolean

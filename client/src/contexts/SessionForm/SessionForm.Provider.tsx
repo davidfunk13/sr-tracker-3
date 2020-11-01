@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { SessionForm } from '../../App.Types';
 import SessionFormContext, { initialSessionFormState } from './SessionForm.Context';
 

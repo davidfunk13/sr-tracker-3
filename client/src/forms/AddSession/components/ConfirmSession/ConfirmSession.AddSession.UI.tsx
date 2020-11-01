@@ -1,9 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
 import useStyles from './ConfirmSession.UI.Styles';
 import ConfirmSessionProps from './ConfirmSession.AddSession.UI.Types';
 import Stepper from '../../../Stepper';
@@ -48,7 +45,7 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
             <Typography gutterBottom align={'center'} variant={'h5'} component={'h3'}>
                 Is this correct?
             </Typography>
-            <Grid container justify={'center'} spacing={2} style={{ height: "70%", overflow: 'auto' }}>
+            <Grid container justify={'center'} spacing={2} style={{ height: "75%", overflow: 'auto' }}>
                 <Grid item xs={12}>
                     <MediaCard
                         cardMediaStyle={{ backgroundSize: "contain" }}
@@ -64,26 +61,6 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
                         image={roleCard.icon}
                     />
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <Card className={classes.root} variant={'outlined'}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.image}
-                                image={generateCard(state.role)} >
-                            </CardMedia>
-                        </CardActionArea>
-                    </Card>
-                    <Card>
-                        <CardActionArea>
-                            <Typography align={'center'} variant={'h5'} component={'h3'}>
-                                Staring SkillRating
-                           </Typography>
-                            <Typography align={'center'} variant={'h5'} component={'h1'}>
-                                {state.skillRating}
-                            </Typography>
-                        </CardActionArea>
-                    </Card>
-                // </Grid> */}
             </Grid>
             <Stepper submit={() => createSession()} formContext={SessionFormContext} disabled={false} />
         </FormComponentWrapper>

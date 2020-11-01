@@ -6,23 +6,18 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import useStyles from './DrawerRight.Component.Styles';
 import { useTheme } from '@material-ui/core/styles';
 import history from '../../utils/history';
 import DrawerItem from './DrawerItem/DrawerItem.Component';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import CardWithAvatar from '../../UI/CardWithAvatar/CardWithAvatar.UI';
 
 
 const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {

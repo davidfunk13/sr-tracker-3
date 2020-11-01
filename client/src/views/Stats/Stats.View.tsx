@@ -13,15 +13,12 @@ import fetchGraphQL from '../../utils/fetchGraphQL';
 import { Response } from './Stats.View.Types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Options, Ruleset } from './Stats.View.Types';
-import SelectBattletag from '../SelectBattletag/SelectBattletag.View';
 import StatsTable from '../../components/StatsTable/StatsTable.Component';
 
 const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
 
     const history = useHistory();
-
-    const location = useLocation();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 

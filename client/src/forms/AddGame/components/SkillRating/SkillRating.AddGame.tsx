@@ -12,6 +12,7 @@ import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormCompon
 import Stepper from '../../../Stepper';
 import fetchGraphQL from '../../../../utils/fetchGraphQL';
 import { useAuth0 } from '../../../../react-auth0-spa';
+
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
     const { getTokenSilently } = useAuth0();
 

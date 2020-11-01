@@ -1,3 +1,4 @@
+import React, { FunctionComponent, useContext, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
@@ -5,8 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import TankIcon from '../../../../assets/icons/roles/Tank.png';
 import DamageIcon from '../../../../assets/icons/roles/Damage.png';
 import SupportIcon from '../../../../assets/icons/roles/Support.png';
-import Typography from '@material-ui/core/Typography';
-import React, { Fragment, FunctionComponent, useContext, useState } from 'react';
 import SelectRoleProps from './SelectRole.AddSession.Types';
 import useStyles from './SelectRole.AddSession.Styles';
 import { RoleKey, SessionFormContextType } from '../../../../App.Types';

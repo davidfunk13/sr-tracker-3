@@ -28,7 +28,6 @@ const Profile: React.FC<ProfileProps> = () => {
             <Grid item xs={12}>
                 <Typography variant={'h4'}>Profile</Typography>
             </Grid>
-            {/* <Grid container justify={'center'}> */}
             <Grid item xs={12} sm={9}>
                 <Card variant={'outlined'}>
                     <CardContent>
@@ -40,7 +39,6 @@ const Profile: React.FC<ProfileProps> = () => {
                         <Typography variant={"body1"}>{user.email_verified ? 'Email Verified.' : 'Email not verified.'}</Typography>
                     </CardContent>
                 </Card>
-                {/* </Grid> */}
             </Grid>
         </Grid>
     );

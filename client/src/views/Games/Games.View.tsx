@@ -4,14 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import GameTable from '../../components/GameTable/GameTable.Component';
 import Button from '@material-ui/core/Button';
 import GamesProps from './Games.View.Types';
-import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import DamageIcon from '../../assets/icons/roles/Damage.png';
 import SupportIcon from '../../assets/icons/roles/Support.png';
 import TankIcon from '../../assets/icons/roles/Tank.png';
 import useStyles from './Games.View.Styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 
 const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls }) => {
     const { setModalOpen } = modalControls;

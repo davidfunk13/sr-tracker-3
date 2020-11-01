@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, FunctionComponent } from 'react';
+import React, { useEffect, useState, FunctionComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Modal from '../../UI/Modal/Modal.UI';
 import { useAuth0 } from '../../react-auth0-spa';

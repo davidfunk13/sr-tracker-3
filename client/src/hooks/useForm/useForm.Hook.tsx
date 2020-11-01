@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 // get rid of this any. 
 const useForm: any = (formKeys: { [key: string]: any }) => {

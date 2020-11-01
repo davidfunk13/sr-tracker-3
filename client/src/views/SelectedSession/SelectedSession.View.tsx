@@ -5,9 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { LocationState } from './SelectedSession.View.Types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import GameTable from '../../components/GameTable/GameTable.Component';
 import Modal from '../../UI/Modal/Modal.UI';
-import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
@@ -18,7 +16,6 @@ import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Games from '../Games/Games.View';
-import PercentPie from '../../UI/Charts/PercentPie/PercentPie.UI';
 import SessionStats from '../SessionStats/SessionStats.View';
 
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {

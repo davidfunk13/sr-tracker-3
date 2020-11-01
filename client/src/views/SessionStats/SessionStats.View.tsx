@@ -1,8 +1,7 @@
 import { Card } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import React, { createRef, FunctionComponent } from 'react'
-import useIsVisible from '../../hooks/isVisible/useIsVisible';
+import React, { FunctionComponent } from 'react'
 import LineChart from '../../UI/Charts/PercentPie/LineChart/LineChart.UI';
 import PercentPie from '../../UI/Charts/PercentPie/PercentPie.UI';
 import { SessionStatsProps } from './SessionStats.View.Types';

@@ -1,6 +1,5 @@
 import rankDictionary, { Rank } from '../../utils/rankDictionary';
 
-
 export interface YourRank {
     name: string
     icon: string | NodeRequire

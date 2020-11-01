@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState, Fragment } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';

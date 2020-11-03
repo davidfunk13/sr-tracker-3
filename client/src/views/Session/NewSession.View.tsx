@@ -4,7 +4,7 @@ import Modal from '../../UI/Modal/Modal.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import Typography from '@material-ui/core/Typography';
 import SessionCard from '../../UI/SessionCard/SessionCard.UI';
-import { BlizzAPIBattletag, SessionType } from '../../App.Types';
+import { BlizzAPIBattletag, SessionForm, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -53,14 +53,14 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
 
     }, []);
 
-    async function createSession() {
+    async function createSession(form: SessionForm) {
         if (!selected) {
             console.error("No battletag ID available, something went creating a new session.");
             return
         }
 
         const query: string = `mutation {
-            createSession(input: { _battletag: "${selected._id}", sessionRole: ${selected.sessionRole}, skillRatingStart: ${selected.skillRatingStart}, skillRatingCurrent: ${selected.skillRatingStart}) {
+            createSession(input: { _battletag: "${selected._id}", sessionRole: ${form.role}, skillRatingStart: ${form.skillRating}}) {
                 _id
                 skillRatingStart
                 skillRatingCurrent
@@ -71,6 +71,7 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
                 }
             }
         }`;
+
         console.log(query)
         const token = await getTokenSilently({
             audience: "AuthAPI",

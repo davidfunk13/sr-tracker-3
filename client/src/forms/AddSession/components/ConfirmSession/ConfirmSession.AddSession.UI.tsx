@@ -16,14 +16,16 @@ import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 
 const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
 
-    const [state, setState] = useContext(SessionFormContext);
+    const [state] = useContext(SessionFormContext);
 
     const classes = useStyles();
 
     useEffect(() => {
         console.log(state);
     }, []);
+
     const skillRating: number = state.skillRating ? state.skillRating : 0;
+
     const rank: YourRank = useGetRank(skillRating);
 
     function generateCard(role: RoleKey): { name: string, icon: string } {
@@ -40,6 +42,7 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
     };
 
     const roleCard = generateCard(state.role);
+
     return (
         <FormComponentWrapper spacing={2}>
             <Typography gutterBottom align={'center'} variant={'h5'} component={'h3'}>
@@ -62,7 +65,7 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
                     />
                 </Grid>
             </Grid>
-            <Stepper submit={() => createSession()} formContext={SessionFormContext} disabled={false} />
+            <Stepper submit={() => createSession(state)} formContext={SessionFormContext} disabled={false} />
         </FormComponentWrapper>
     );
 };

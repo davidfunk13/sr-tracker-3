@@ -1,3 +1,5 @@
+import { SessionForm } from "../../../../App.Types";
+
 export default interface ConfirmSessionProps {
-    createSession: () => void
+    createSession: (form: SessionForm) => void
 }

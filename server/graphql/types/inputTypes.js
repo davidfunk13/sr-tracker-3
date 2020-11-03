@@ -24,7 +24,7 @@ input GameInput {
 input SessionInput {
     _battletag: ID!
     sessionRole: Int!
-    startingSkillRating: Int!
+    skillRatingStart: Int!
 }
 
 input StatsInput{

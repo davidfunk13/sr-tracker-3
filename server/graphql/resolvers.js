@@ -73,7 +73,7 @@ const resolvers = {
       }
 
       let session = new Session(newSession);
-      console.log({ session })
+      console.log({ session });
       session = await session.save();
 
       const battletag = await Battletag.findById(session._battletag);

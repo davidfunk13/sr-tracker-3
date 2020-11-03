@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
-  // context: app.use(checkJwt),
+  context: app.use(checkJwt),
 }));
 
 app.listen(PORT, () => {

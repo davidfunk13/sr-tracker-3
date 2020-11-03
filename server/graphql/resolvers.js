@@ -64,7 +64,7 @@ const resolvers = {
       return await battletag.save();
     },
     async createSession(_, { input }) {
-      console.log('sup')
+
       const newSession = {
         ...input,
         skillRatingStart: input.skillRatingStart,

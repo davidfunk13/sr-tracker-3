@@ -6,13 +6,9 @@ import ConfirmSessionProps from './ConfirmSession.AddSession.UI.Types';
 import Stepper from '../../../Stepper';
 import SessionFormContext from '../../../../contexts/SessionForm/SessionForm.Context';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
-import { RoleKey } from '../../../../App.Types';
-import TankIcon from '../../../../assets/icons/roles/Tank.png';
-import SupportIcon from '../../../../assets/icons/roles/Support.png';
-import DamageIcon from '../../../../assets/icons/roles/Damage.png';
-import ErrorIcon from '../../../../assets/icons/other/loss.png';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
+import convertRoleKey from '../../../../utils/convertRoleKey';
 
 const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
 
@@ -28,20 +24,7 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
 
     const rank: YourRank = useGetRank(skillRating);
 
-    function generateCard(role: RoleKey): { name: string, icon: string } {
-        switch (role) {
-            case 0:
-                return { name: 'Tank', icon: TankIcon };
-            case 1:
-                return { name: 'Damage', icon: DamageIcon };
-            case 2:
-                return { name: 'Support', icon: SupportIcon };
-            default:
-                return { name: 'Error!', icon: ErrorIcon };
-        }
-    };
-
-    const roleCard = generateCard(state.role);
+    const roleCard = convertRoleKey(state.role);
 
     return (
         <FormComponentWrapper spacing={2}>

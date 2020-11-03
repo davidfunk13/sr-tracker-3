@@ -16,7 +16,6 @@ import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 import Stats from "./views/Stats/Stats.View";
 import AppProps from "./App.Types";
 import Session from './views/Session/Session.View';
-import NewSession from './views/Session/NewSession.View';
 import SelectBattletag from "./views/SelectBattletag/SelectBattletag.View";
 import SelectedSession from "./views/SelectedSession/SelectedSession.View";
 
@@ -47,8 +46,7 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/select" component={SelectBattletag} />
             <PrivateRoute path="/session/selected" component={SelectedSession} />
-            {/* <PrivateRoute path="/session" component={Session} /> */}
-            <PrivateRoute path="/session" component={NewSession} />
+            <PrivateRoute path="/session" component={Session} />
           </Switch>
         </Container>
       </main>

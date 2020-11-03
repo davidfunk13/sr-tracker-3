@@ -1,147 +1,248 @@
-import React, { useEffect, useState, Fragment, FunctionComponent } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button'
-import SessionTypes from './Session.View.Types';
-import DamageIcon from '../../assets/icons/roles/Damage.png';
-import SupportIcon from '../../assets/icons/roles/Support.png';
-import TankIcon from '../../assets/icons/roles/Tank.png';
-import Modal from '../../UI/Modal/Modal.UI';
+import React, { useEffect, useState, FunctionComponent, Fragment } from 'react';
+import { BlizzAPIBattletag, SessionForm, SessionType } from '../../App.Types';
 import { useHistory } from 'react-router-dom';
-import { BlizzAPIBattletag, SessionType } from '../../App.Types';
-import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Modal from '../../UI/Modal/Modal.UI';
+import SessionCard from '../../UI/SessionCard/SessionCard.UI';
+import Typography from '@material-ui/core/Typography';
+import useStyles from './Session.Styles';
+import SessionProps from './Session.Types';
 import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
+import SessionFormProvider from '../../contexts/SessionForm/SessionForm.Provider';
 
-const Session: FunctionComponent<SessionTypes> = () => {
-    // const [modalOpen, setModalOpen] = useState<boolean>(false);
+const Session: FunctionComponent<SessionProps> = ({ }) => {
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    // const history = useHistory();
+    const [loading, setLoading] = useState<boolean>(false);
 
-    // const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
+    const [loadingSelected, setLoadingSelected] = useState<boolean>(false);
 
-    // const [session, setSession] = useState<SessionType>({ _id: '', _games: [], tankSR: 0, supportSR: 0, damageSR: 0, createdAt: '' });
+    const classes = useStyles();
 
-    // const { getTokenSilently } = useAuth0();
+    const history = useHistory();
 
-    // useEffect(() => {
-    //     const selected = localStorage.getItem('selected');
+    const [sessions, setSessions] = useState<SessionType[]>([]);
 
-    //     if (!selected) {
-    //         history.push('/select', 'Track');
-    //     }
+    const [selectedSession, setSelectedSession] = useState<SessionType | undefined>(undefined);
 
-    //     if (selected) {
-    //         const parsed: BlizzAPIBattletag = JSON.parse(selected);
-    //         setBattletag(parsed);
-    //         getMostRecentSession();
-    //     }
+    const [battletag, setBattletag] = useState<BlizzAPIBattletag>();
 
-    // }, []);
+    const { getTokenSilently } = useAuth0();
 
-    // async function getMostRecentSession() {
-    //     const storage = localStorage.getItem("selected");
+    const selected = JSON.parse(localStorage.getItem("selected") as string);
 
-    //     if (!storage) {
-    //         console.error("No battletag ID available, something went wrong getting your most recent session.");
-    //         return;
-    //     }
+    const _session = JSON.parse(localStorage.getItem("_session") as string);
 
-    //     let selected: { _id: string } = JSON.parse(storage);
+    useEffect(() => {
+        if (_session) {
+            getSelectedSession(_session._session);
+        }
 
-    //     const query: string = `{
-    //     getMostRecentSession(_battletag: "${selected._id}") {
-    //         _id
-    //         tankSR
-    //         supportSR
-    //         damageSR
-    //     }
-    // }` ;
+        if (!selected) {
+            history.push('/select', 'Track');
+        }
 
-    //     const token = await getTokenSilently({
-    //         audience: "AuthAPI",
-    //         scope: "read:current_user",
-    //     });
+        if (selected) {
+            setBattletag(selected);
+            getAllSessions();
+        }
 
-    //     const res: { getMostRecentSession: any } = await fetchGraphQL(token, query);
+    }, []);
 
-    //     if (res.getMostRecentSession && res.getMostRecentSession._id) {
-    //         let str = JSON.stringify({ _session: res.getMostRecentSession._id });
+    useEffect(() => console.log(sessions), [sessions])
 
-    //         localStorage.setItem("_session", str);
+    useEffect(() => console.log({ selectedSession }), [selectedSession])
 
-    //         setSession(res.getMostRecentSession);
-    //     } else {
-    //         createSession();
-    //     }
-    // }
 
-    // async function createSession() {
-    //     const storage = localStorage.getItem("selected");
+    async function createSession(form: SessionForm) {
+        if (!selected) {
+            console.error("No battletag ID available, something went creating a new session.");
+            return
+        }
 
-    //     if (!storage) {
-    //         console.error("No battletag ID available, something went creating a new session.");
-    //         return
-    //     }
+        const query: string = `mutation {
+            createSession(input: { _battletag: "${selected._id}", sessionRole: ${form.role}, skillRatingStart: ${form.skillRating}}) {
+                _id
+                skillRatingStart
+                skillRatingCurrent
+                sessionRole
+                _games {
+                    _id
+                    outcome
+                }
+            }
+        }`;
 
-    //     let selected: { _id: string, name: string } = JSON.parse(storage);
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
 
-    //     const query: string = `mutation{
-    //         createSession(input: { _battletag: "${selected._id}", damageSR: 0, tankSR: 0, supportSR: 0}) {
-    //         _id
-    //         damageSR
-    //         tankSR
-    //         supportSR
-    //     }
-    // }`;
+        await fetchGraphQL(token, query);
+        await getAllSessions();
 
-    //     const token = await getTokenSilently({
-    //         audience: "AuthAPI",
-    //         scope: "read:current_user",
-    //     });
+        setModalOpen(false);
 
-    //     await fetchGraphQL(token, query);
+    }
 
-    //     getMostRecentSession();
+    async function getAllSessions() {
+        setLoading(true);
 
-    //     setModalOpen(false);
-    // }
+        if (!selected) {
+            console.error("No battletag ID available, something went wrong getting your most recent session.");
+            return;
+        }
+
+        const query: string = `{
+        getAllSessions(_battletag: "${selected._id}") {
+            _id
+            skillRatingStart
+            skillRatingCurrent
+            sessionRole
+            createdAt
+            _games {
+                _id
+                _session
+                outcome
+                createdAt
+                }
+            }
+        }` ;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const res: { getAllSessions: any } = await fetchGraphQL(token, query);
+        console.log(res)
+        if (res === undefined) {
+            console.error('ALL SESSIONS RETURNED UNDEFINED');
+            return;
+        }
+
+        setSessions(res.getAllSessions);
+
+        setLoading(false);
+    }
+
+    async function getSelectedSession(_session: string) {
+        if (!selected) {
+            console.error("No battletag ID available, something went wrong getting your most recent session.");
+            return;
+        }
+
+        setLoadingSelected(true);
+
+        const query: string = `{
+        getOneSession(_id: "${_session}") {
+            _id
+            skillRatingStart
+            skillRatingCurrent
+            sessionRole
+            createdAt
+            _games {
+                _id
+                _session
+                outcome
+                createdAt
+                }
+            }
+        }` ;
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const res: { getOneSession: any } = await fetchGraphQL(token, query);
+
+        if (res === undefined) {
+            console.error('ALL SESSIONS RETURNED UNDEFINED');
+            return;
+        }
+
+        console.log({ 'got one': res.getOneSession });
+
+        setSelectedSession(res.getOneSession);
+        setLoadingSelected(false);
+    }
+
+    async function deleteSession(_id: string) {
+        if (_id === selectedSession?._id) {
+            console.log('hit')
+            localStorage.removeItem('selected');
+            setSelectedSession(undefined)
+        }
+
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const query = `mutation {
+            deleteSession(_id:"${_id}"){
+              _id
+            }
+          }`;
+
+        const res = await fetchGraphQL(token, query);
+
+        if (res.deleteSession && res.deleteSession._id) {
+            await getAllSessions();
+        }
+
+
+    };
+
+    function selectSession(session: SessionType) {
+        let str = JSON.stringify({ _session: session._id });
+
+        localStorage.setItem("_session", str);
+
+        history.push({ pathname: '/session/selected' });
+    }
 
     return (
-        <Fragment>
-            {/* <Typography gutterBottom variant={"h5"}>
-                {battletag && battletag.name ? battletag.name : '...loading'}
-            </Typography>
-            <Typography gutterBottom variant={"h6"}>
-                Most Recent Session
-            </Typography>
-            <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
-                <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'tank' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={TankIcon} title={session.tankSR.toString()} subtitle={"Tank"} />
-                    </Link>
-                </Grid>
-                <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'damage' } }} >
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={DamageIcon} title={session.damageSR.toString()} subtitle={"Damage"} />
-                    </Link>
-                </Grid>
-                <Grid item xs={4}>
-                    <Link style={{ textDecoration: "none" }} to={{ pathname: '/session/role', state: { role: 'support' } }}>
-                        <MediaCard cardMediaStyle={{ margin: "0.5em", backgroundSize: "contain" }} image={SupportIcon} title={session.supportSR.toString()} subtitle={"Support"} />
-                    </Link>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
+        <Grid container spacing={2} >
+            <Grid item xs={12}>
+                <Typography variant={'h5'}>
+                    Selected Session
+                </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                {loadingSelected && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
+                {selectedSession && !loadingSelected ? <SessionCard session={selectedSession} deleteSession={deleteSession} onClick={() => selectSession(selectedSession)} /> : <Typography>Please select an existing session</Typography>}
+            </Grid>
+            <Grid item xs={12}>
+                <Typography variant={'h5'}>Load Existing Session</Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <Grid container justify={'center'} spacing={2}>
+                    {loading && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
+                    {sessions.length && !loading ? sessions.map(session => {
+                        console.log(session._id, selectedSession?._id)
+                        if (session._id !== selectedSession?._id) {
+                            return <Grid key={session._id} item xs={12}>
+                                <SessionCard session={session} deleteSession={deleteSession} onClick={() => selectSession(session)} />
+                            </Grid>
+                        }
+                    }) : null}
                 </Grid>
             </Grid>
-
-            <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
-                <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
-            </Modal> */}
-        </Fragment>
+            <Grid item xs={12}>
+                <Button onClick={() => setModalOpen(true)} fullWidth variant={'contained'} color={"primary"} >Add a new Session</Button>
+            </Grid>
+            <SessionFormProvider>
+                <Modal modalControls={{ modalOpen, setModalOpen }} title={'Create New Session'} >
+                    <AddSession createSession={createSession} modalControls={{ modalOpen, setModalOpen }} />
+                </Modal>
+            </SessionFormProvider>
+        </Grid>
     );
 }
 

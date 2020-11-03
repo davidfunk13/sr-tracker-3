@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             display: 'flex',
+            flexWrap: 'nowrap',
         },
         details: {
             display: 'flex',
@@ -13,9 +14,18 @@ const useStyles = makeStyles((theme: Theme) =>
         content: {
             flex: '1 0 auto',
         },
+        images: {
+            display: 'flex',
+            width: '40%',
+        },
+        arrowIcon: {
+            height: 'auto',
+        },
         cover: {
-            width: 151,
-            backgroundColor: "red"
+            backgroundSize: 'contain',
+            width: '100%',
+            backgroundPosition: 'center',
+            transform: 'scale(.75)',
         },
     }),
 );

@@ -1,10 +1,10 @@
-import React, { useEffect, useState, FunctionComponent, useContext } from 'react';
+import React, { useEffect, useState, FunctionComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Modal from '../../UI/Modal/Modal.UI';
 import { useAuth0 } from '../../react-auth0-spa';
 import Typography from '@material-ui/core/Typography';
 import SessionCard from '../../UI/SessionCard/SessionCard.UI';
-import { BlizzAPIBattletag, GameForm, SessionForm, SessionFormContextType, SessionType } from '../../App.Types';
+import { BlizzAPIBattletag, SessionType } from '../../App.Types';
 import fetchGraphQL from '../../utils/fetchGraphQL';
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,11 +13,8 @@ import useStyles from './NewSession.Styles';
 import NewSessionProps from './NewSession.Types';
 import AddSession from '../../forms/AddSession/AddSession.Modal.UI';
 import SessionFormProvider from '../../contexts/SessionForm/SessionForm.Provider';
-import SessionFormContext from '../../contexts/SessionForm/SessionForm.Context';
 
 const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
-    const [state] = useContext<SessionFormContextType>(SessionFormContext);
-
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -56,15 +53,14 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
 
     }, []);
 
-    async function createSession(form: SessionForm) {
+    async function createSession() {
         if (!selected) {
             console.error("No battletag ID available, something went creating a new session.");
             return
         }
 
-
         const query: string = `mutation {
-            createSession(input: { _battletag: "${selected._id}", sessionRole: ${selected.sessionRole}, skillRatingStart: ${form.skillRating}, skillRatingCurrent: ${form.skillRating}) {
+            createSession(input: { _battletag: "${selected._id}", sessionRole: ${selected.sessionRole}, skillRatingStart: ${selected.skillRatingStart}, skillRatingCurrent: ${selected.skillRatingStart}) {
                 _id
                 skillRatingStart
                 skillRatingCurrent
@@ -75,9 +71,7 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
                 }
             }
         }`;
-
-        console.log(query);
-
+        console.log(query)
         const token = await getTokenSilently({
             audience: "AuthAPI",
             scope: "read:current_user",
@@ -118,7 +112,7 @@ const NewSession: FunctionComponent<NewSessionProps> = ({ }) => {
         });
 
         const res: { getAllSessions: any } = await fetchGraphQL(token, query);
-
+        console.log(res)
         if (res === undefined) {
             console.error('ALL SESSIONS RETURNED UNDEFINED');
             return;

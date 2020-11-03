@@ -1,18 +1,21 @@
 import React, { FunctionComponent, useContext, } from 'react';
-import { ModalControls, SessionForm, SessionFormContextType } from '../../App.Types';
+import { ModalControls, SessionFormContextType } from '../../App.Types';
 import SelectRole from './components/SelectRole/SelectRole.AddSession';
 import SessionFormContext from '../../contexts/SessionForm/SessionForm.Context';
 import SkillRating from '../AddSession/components/SkillRating/SkillRating.AddSession';
 import ConfirmSession from './components/ConfirmSession/ConfirmSession.AddSession.UI';
 
 export interface AddSessionTypes {
-    createSession: (form: SessionForm) => Promise<void>;
+    createSession: () => void;
     modalControls: ModalControls
 };
 
-const AddSession: FunctionComponent<AddSessionTypes> = ({ createSession }) => {
+const AddSession: FunctionComponent<AddSessionTypes> = ({ createSession, modalControls }) => {
+    // const { setModalOpen, modalOpen }: ModalControls = modalControls;
 
-    const [state] = useContext<SessionFormContextType>(SessionFormContext);
+    // const classes = useStyles();
+
+    const [state, setState] = useContext<SessionFormContextType>(SessionFormContext);
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {

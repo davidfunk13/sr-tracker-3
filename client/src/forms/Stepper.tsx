@@ -3,11 +3,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import React, { useContext, useEffect, useState } from 'react';
 import useStyles from './Stepper.Forms.Styles';
-import { GameForm } from '../App.Types';
+import { GameForm, SessionForm } from '../App.Types';
 
 interface StepperTypes {
     disabled: boolean
-    submit?: (form: GameForm) => void
+    submit?: (form: GameForm | SessionForm) => void
     formContext: React.Context<any>
 };
 
@@ -33,6 +33,7 @@ const Stepper: React.FC<StepperTypes> = ({ disabled, submit, formContext }) => {
             return;
         }
 
+        console.log({ currentStateBeingSpread: state });
         const newState = { ...state, step: state.step + 1 };
         setState(newState);
     }

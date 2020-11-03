@@ -33,16 +33,6 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
             ...state,
             skillRating: val
         };
-
-        setState(newState);
-    }
-
-    function next() {
-        const newState = {
-            ...state,
-            step: state.step + 1,
-        };
-
         setState(newState);
     }
 
@@ -83,6 +73,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
         return () => {
             setDisabled(true);
         }
+
     }, []);
 
     return (

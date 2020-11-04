@@ -33,7 +33,7 @@ const SelectRole: FunctionComponent<SelectRoleProps> = ({ }) => {
     const [disabled, setDisabled] = useState<boolean>(true);
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
             <Grid item xs={4} sm={4}>
                 <Card onClick={() => selectRole(0)} className={classes.root} variant={'outlined'}>
                     <CardActionArea>

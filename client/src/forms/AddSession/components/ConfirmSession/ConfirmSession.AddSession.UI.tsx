@@ -29,11 +29,11 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
     const cardMediaStyle = { backgroundSize: "contain", margin: '1em', };
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Typography gutterBottom align={'center'} variant={'h5'} component={'h3'}>
+                <Typography variant={'h5'} component={'h3'}>
                     Is this correct?
-            </Typography>
+                </Typography>
             </Grid>
             <Grid item xs={6}>
                 <MediaCard

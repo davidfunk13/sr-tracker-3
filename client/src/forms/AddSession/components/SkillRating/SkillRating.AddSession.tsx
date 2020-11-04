@@ -87,13 +87,13 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
     }, []);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
+        <Grid container justify={'center'} spacing={2}>
+            <Grid item xs={12} >
                 <Typography style={{ lineHeight: '1' }} variant={'subtitle1'} component={'strong'}>
                     Please enter a skillrating to start this session from.
                 </Typography>
             </Grid>
-            <Grid style={{ height: '60%' }} item xs={12}>
+            <Grid style={{ width: '100%', height: '60%' }} item xs={12}>
                 <MediaCard
                     cardMediaStyle={cardPictureStyles}
                     title={skillRating.toString()}
@@ -101,7 +101,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                     image={rank.icon}
                 />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
                 <TextField
                     fullWidth
                     required

@@ -96,6 +96,11 @@ export type RoleName = "tank" | "damage" | "support";
 
 export type RoleKey = 0 | 1 | 2 | 3;
 
+export type RoleObject = {
+  name: string
+  icon: NodeRequire | string
+};
+
 export type SessionType = {
   _id: string
   sessionRole: RoleKey

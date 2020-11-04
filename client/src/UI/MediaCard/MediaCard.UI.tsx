@@ -41,7 +41,7 @@ const MediaCard: FunctionComponent<MediaCardProps> = ({ children, image, title, 
                 :
                 null}
 
-            <CardContent style={{ height: '20%', padding: '1em', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+            <CardContent style={{ textAlign: 'center', padding: '1em', display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                 <Typography style={{ width: '100%' }} gutterBottom={subtitle ? true : false} variant="h5" component="h2">
                     {title}
                 </Typography>

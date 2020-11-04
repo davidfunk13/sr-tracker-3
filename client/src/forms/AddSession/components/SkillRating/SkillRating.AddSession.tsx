@@ -1,18 +1,19 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { SessionFormContextType } from '../../../../App.Types';
 import SkillRatingProps from './SkillRating.AddSession.Types';
 import Grid from '@material-ui/core/Grid';
-import useStyles from './SkillRating.AddSession.Styles';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import useStyles from './SkillRating.AddSession.Styles';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import CSS from 'csstype';
-import { SessionFormContextType } from '../../../../App.Types';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import Stepper from '../../../Stepper';
 import SessionFormContext from '../../../../contexts/SessionForm/SessionForm.Context';
 
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
-    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em', height: '80%' };
+    const cardPictureStyles: CSS.Properties = { backgroundSize: "contain", margin: '1em' };
 
     const classes = useStyles();
 
@@ -86,8 +87,13 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
     }, []);
 
     return (
-        <FormComponentWrapper spacing={2}>
-            <Grid style={{ height: '65%' }} item xs={12}>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <Typography style={{ lineHeight: '1' }} variant={'subtitle1'} component={'strong'}>
+                    Please enter a skillrating to start this session from.
+                </Typography>
+            </Grid>
+            <Grid style={{ height: '60%' }} item xs={12}>
                 <MediaCard
                     cardMediaStyle={cardPictureStyles}
                     title={skillRating.toString()}
@@ -110,7 +116,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                 />
             </Grid>
             <Stepper formContext={SessionFormContext} disabled={disabled} />
-        </FormComponentWrapper>
+        </Grid>
     );
 }
 

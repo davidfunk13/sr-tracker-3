@@ -7,16 +7,14 @@ const useStyles = makeStyles((theme: Theme) =>
             flexWrap: 'nowrap',
         },
         details: {
-            display: 'flex',
-            flex: '1 1 auto',
-            flexDirection: 'column',
+            width: '100%',
         },
         content: {
             flex: '1 0 auto',
         },
         images: {
             display: 'flex',
-            width: '40%',
+            width: '100%',
         },
         arrowIcon: {
             height: 'auto',

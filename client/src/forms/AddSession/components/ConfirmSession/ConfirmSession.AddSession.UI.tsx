@@ -26,30 +26,32 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
 
     const roleCard = convertRoleKey(state.role);
 
+    const cardMediaStyle = { backgroundSize: "contain", margin: '1em', };
+
     return (
-        <FormComponentWrapper spacing={2}>
-            <Typography gutterBottom align={'center'} variant={'h5'} component={'h3'}>
-                Is this correct?
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <Typography gutterBottom align={'center'} variant={'h5'} component={'h3'}>
+                    Is this correct?
             </Typography>
-            <Grid container justify={'center'} spacing={2} style={{ height: "75%", overflow: 'auto' }}>
-                <Grid item xs={12}>
-                    <MediaCard
-                        cardMediaStyle={{ backgroundSize: "contain" }}
-                        title={state.skillRating ? state.skillRating.toString() : '----'}
-                        subtitle={rank.name}
-                        image={rank.icon}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <MediaCard
-                        cardMediaStyle={{ backgroundSize: "contain" }}
-                        title={roleCard.name}
-                        image={roleCard.icon}
-                    />
-                </Grid>
+            </Grid>
+            <Grid item xs={6}>
+                <MediaCard
+                    cardMediaStyle={cardMediaStyle}
+                    title={state.skillRating ? state.skillRating.toString() : '----'}
+                    subtitle={rank.name}
+                    image={rank.icon}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <MediaCard
+                    cardMediaStyle={cardMediaStyle}
+                    title={roleCard.name}
+                    image={roleCard.icon}
+                />
             </Grid>
             <Stepper submit={() => createSession(state)} formContext={SessionFormContext} disabled={false} />
-        </FormComponentWrapper>
+        </Grid>
     );
 };
 

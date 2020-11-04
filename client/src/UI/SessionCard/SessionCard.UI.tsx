@@ -83,18 +83,18 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session, de
                     <CardMedia
                         className={classes.cover}
                         image={role.icon}
-                        title={"Session Feature"}
+                        title={`${role.name.charAt(0).toUpperCase() + role.name.slice(1)} Session`}
                     />
                     <CardMedia
                         className={classes.cover}
                         image={rank.icon.toString()}
-                        title={"Session Feature"}
+                        title={"Starting Skillrating"}
                     />
                     <TrendingFlatIcon className={classes.arrowIcon} />
                     <CardMedia
                         className={classes.cover}
                         image={rank.icon.toString()}
-                        title={"Session Feature"}
+                        title={"Current Skillrating"}
                     />
                 </div>
             </Card>

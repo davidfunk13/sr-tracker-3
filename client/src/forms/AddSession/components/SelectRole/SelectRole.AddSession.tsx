@@ -33,41 +33,39 @@ const SelectRole: FunctionComponent<SelectRoleProps> = ({ }) => {
     const [disabled, setDisabled] = useState<boolean>(true);
 
     return (
-        <FormComponentWrapper spacing={2}>
-            <Grid container spacing={2} style={{ height: "80%", overflow: 'auto' }}>
-                <Grid item xs={12} sm={4}>
-                    <Card onClick={() => selectRole(0)} className={classes.root} variant={'outlined'}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.image}
-                                image={TankIcon} >
-                            </CardMedia>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Card onClick={() => selectRole(1)} className={classes.root} variant={'outlined'}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.image}
-                                image={DamageIcon} >
-                            </CardMedia>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Card onClick={() => selectRole(2)} className={classes.root} variant={'outlined'}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.image}
-                                image={SupportIcon} >
-                            </CardMedia>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={4} sm={4}>
+                <Card onClick={() => selectRole(0)} className={classes.root} variant={'outlined'}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.image}
+                            image={TankIcon} >
+                        </CardMedia>
+                    </CardActionArea>
+                </Card>
+            </Grid>
+            <Grid item xs={4} sm={4}>
+                <Card onClick={() => selectRole(1)} className={classes.root} variant={'outlined'}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.image}
+                            image={DamageIcon} >
+                        </CardMedia>
+                    </CardActionArea>
+                </Card>
+            </Grid>
+            <Grid item xs={4} sm={4}>
+                <Card onClick={() => selectRole(2)} className={classes.root} variant={'outlined'}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.image}
+                            image={SupportIcon} >
+                        </CardMedia>
+                    </CardActionArea>
+                </Card>
             </Grid>
             <Stepper formContext={SessionFormContext} disabled={disabled} />
-        </FormComponentWrapper>
+        </Grid>
     );
 }
 

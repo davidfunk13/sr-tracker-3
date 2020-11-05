@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState, Fragment } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import HeroesPlayedTypes from './HeroesPlayed.AddGame.Types';
@@ -21,7 +21,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
             return;
         }
 
-        return hero.roleName === role;
+        return hero.roleName === role.name.toLowerCase();
     });
 
     function selectHero(hero: HeroEntry) {
@@ -103,7 +103,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
                     )
                 })}
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     )
 };

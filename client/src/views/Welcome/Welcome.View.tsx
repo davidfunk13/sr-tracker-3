@@ -43,22 +43,22 @@ const Welcome: React.ComponentType<WelcomeViewProps> = () => {
                 </Typography>
                 <Typography gutterBottom variant={'body1'}>
                     After linking a battletag and selecting it, players are greeted with an empty
-                    season with three roles.
+                    session with three roles.
                 </Typography>
                 <Typography gutterBottom variant={'body1'}>
-                    Creating a new season will reset the skill rating for all roles to zero.
-                    These seasons can be loaded back into the application to continue at any time.
+                    Creating a new session will reset the skill rating for all roles to zero.
+                    These sessions can be loaded back into the application to continue at any time.
                 </Typography>
                 <Typography gutterBottom variant={'h5'}>
                     Adding Games
                 </Typography>
                 <Typography gutterBottom variant={'body1'}>
                     After linking a battletag and selecting it, players are greeted with an empty
-                    season with three roles.
+                    session with three roles.
                 </Typography>
                 <Typography gutterBottom variant={'body1'}>
-                    Creating a new season will reset the skill rating for all roles to zero.
-                    These seasons can be loaded back into the application to continue at any time.
+                    Creating a new session will reset the skill rating for all roles to zero.
+                    These sessions can be loaded back into the application to continue at any time.
                 </Typography> */}
             </Grid>
         </Grid>

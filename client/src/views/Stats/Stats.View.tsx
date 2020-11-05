@@ -13,14 +13,12 @@ import fetchGraphQL from '../../utils/fetchGraphQL';
 import { Response } from './Stats.View.Types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Options, Ruleset } from './Stats.View.Types';
-import SelectBattletag from '../SelectBattletag/SelectBattletag.View';
+import StatsTable from '../../components/StatsTable/StatsTable.Component';
 
 const Stats: React.FC<StatsProps> = () => {
     const { getTokenSilently } = useAuth0();
 
     const history = useHistory();
-    
-    const location = useLocation();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -40,8 +38,8 @@ const Stats: React.FC<StatsProps> = () => {
         }
 
     }, [history]);
-    
-    
+
+
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
@@ -105,15 +103,22 @@ const Stats: React.FC<StatsProps> = () => {
                 }
             }`;
 
+
         const stats = await fetchGraphQL(token, query);
-        console.log({ stats });
-        return stats;
+
+        console.log(stats);
+
+        setStatistics(stats.getBattletagStats);
+        setIsLoading(false);
+        return;
     };
 
     return (
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Typography variant={'h4'}>Profile Statistics</Typography>
+                <Typography variant={'h4'}>
+                    Profile Statistics
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={'h5'} gutterBottom>
@@ -157,12 +162,13 @@ const Stats: React.FC<StatsProps> = () => {
                 </Button>
             </Grid>
             <Grid item xs={12}>
-                <Typography variant={"h5"}>Stats</Typography>
+                <Typography gutterBottom variant={"h5"} component={'h2'}>Stats</Typography>
                 <Grid container justify={isLoading ? 'center' : 'flex-start'}>
                     {!isLoading ? null : <CircularProgress style={{ marginTop: '10vh' }} size={100} />}
-                    <Grid item xs={12}>
-
-                    </Grid>
+                    {statistics && !isLoading ?
+                        <Grid item xs={12}>
+                            <StatsTable loading={isLoading} stats={statistics} />
+                        </Grid> : null}
                 </Grid>
             </Grid>
 

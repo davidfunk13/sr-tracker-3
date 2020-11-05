@@ -20,6 +20,12 @@ const NavBar: React.ComponentType<NavBarProps> = ({ open, handleDrawerOpen }) =>
 
   const matches = useMediaQuery(titleMaxWidth, { noSsr: true });
 
+  function fullLogout() {
+    localStorage.removeItem('selected');
+    localStorage.removeItem('_session');
+    logout();
+  }
+
   return (
     <div className={clsx(classes.appBar, { [classes.appBarShift]: open, })}>
       <AppBar position="static">
@@ -31,7 +37,7 @@ const NavBar: React.ComponentType<NavBarProps> = ({ open, handleDrawerOpen }) =>
           }
 
           {isAuthenticated &&
-            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => logout()}>
+            <Button className={classes.loginButton} variant={'contained'} color={'secondary'} onClick={() => fullLogout()}>
               <Typography variant={'button'}>Log out</Typography>
             </Button>
           }

@@ -19,12 +19,12 @@ const Modal: React.FC<ModalTypes> = ({ children, modalControls, title, isFullScr
 
     const { modalOpen, setModalOpen } = modalControls;
 
-    function resetForm () {
+    function resetForm() {
         setModalOpen(false);
         // setState(initialGameFormState);
         return;
     }
-    
+
     return <Dialog
         onClose={() => resetForm()}
         fullWidth
@@ -32,8 +32,8 @@ const Modal: React.FC<ModalTypes> = ({ children, modalControls, title, isFullScr
         fullScreen={isFullScreen ? fullScreen : undefined}
         TransitionComponent={Transition}
         keepMounted
-        aria-labelledby="Confirm Season"
-        aria-describedby="Confirm creation of season">
+        aria-labelledby="Confirm Session"
+        aria-describedby="Confirm creation of session">
         <DialogTitle>
             {title ? title : 'Modal'}
         </DialogTitle>

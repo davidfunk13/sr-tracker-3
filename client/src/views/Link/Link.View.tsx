@@ -1,4 +1,4 @@
-import React, { useState, ReactEventHandler, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
@@ -95,14 +95,13 @@ const Link: React.FC<LinkProps> = () => {
       dispatchNotification({ type: 'success', title: `Successfully linked ${data.createBattletag.name}`, message: "Battletag successfully linked to user" });
       return history.push('/');
     }
-    console.log(data);
   }
 
   function testNotification() {
     dispatchNotification({ type: 'success', title: 'Successfully Linked Batteletag', message: "Battletag successfully linked to user" });
   }
 
-  function changeInput(e:ChangeEvent<HTMLInputElement>) {
+  function changeInput(e: ChangeEvent<HTMLInputElement>) {
     if (inputError) {
       setInputError(false);
     }
@@ -121,7 +120,7 @@ const Link: React.FC<LinkProps> = () => {
           fullWidth
           required
           value={search}
-          onChange={(e:ChangeEvent<HTMLInputElement>) => changeInput(e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => changeInput(e)}
           label="Search for Battletag"
           type="search"
           error={inputError}

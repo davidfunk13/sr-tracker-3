@@ -15,9 +15,9 @@ import Welcome from './views/Welcome/Welcome.View';
 import useDrawer from './hooks/useDrawer/useDrawer.Hook';
 import Stats from "./views/Stats/Stats.View";
 import AppProps from "./App.Types";
-import Role from "./views/Role/Role.View";
-import Season from './views/Season/Season.View';
+import Session from './views/Session/Session.View';
 import SelectBattletag from "./views/SelectBattletag/SelectBattletag.View";
+import SelectedSession from "./views/SelectedSession/SelectedSession.View";
 
 const App: React.FC<AppProps> = () => {
   const { isAuthenticated } = useAuth0();
@@ -45,8 +45,8 @@ const App: React.FC<AppProps> = () => {
             <PrivateRoute path="/link" component={Link} />
             <PrivateRoute path="/stats" component={Stats} />
             <PrivateRoute path="/select" component={SelectBattletag} />
-            <PrivateRoute path="/season/role" component={Role} />
-            <PrivateRoute path="/season" component={Season} />
+            <PrivateRoute path="/session/selected" component={SelectedSession} />
+            <PrivateRoute path="/session" component={Session} />
           </Switch>
         </Container>
       </main>

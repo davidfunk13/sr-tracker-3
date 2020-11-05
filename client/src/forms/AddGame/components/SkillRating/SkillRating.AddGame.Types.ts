@@ -1,2 +1,2 @@
-export default interface SkillRatingProps  {    
+export default interface SkillRatingProps {
 }

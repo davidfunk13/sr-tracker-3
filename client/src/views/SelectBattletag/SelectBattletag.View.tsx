@@ -19,7 +19,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   const { getTokenSilently, user } = useAuth0();
 
   // when data arrives from the api it is stored here
-  const [data, setData] = useState<Array<Battletag>>([]);
+  const [data, setData] = useState<Battletag[]>([]);
 
   // handles application loading state 
   const [loading, setLoading] = useState<boolean>();
@@ -34,7 +34,7 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
     switch (prevLocation) {
       case PrevLocation.Track:
-        history.push('/season');
+        history.push('/session');
         break;
       case PrevLocation.Stats:
         history.push('/stats');
@@ -116,17 +116,12 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
 
   return (
     <Fragment>
-
       <Typography gutterBottom variant={"h5"}>
         Select Battletag
       </Typography>
       <Grid container justify={"center"} spacing={2}>
-        {loading ?
-
-          <CircularProgress style={{ marginTop: "10vh" }} size={100} />
-
-          : null}
-
+        {loading ? <CircularProgress style={{ marginTop: "10vh" }} size={100} /> : null}
+        {data.length ? 'yes' : 'no'}
         {data && data.map((battletag) => {
           const battletagSplit = battletag.name.split("#");
           const name: string = battletagSplit[0];

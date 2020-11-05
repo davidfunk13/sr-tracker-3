@@ -20,6 +20,7 @@ export const Auth0Provider = ({
   useEffect(() => {
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
+
       setAuth0(auth0FromHook);
 
       if (window.location.search.includes("code=") &&
@@ -39,6 +40,7 @@ export const Auth0Provider = ({
 
       setLoading(false);
     };
+
     initAuth0();
     // eslint-disable-next-line
   }, []);

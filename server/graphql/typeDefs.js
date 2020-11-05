@@ -1,17 +1,17 @@
 const statTypes = require('./types/statTypes');
 const gameTypes = require('./types/gameTypes');
-const seasonTypes = require('./types/seasonTypes');
-const battletagTypes =require('./types/battletagTypes');
-const queries = require('./queries/queries');
-const mutations = require('./mutations/mutations');
-const inputTypes = require('./inputs/inputTypes');
+const sessionTypes = require('./types/sessionTypes');
+const battletagTypes = require('./types/battletagTypes');
+const queries = require('./types/queries');
+const mutations = require('./types/mutations');
+const inputTypes = require('./types/inputTypes');
 
 module.exports = typeDefs = `
 ${battletagTypes}
 
 ${gameTypes}
 
-${seasonTypes}
+${sessionTypes}
 
 ${inputTypes}
 

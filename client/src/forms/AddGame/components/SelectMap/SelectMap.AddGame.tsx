@@ -7,7 +7,6 @@ import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import { GameFormContextType, MapEntry } from '../../../../App.Types';
 import GameFormContext from '../../../../contexts/GameForm/GameFormContext';
 import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
-import { Button } from '@material-ui/core';
 import Stepper from '../../../Stepper';
 import useStyles from './SelectMap.AddGame.Styles';
 
@@ -35,7 +34,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
         if (state && state.mapPlayed && state.mapPlayed.name) {
             return setDisabled(false);
         }
-        
+
     }, [state]);
 
     return (
@@ -52,7 +51,7 @@ const SelectMap: FunctionComponent<SelectMapProps> = () => {
                     </Grid>;
                 })}
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     )
 }

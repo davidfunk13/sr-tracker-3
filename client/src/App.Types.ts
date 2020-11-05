@@ -25,7 +25,7 @@ export interface BlizzAPIBattletag {
 
 export interface Game {
   _id?: string
-  _season?: string
+  _session?: string
   role: 0 | 1 | 2
   mapPlayed: string
   heroesPlayed: [string, string?, string?]
@@ -44,7 +44,15 @@ export interface GameForm {
   skillRating: number | undefined
 }
 
+export interface SessionForm {
+  step: number
+  role: RoleKey
+  skillRating: number | undefined
+}
+
 export type GameFormContextType = [GameForm, Dispatch<SetStateAction<GameForm>>];
+
+export type SessionFormContextType = [SessionForm, Dispatch<SetStateAction<SessionForm>>];
 
 export interface HeroEntry {
   name: string,
@@ -88,11 +96,19 @@ export type RoleName = "tank" | "damage" | "support";
 
 export type RoleKey = 0 | 1 | 2 | 3;
 
+export type RoleObject = {
+  name: string
+  icon: NodeRequire | string
+};
 
-
-
-
-
+export type SessionType = {
+  _id: string
+  sessionRole: RoleKey
+  skillRatingStart: number
+  skillRatingCurrent: number
+  _games?: Game[]
+  createdAt: string
+};
 
 export default interface AppProps {
 

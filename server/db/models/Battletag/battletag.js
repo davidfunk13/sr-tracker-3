@@ -39,10 +39,10 @@ const BattletagSchema = new Schema({
         type: String,
         required: true,
     },
-    _seasons: [{
+    _sessions: [{
         type: Schema.Types.ObjectId,
-        ref: 'season'
+        ref: 'session'
     }]
-},{ timestamps: true });
+}, { timestamps: true });
 
 module.exports = mongoose.model('battletag', BattletagSchema);

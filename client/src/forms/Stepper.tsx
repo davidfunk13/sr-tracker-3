@@ -1,19 +1,18 @@
+import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import React, { useContext, useEffect, useState } from 'react';
 import useStyles from './Stepper.Forms.Styles';
-import clsx from 'clsx';
-import { GameForm, GameFormContextType } from '../App.Types';
-import GameFormContext from '../contexts/GameForm/GameFormContext';
+import { GameForm } from '../App.Types';
 
 interface StepperTypes {
     disabled: boolean
     submit?: (form: GameForm) => void
+    formContext: React.Context<any>
 };
 
-const Stepper: React.FC<StepperTypes> = ({ disabled, submit }) => {
-
-    const [state, setState]: GameFormContextType = useContext(GameFormContext);
+const Stepper: React.FC<StepperTypes> = ({ disabled, submit, formContext }) => {
+    const [state, setState] = useContext(formContext);
 
     const [prevDisabled, setPrevDisabled] = useState<boolean>(false);
 

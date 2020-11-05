@@ -12,6 +12,7 @@ import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormCompon
 import Stepper from '../../../Stepper';
 import fetchGraphQL from '../../../../utils/fetchGraphQL';
 import { useAuth0 } from '../../../../react-auth0-spa';
+
 const SkillRating: FunctionComponent<SkillRatingProps> = () => {
     const { getTokenSilently } = useAuth0();
 
@@ -39,17 +40,17 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
             scope: "read:current_user",
         });
 
-        const storage = localStorage.getItem('_season');
+        const storage = localStorage.getItem('_session');
 
         if (!storage) {
-            console.warn('no seasonId found');
+            console.warn('no sessionId found');
             return
         }
 
-        const parsed = JSON.parse(storage)._season;
+        const parsed = JSON.parse(storage)._session;
 
         const query: string = `query {
-          getMostRecentGame(_season:"${parsed}"){
+          getMostRecentGame(_session:"${parsed}"){
             rankIn
             rankOut
           }
@@ -122,8 +123,6 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
         }
     }, []);
 
-    useEffect(() => console.log({ lastPlayed }), [lastPlayed])
-
     return (
         <FormComponentWrapper>
             <Grid style={{ height: '70%' }} item xs={12}>
@@ -148,7 +147,7 @@ const SkillRating: FunctionComponent<SkillRatingProps> = () => {
                     label="New Skill Rating"
                 />
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

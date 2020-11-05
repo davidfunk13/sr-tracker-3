@@ -49,17 +49,17 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
             scope: "read:current_user",
         });
 
-        const storage = localStorage.getItem('_season');
+        const storage = localStorage.getItem('_session');
 
         if (!storage) {
-            console.warn('no seasonId found');
+            console.warn('no sessionId found');
             return
         }
 
-        const parsed = JSON.parse(storage)._season;
+        const parsed = JSON.parse(storage)._session;
 
         const query: string = `query {
-          getMostRecentGame(_season:"${parsed}"){
+          getMostRecentGame(_session:"${parsed}"){
             rankIn
             rankOut
           }
@@ -121,7 +121,7 @@ const Outcome: FunctionComponent<OutcomeProps> = () => {
                     />
                 </Grid>
             </Grid>
-            <Stepper disabled={disabled} />
+            <Stepper formContext={GameFormContext} disabled={disabled} />
         </FormComponentWrapper>
     );
 }

@@ -1,7 +1,3 @@
-export interface IUseDrawerProps {
-    // 
-};
-
 interface DrawerHook {
     open: boolean,
     setOpen: (isOpen: boolean) => void,

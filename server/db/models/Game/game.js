@@ -9,7 +9,7 @@ const heroes = heroDictionary.map(hero => hero.name);
 
 const GameSchema = new Schema({
     role: { type: Number, required: true, enum: [0, 1, 2, 3] },
-    _season: {type: Schema.Types.ObjectId, ref: "season", required: true},
+    _session: { type: Schema.Types.ObjectId, ref: "session", required: true },
     mapPlayed: { type: String, required: true },
     heroesPlayed: [{ type: String, required: true, enum: heroes }],
     outcome: { type: Number, required: true },

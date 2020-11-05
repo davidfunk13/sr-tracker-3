@@ -125,6 +125,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
         const res = await fetchGraphQL(token, query);
         getAllGames(_session);
+        getSelectedSession(sessionStorage._session);
     }
 
     async function getAllGames(_session: string) {
@@ -155,6 +156,10 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         }
     };
 
+    const wins: number = games.filter(game => game.outcome === 1).length;
+    const losses: number = games.filter(game => game.outcome === 0).length;
+    const ties: number = games.filter(game => game.outcome === 2).length;
+
 
     //start effect to parse localstorage string if it exists
     useEffect(() => {
@@ -168,6 +173,9 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         getAllGames(sessionStorage._session);
     }, []);
 
+    useEffect(() => console.log(session), [session]);
+    useEffect(() => console.log(games), [games]);
+
     return (
         <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
             <Grid item xs={12}>
@@ -175,17 +183,18 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                     {role.name} Session
                 </Typography>
                 <Typography gutterBottom variant={'h5'}>
-                    Wins - Losses
+                    Skillrating Start - Skillrating Current
                 </Typography>
                 <Typography gutterBottom variant={'h5'}>
-                    X - X
+                    {session.skillRatingStart} - {session.skillRatingCurrent}
+                </Typography>
+                <Typography gutterBottom variant={'h5'}>
+                    Wins - Losses - Draws
+                </Typography>
+                <Typography gutterBottom variant={'h5'}>
+                    {wins} - {losses} - {ties}
                 </Typography>
             </Grid>
-            {/* <Grid item xs={12}>
-                <Button fullWidth onClick={() => setModalOpen(true)} variant={"contained"} color={'primary'}>
-                    Add New Game
-                </Button>
-            </Grid> */}
             <Grid item xs={12}>
                 <AppBar position="static">
                     <Tabs

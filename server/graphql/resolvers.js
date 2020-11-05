@@ -103,8 +103,12 @@ const resolvers = {
         }
       }
 
+      session.skillRatingCurrent = game.rankOut;
+
       session._games.push(game._id);
 
+      console.log(`Session ${session._id} skillrating updated to ${session.skillRatingCurrent} `)
+      console.log(session)
       session.save();
 
       return game;

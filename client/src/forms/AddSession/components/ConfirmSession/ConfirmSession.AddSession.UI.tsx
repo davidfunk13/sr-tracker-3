@@ -5,7 +5,6 @@ import useStyles from './ConfirmSession.UI.Styles';
 import ConfirmSessionProps from './ConfirmSession.AddSession.UI.Types';
 import Stepper from '../../../Stepper';
 import SessionFormContext from '../../../../contexts/SessionForm/SessionForm.Context';
-import FormComponentWrapper from '../../../../UI/FormComponentWrapper/FormComponentWrapper.UI.Component';
 import MediaCard from '../../../../UI/MediaCard/MediaCard.UI';
 import useGetRank, { YourRank } from '../../../../hooks/useGetRank/useGetRank';
 import convertRoleKey from '../../../../utils/convertRoleKey';
@@ -26,7 +25,10 @@ const ConfirmSession: React.FC<ConfirmSessionProps> = ({ createSession }) => {
 
     const roleCard = convertRoleKey(state.role);
 
-    const cardMediaStyle = { backgroundSize: "contain", margin: '1em', };
+    const cardMediaStyle = {
+        backgroundSize: "contain",
+        margin: '1em',
+    };
 
     return (
         <Grid container spacing={1}>

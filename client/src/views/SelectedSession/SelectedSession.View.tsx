@@ -1,8 +1,6 @@
-import CSS from 'csstype';
 import React, { useState, FunctionComponent, useEffect } from 'react';
 import SelectedSessionTypes from './SelectedSession.View.Types';
 import { useLocation } from 'react-router-dom';
-import { LocationState } from './SelectedSession.View.Types';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Modal from '../../UI/Modal/Modal.UI';
@@ -18,6 +16,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Games from '../Games/Games.View';
 import SessionStats from '../SessionStats/SessionStats.View';
 import convertRoleKey from '../../utils/convertRoleKey';
+import Button from '@material-ui/core/Button';
 
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const [value, setValue] = useState<number>(0);
@@ -47,6 +46,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
+
+    const role: RoleObject = convertRoleKey(session.sessionRole);
 
     async function getSelectedSession(_session: string) {
         setSessionLoading(true);
@@ -79,88 +80,112 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
             return;
         }
 
-        console.log(res.getOneSession);
-
         setSession(res.getOneSession);
 
         setSessionLoading(false);
     }
 
-    // function to convert string used for title on role page to a role key the api understands
-    // function convertRole() {
-    //     switch (role) {
-    //         case RoleEnum.Tank:
-    //             return 0;
-    //         case RoleEnum.Damage:
-    //             return 1;
-    //         case RoleEnum.Support:
-    //             return 2;
-    //         default:
-    //             return 3;
-    //     }
-    // };
-
     // start create game function
-    // async function createGame(form: GameForm) {
-    //     const token = await getTokenSilently({
-    //         audience: "AuthAPI",
-    //         scope: "read:current_user",
-    //     });
+    async function createGame(form: GameForm) {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
 
-    //     if (!sessionStorage) {
-    //         console.log('session id not found in state.')
-    //         return;
-    //     }
+        if (!sessionStorage) {
+            console.log('session id not found in state.')
+            return;
+        }
 
-    //     if (!form.mapPlayed) {
-    //         console.log('no map has been selected');
-    //         return;
-    //     }
+        if (!form.mapPlayed) {
+            console.log('no map has been selected');
+            return;
+        }
 
+        const { _session } = sessionStorage;
 
-    //     const { _session } = sessionStorage;
+        let heroesPlayed: string = form.heroesPlayed.map((hero: HeroEntry) => {
+            const q = '"';
+            return q + hero.name + q;
+        }).toString();
 
-    //     let heroesPlayed: string = form.heroesPlayed.map((hero: HeroEntry) => {
-    //         const q = '"'
-    //         return q + hero.name + q
-    //     }).toString();
+        const query: string = `mutation{
+              createGame(input: { 
+                    _session: "${_session}"
+                    role: ${session.sessionRole}
+                    heroesPlayed: [${heroesPlayed}]
+                    mapPlayed: "${form.mapPlayed.name}"
+                    rankIn: ${session.skillRatingCurrent}
+                    rankOut: ${form.skillRating}
+                    outcome: ${form.outcome} 
+                }){
+                    _session
+                }
+            }`;
 
-    const role: RoleObject = convertRoleKey(session.sessionRole);
+        const res = await fetchGraphQL(token, query);
+        getAllGames(_session);
+    }
 
-    //     const query: string = `mutation{
-    //       createGame(input: { 
-    //             _session: "${_session}"
-    //             role: ${role}
-    //             heroesPlayed: [${heroesPlayed}]
-    //             mapPlayed: "${form.mapPlayed.name}"
-    //             rankIn: ${0}
-    //             rankOut: ${form.skillRating}
-    //             outcome: ${form.outcome} 
-    //         }){
-    //             _session
-    //         }
-    //     }`;
+    async function getAllGames(_session: string) {
+        setIsLoading(true);
 
-    //     const res = await fetchGraphQL(token, query);
-    // }
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const query: string = `
+        query{
+            getAllGames(_session: "${_session}"){
+                role
+                mapPlayed
+                heroesPlayed
+                outcome
+                rankIn
+                rankOut
+            }
+        }`;
+        // conosole.log(query)
+        const games = await fetchGraphQL(token, query);
+
+        if (games && games.getAllGames) {
+            setGames(games.getAllGames);
+            setIsLoading(false);
+        }
+    };
+
 
     //start effect to parse localstorage string if it exists
     useEffect(() => {
         if (!sessionStorage) {
             console.error('No Session found in storage.');
+            history.push('/');
             return;
         }
 
         getSelectedSession(sessionStorage._session);
+        getAllGames(sessionStorage._session);
     }, []);
 
     return (
-        <Grid container style={{ marginBottom: '1em' }} justify={'center'}>
+        <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {role.name} Session
                 </Typography>
+                <Typography gutterBottom variant={'h5'}>
+                    Wins - Losses
+                </Typography>
+                <Typography gutterBottom variant={'h5'}>
+                    X - X
+                </Typography>
             </Grid>
+            {/* <Grid item xs={12}>
+                <Button fullWidth onClick={() => setModalOpen(true)} variant={"contained"} color={'primary'}>
+                    Add New Game
+                </Button>
+            </Grid> */}
             <Grid item xs={12}>
                 <AppBar position="static">
                     <Tabs
@@ -180,10 +205,9 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                     <SessionStats />
                 </TabPanel>
             </Grid>
-
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
-                    {/* <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} /> */}
+                    <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
                 </Modal>
             </GameFormProvider>
         </Grid>

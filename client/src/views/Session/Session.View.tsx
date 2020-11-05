@@ -53,11 +53,6 @@ const Session: FunctionComponent<SessionProps> = ({ }) => {
 
     }, []);
 
-    useEffect(() => console.log(sessions), [sessions])
-
-    useEffect(() => console.log({ selectedSession }), [selectedSession])
-
-
     async function createSession(form: SessionForm) {
         if (!selected) {
             console.error("No battletag ID available, something went creating a new session.");
@@ -174,7 +169,6 @@ const Session: FunctionComponent<SessionProps> = ({ }) => {
 
     async function deleteSession(_id: string) {
         if (_id === selectedSession?._id) {
-            console.log('hit')
             localStorage.removeItem('selected');
             setSelectedSession(undefined)
         }

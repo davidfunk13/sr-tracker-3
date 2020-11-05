@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
         icon: {
             width: '100%',
             maxWidth: '15vw'
+        },
+        marginBottom: {
+            marginBottom: '1em',
         }
     }),
 );

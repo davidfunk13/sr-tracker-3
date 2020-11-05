@@ -21,7 +21,7 @@ const HeroesPlayed: FunctionComponent<HeroesPlayedTypes> = ({ role }) => {
             return;
         }
 
-        return hero.roleName === role;
+        return hero.roleName === role.name.toLowerCase();
     });
 
     function selectHero(hero: HeroEntry) {

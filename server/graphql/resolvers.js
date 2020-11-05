@@ -23,7 +23,6 @@ const resolvers = {
       return await Session.findById(_id);
     },
     async getAllSessions(_, { _battletag }) {
-      console.log({ _battletag })
       const populated = await Battletag.findById(_battletag).populate({
         path: '_sessions',
         populate: {
@@ -31,7 +30,7 @@ const resolvers = {
           model: 'game'
         }
       });
-      console.log(populated)
+
       return await populated._sessions;
     },
     async getMostRecentSession(_, { _battletag }) {
@@ -102,24 +101,6 @@ const resolvers = {
           console.log('game not saved successfully');
           return;
         }
-      }
-
-      switch (game.role) {
-        case 0:
-          console.log("Updating tank SR...");
-          session.tankSR = game.rankOut;
-          break;
-        case 1:
-          console.log("Updating damage SR...");
-          session.damageSR = game.rankOut;
-          break;
-        case 2:
-          console.log("Updating support SR...");
-          session.supportSR = game.rankOut;
-          break;
-        default:
-          console.log("something went wrong with game role");
-          break;
       }
 
       session._games.push(game._id);

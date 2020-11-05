@@ -16,39 +16,19 @@ const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls 
     const classes = useStyles();
 
     return (
-        <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
                 <Typography variant={'h5'}>
                     Games
                 </Typography>
             </Grid>
             {isLoading && <div className={classes.loadingContainer}><CircularProgress style={{ margin: "5vh 0" }} size={100} /></div>}
-            <Grid container spacing={2} style={{ marginBottom: '1em' }} justify={'center'}>
-                <Grid className={classes.iconContainer} item xs={4}>
-                    <img className={classes.icon} src={TankIcon} alt="Tank" />
-                    <Typography align={"center"}>
-                        {session.tankSR.toString()}
-                    </Typography>
-                </Grid>
-                <Grid className={classes.iconContainer} item xs={4}>
-                    <img className={classes.icon} src={SupportIcon} alt="Support" />
-                    <Typography align={"center"}>
-                        {session.supportSR.toString()}
-                    </Typography>
-                </Grid>
-                <Grid className={classes.iconContainer} item xs={4}>
-                    <img className={classes.icon} src={DamageIcon} alt="Damage" />
-                    <Typography align={"center"}>{session.damageSR.toString()}</Typography>
-                </Grid>
-            </Grid>
-            <Grid item xs={12}>
+            <Grid className={classes.marginBottom} item xs={12}>
                 <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
             </Grid>
-            <Grid item xs={12}>
-                <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
-                    <Typography variant={'button'}>Add A Game</Typography>
-                </Button>
-            </Grid> */}
+            <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
+                <Typography variant={'button'}>Add A Game</Typography>
+            </Button>
         </Grid>
     );
 };

@@ -3,13 +3,13 @@ import SelectMap from './components/SelectMap/SelectMap.AddGame';
 import HeroesPlayed from './components/HeroesPlayed/HeroesPlayed.AddGame';
 import Outcome from './components/Outcome/Outcome.AddGame';
 import SkillRating from './components/SkillRating/SkillRating.AddGame';
-import { GameFormContextType, ModalControls, RoleEnum } from '../../App.Types'
+import { GameFormContextType, ModalControls, RoleEnum, RoleObject } from '../../App.Types'
 import ConfirmGame from './components/ConfirmGame/ConfirmGame.AddGame';
 import GameFormContext from '../../contexts/GameForm/GameFormContext';
 
 export interface ComponentDependenciesTypes {
     createGame: (game: any) => void
-    role: RoleEnum
+    role: RoleObject
 }
 
 export interface GameFormProps {
@@ -20,7 +20,7 @@ export interface GameFormProps {
 const GameForm: FunctionComponent<GameFormProps> = ({ modalControls, componentDependencies }) => {
     const [state, setState] = useContext<GameFormContextType>(GameFormContext);
 
-    const { createGame, role } = componentDependencies
+    const { createGame, role } = componentDependencies;
 
     function renderComponent(step: number): JSX.Element {
         switch (step) {

@@ -25,7 +25,8 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session, de
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const rank = useGetRank(session.skillRatingStart);
+    const start = useGetRank(session.skillRatingStart);
+    const current = useGetRank(session.skillRatingCurrent);
 
     const createdAt: { date: string, time: string } = {
         date: date.toLocaleDateString(),
@@ -87,13 +88,13 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session, de
                     />
                     <CardMedia
                         className={classes.cover}
-                        image={rank.icon.toString()}
+                        image={start.icon.toString()}
                         title={"Starting Skillrating"}
                     />
                     <TrendingFlatIcon className={classes.arrowIcon} />
                     <CardMedia
                         className={classes.cover}
-                        image={rank.icon.toString()}
+                        image={current.icon.toString()}
                         title={"Current Skillrating"}
                     />
                 </div>

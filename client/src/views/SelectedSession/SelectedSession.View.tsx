@@ -17,7 +17,9 @@ import Games from '../Games/Games.View';
 import SessionStats from '../SessionStats/SessionStats.View';
 import convertRoleKey from '../../utils/convertRoleKey';
 import Button from '@material-ui/core/Button';
-
+import MediaCard from '../../UI/MediaCard/MediaCard.UI';
+import useGetRank from '../../hooks/useGetRank/useGetRank';
+import useStyles from './SelectedSession.View.Styles';
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const [value, setValue] = useState<number>(0);
 
@@ -36,6 +38,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const location = useLocation();
 
     const history = useHistory();
+
+    const classes = useStyles();
 
     if (!location) {
         history.push('/')
@@ -173,28 +177,55 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         getAllGames(sessionStorage._session);
     }, []);
 
-    useEffect(() => console.log(session), [session]);
-    useEffect(() => console.log(games), [games]);
+    const cardMediaStyle = {
+        margin: '1em',
+        backgroundSize: 'contain',
+    };
+
+    const start = useGetRank(session.skillRatingStart);
+    const current = useGetRank(session.skillRatingCurrent);
 
     return (
         <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
+
             <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {role.name} Session
                 </Typography>
-                <Typography gutterBottom variant={'h5'}>
+            </Grid>
+            <Grid item xs={6}>
+                <MediaCard
+                    cardMediaStyle={cardMediaStyle}
+                    title={start.skillRating.toString()}
+                    subtitle={start.name}
+                    image={start.icon}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <MediaCard
+                    cardMediaStyle={cardMediaStyle}
+                    title={current.skillRating.toString()}
+                    subtitle={current.name}
+                    image={current.icon}
+                />
+            </Grid>
+            {/* <Typography gutterBottom variant={'h5'}>
                     Skillrating Start - Skillrating Current
                 </Typography>
                 <Typography gutterBottom variant={'h5'}>
                     {session.skillRatingStart} - {session.skillRatingCurrent}
                 </Typography>
+                <MediaCard
+                    cardMediaStyle={cardMediaStyle}
+                    title={start.name}
+                    image={start.icon}
+                />
                 <Typography gutterBottom variant={'h5'}>
                     Wins - Losses - Draws
                 </Typography>
                 <Typography gutterBottom variant={'h5'}>
                     {wins} - {losses} - {ties}
-                </Typography>
-            </Grid>
+                </Typography> */}
             <Grid item xs={12}>
                 <AppBar position="static">
                     <Tabs

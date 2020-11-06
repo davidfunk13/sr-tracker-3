@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme: Theme) =>
         loadingContainer: {
             display: 'flex',
             justifyContent: 'center'
+        },
+        topSection: {
+            maxHeight: '20vh',
+            width: 'auto'
         }
     }),
 );

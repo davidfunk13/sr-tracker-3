@@ -20,8 +20,14 @@ import Button from '@material-ui/core/Button';
 import MediaCard from '../../UI/MediaCard/MediaCard.UI';
 import useGetRank from '../../hooks/useGetRank/useGetRank';
 import useStyles from './SelectedSession.View.Styles';
+import SwipeableViews, { OnChangeIndexCallback } from 'react-swipeable-views';
+import { Fab, useTheme, Zoom } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const [value, setValue] = useState<number>(0);
+
+    const theme = useTheme();
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -185,10 +191,20 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const start = useGetRank(session.skillRatingStart);
     const current = useGetRank(session.skillRatingCurrent);
 
+    const handleChangeIndex: OnChangeIndexCallback = (index: number, indexLatest: number) => {
+        console.log(index, indexLatest)
+        setValue(index);
+    };
+
+    const transitionDuration = {
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+    };
+
     return (
         <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Typography gutterBottom variant={'h4'}>
                     {role.name} Session
                 </Typography>
@@ -208,7 +224,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                     subtitle={current.name}
                     image={current.icon}
                 />
-            </Grid>
+            </Grid> */}
             {/* <Typography gutterBottom variant={'h5'}>
                     Skillrating Start - Skillrating Current
                 </Typography>
@@ -234,17 +250,37 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                         onChange={handleChange}
                         aria-label="nav tabs example"
                     >
-                        <LinkTab label="Games" {...a11yProps(0)} />
-                        <LinkTab label="Statistics" {...a11yProps(1)} />
+                        <LinkTab label="Info" {...a11yProps(0)} />
+                        <LinkTab label="Games" {...a11yProps(1)} />
+                        <LinkTab label="Statistics" {...a11yProps(2)} />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={value} index={0}>
-                    <Games session={session} isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <SessionStats />
-                </TabPanel>
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={value}
+                    onChangeIndex={() => console.log('hi')}
+                >
+                    <TabPanel value={value} index={0}>
+                        <p>info</p>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <Games session={session} isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
+                    </TabPanel>
+                    <TabPanel value={value} index={2}>
+                        <SessionStats />
+                    </TabPanel>
+                </SwipeableViews>
             </Grid>
+            <Zoom
+                in={value === 1}
+                timeout={transitionDuration}
+                unmountOnExit
+            >
+                <Fab onClick={() => setModalOpen(true)} variant="extended" color="primary" aria-label="add" className={classes.fab}>
+                    <AddIcon className={classes.addIcon} />
+                    Add New Game
+                </Fab>
+            </Zoom>
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
                     <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />
@@ -255,3 +291,6 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 }
 
 export default SelectedSession;
+
+
+

@@ -26,9 +26,9 @@ const Games: React.FC<GamesProps> = ({ session, isLoading, games, modalControls 
             <Grid className={classes.marginBottom} item xs={12}>
                 <GameTable isLoading={isLoading} games={games} setModalOpen={setModalOpen} />
             </Grid>
-            <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
+            {/* <Button variant={"contained"} fullWidth color={'primary'} onClick={() => setModalOpen(true)}>
                 <Typography variant={'button'}>Add A Game</Typography>
-            </Button>
+            </Button> */}
         </Grid>
     );
 };

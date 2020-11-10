@@ -23,6 +23,7 @@ import useStyles from './SelectedSession.View.Styles';
 import SwipeableViews, { OnChangeIndexCallback } from 'react-swipeable-views';
 import { Fab, useTheme, Zoom } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import SessionInfo from '../SessionInfo/SessionInfo.View';
 
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     const [value, setValue] = useState<number>(0);
@@ -166,11 +167,6 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         }
     };
 
-    const wins: number = games.filter(game => game.outcome === 1).length;
-    const losses: number = games.filter(game => game.outcome === 0).length;
-    const ties: number = games.filter(game => game.outcome === 2).length;
-
-
     //start effect to parse localstorage string if it exists
     useEffect(() => {
         if (!sessionStorage) {
@@ -183,19 +179,6 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         getAllGames(sessionStorage._session);
     }, []);
 
-    const cardMediaStyle = {
-        margin: '1em',
-        backgroundSize: 'contain',
-    };
-
-    const start = useGetRank(session.skillRatingStart);
-    const current = useGetRank(session.skillRatingCurrent);
-
-    const handleChangeIndex: OnChangeIndexCallback = (index: number, indexLatest: number) => {
-        console.log(index, indexLatest)
-        setValue(index);
-    };
-
     const transitionDuration = {
         enter: theme.transitions.duration.enteringScreen,
         exit: theme.transitions.duration.leavingScreen,
@@ -204,44 +187,6 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
     return (
         <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
 
-            {/* <Grid item xs={12}>
-                <Typography gutterBottom variant={'h4'}>
-                    {role.name} Session
-                </Typography>
-            </Grid>
-            <Grid item xs={6}>
-                <MediaCard
-                    cardMediaStyle={cardMediaStyle}
-                    title={start.skillRating.toString()}
-                    subtitle={start.name}
-                    image={start.icon}
-                />
-            </Grid>
-            <Grid item xs={6}>
-                <MediaCard
-                    cardMediaStyle={cardMediaStyle}
-                    title={current.skillRating.toString()}
-                    subtitle={current.name}
-                    image={current.icon}
-                />
-            </Grid> */}
-            {/* <Typography gutterBottom variant={'h5'}>
-                    Skillrating Start - Skillrating Current
-                </Typography>
-                <Typography gutterBottom variant={'h5'}>
-                    {session.skillRatingStart} - {session.skillRatingCurrent}
-                </Typography>
-                <MediaCard
-                    cardMediaStyle={cardMediaStyle}
-                    title={start.name}
-                    image={start.icon}
-                />
-                <Typography gutterBottom variant={'h5'}>
-                    Wins - Losses - Draws
-                </Typography>
-                <Typography gutterBottom variant={'h5'}>
-                    {wins} - {losses} - {ties}
-                </Typography> */}
             <Grid item xs={12}>
                 <AppBar position="static">
                     <Tabs
@@ -258,10 +203,9 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                 <SwipeableViews
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={value}
-                    onChangeIndex={() => console.log('hi')}
                 >
                     <TabPanel value={value} index={0}>
-                        <p>info</p>
+                        <SessionInfo />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <Games session={session} isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />

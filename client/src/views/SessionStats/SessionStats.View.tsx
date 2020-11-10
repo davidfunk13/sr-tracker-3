@@ -12,7 +12,7 @@ const SessionStats: FunctionComponent<SessionStatsProps> = () => {
         <Grid container spacing={2}>
             <Grid item xs={12} >
                 <Typography variant={'h5'} >
-                    SessionStats
+                    Session Statistics
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>

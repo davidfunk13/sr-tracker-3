@@ -8,6 +8,7 @@ import MediaCard from "../../UI/MediaCard/MediaCard.UI";
 import convertRoleKey from "../../utils/convertRoleKey";
 import fetchGraphQL from "../../utils/fetchGraphQL";
 import useStyles from "./SessionInfo.Styles";
+import getSelectedSession from '../../utils/getSelectedSession'
 import SessionInfoProps from "./SessionInfo.Types";
 
 const cardMediaStyle = {
@@ -20,7 +21,7 @@ const initialSessionState: SessionType = { _id: '', _games: [], sessionRole: 3, 
 const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
     const sessionStorage = JSON.parse(localStorage.getItem('_session') as string) as { _session: string };
 
-    const { getTokenSilently } = useAuth0();
+    const { getTokenSilently, user } = useAuth0();
 
     const classes = useStyles();
 
@@ -39,41 +40,42 @@ const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
 
     const role: RoleObject = convertRoleKey(session.sessionRole);
 
-    async function getSelectedSession(_session: string) {
-        setSessionLoading(true);
+    // async function getSelectedSession(_session: string) {
+    //     setSessionLoading(true);
 
-        const query: string = `{
-        getOneSession(_id: "${_session}") {
-            _id
-            skillRatingStart
-            skillRatingCurrent
-            sessionRole
-            createdAt
-            _games {
-                _id
-                _session
-                outcome
-                createdAt
-                }
-            }
-        }` ;
+    //     const query: string = `{
+    //     getOneSession(_id: "${_session}") {
+    //         _id
+    //         skillRatingStart
+    //         skillRatingCurrent
+    //         sessionRole
+    //         createdAt
+    //         _games {
+    //             _id
+    //             _session
+    //             outcome
+    //             createdAt
+    //             }
+    //         }
+    //     }` ;
 
-        const token = await getTokenSilently({
-            audience: "AuthAPI",
-            scope: "read:current_user",
-        });
+    //     const token = await getTokenSilently({
+    //         audience: "AuthAPI",
+    //         scope: "read:current_user",
+    //     });
 
-        const res: { getOneSession: any } = await fetchGraphQL(token, query);
+    //     const res: { getOneSession: any } = await fetchGraphQL(token, query);
 
-        if (res === undefined) {
-            console.error('ALL SESSIONS RETURNED UNDEFINED');
-            return;
-        }
-        console.log('hit it')
-        setSession(res.getOneSession);
+    //     if (res === undefined) {
+    //         console.error('ALL SESSIONS RETURNED UNDEFINED');
+    //         return;
+    //     }
+    //     console.log('hit it')
+    //     setSession(res.getOneSession);
 
-        setSessionLoading(false);
-    };
+    //     setSessionLoading(false);
+    // };
+
 
     async function getAllGames(_session: string) {
         setIsLoading(true);
@@ -110,8 +112,33 @@ const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
             return;
         }
 
-        getSelectedSession(sessionStorage._session);
-        getAllGames(sessionStorage._session);
+        async function fetchData() {
+            const token = await getTokenSilently({
+                audience: "AuthAPI",
+                scope: "read:current_user",
+            });
+
+            const query: string = `{
+                getOneSession(_id: "${sessionStorage._session}") {
+                    _id
+                    skillRatingStart
+                    skillRatingCurrent
+                    sessionRole
+                    createdAt
+                    _games {
+                        _id
+                        _session
+                        outcome
+                        createdAt
+                        }
+                    }
+                }` ;
+
+            getSelectedSession(token, setSession, setIsLoading, query);
+        }
+
+        fetchData();
+        // getAllGames(sessionStorage._session);
 
         return () => {
             setSession(initialSessionState)

@@ -36,6 +36,7 @@ const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
     const [session, setSession] = useState<SessionType>(initialSessionState);
 
     const start = useGetRank(session.skillRatingStart);
+
     const current = useGetRank(session.skillRatingCurrent);
 
     const role: RoleObject = convertRoleKey(session.sessionRole);
@@ -75,7 +76,30 @@ const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
 
     //     setSessionLoading(false);
     // };
+    async function fetchData() {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
 
+        const query: string = `{
+            getOneSession(_id: "${sessionStorage._session}") {
+                _id
+                skillRatingStart
+                skillRatingCurrent
+                sessionRole
+                createdAt
+                _games {
+                    _id
+                    _session
+                    outcome
+                    createdAt
+                    }
+                }
+            }` ;
+
+        getSelectedSession(token, setSession, setIsLoading, query);
+    }
 
     async function getAllGames(_session: string) {
         setIsLoading(true);
@@ -110,31 +134,6 @@ const SessionInfo: FunctionComponent<SessionInfoProps> = () => {
             console.error('No Session found in storage.');
             history.push('/');
             return;
-        }
-
-        async function fetchData() {
-            const token = await getTokenSilently({
-                audience: "AuthAPI",
-                scope: "read:current_user",
-            });
-
-            const query: string = `{
-                getOneSession(_id: "${sessionStorage._session}") {
-                    _id
-                    skillRatingStart
-                    skillRatingCurrent
-                    sessionRole
-                    createdAt
-                    _games {
-                        _id
-                        _session
-                        outcome
-                        createdAt
-                        }
-                    }
-                }` ;
-
-            getSelectedSession(token, setSession, setIsLoading, query);
         }
 
         fetchData();

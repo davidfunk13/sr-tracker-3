@@ -20,7 +20,16 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         marginBottom: {
             marginBottom: '1em',
-        }
+        },
+        fab: {
+            // position: 'absolute',
+            // bottom: theme.spacing(2),
+            // right: theme.spacing(2),
+            // margin: theme.spacing(1),
+        },
+        addIcon: {
+            marginRight: theme.spacing(1),
+        },
     }),
 );
 

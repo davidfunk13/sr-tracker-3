@@ -1,58 +1,78 @@
+// React
+import SwipeableViews from 'react-swipeable-views';
 import React, { useState, FunctionComponent, useEffect } from 'react';
-import SelectedSessionTypes from './SelectedSession.View.Types';
+//Hooks
+import { useAuth0 } from '../../react-auth0-spa';
+import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+import { useTheme } from '@material-ui/core';
+import useStyles from './SelectedSession.View.Styles';
+// Types
+import SelectedSessionTypes from './SelectedSession.View.Types';
+import { Game, HeroEntry, GameForm, SessionType, RoleObject } from '../../App.Types';
+// MaterialUI Components
+import AddIcon from '@material-ui/icons/Add';
+import AppBar from '@material-ui/core/AppBar';
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import Modal from '../../UI/Modal/Modal.UI';
-import { useHistory } from 'react-router-dom';
-import { RoleEnum, RoleKey, RoleName, Game, HeroEntry, GameForm, SessionType, RoleObject } from '../../App.Types';
-import fetchGraphQL from '../../utils/fetchGraphQL';
-import { useAuth0 } from '../../react-auth0-spa';
+import Tabs from '@material-ui/core/Tabs';
+import Zoom from '@material-ui/core/Zoom';
+//SR Tracker
+import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
+import Games from '../Games/Games.View';
 import GameFormComponent from '../../forms/AddGame/AddGame.Modal.UI';
 import GameFormProvider from '../../contexts/GameForm/GameFormProvider';
-import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Games from '../Games/Games.View';
-import SessionStats from '../SessionStats/SessionStats.View';
-import convertRoleKey from '../../utils/convertRoleKey';
-import Button from '@material-ui/core/Button';
-import MediaCard from '../../UI/MediaCard/MediaCard.UI';
-import useGetRank from '../../hooks/useGetRank/useGetRank';
-import useStyles from './SelectedSession.View.Styles';
-import SwipeableViews, { OnChangeIndexCallback } from 'react-swipeable-views';
-import { Fab, useTheme, Zoom } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import SessionInfo from '../SessionInfo/SessionInfo.View';
+import SessionStats from '../SessionStats/SessionStats.View';
+// Utility Functions
+import convertRoleKey from '../../utils/convertRoleKey';
+import fetchGraphQL from '../../utils/fetchGraphQL';
+import getSelectedSession from '../../utils/getSelectedSession';
+
+const initialSessionState: SessionType = {
+    _id: '',
+    _games: [],
+    sessionRole: 3,
+    skillRatingStart: 0,
+    skillRatingCurrent: 0,
+    createdAt: ''
+};
 
 const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
-    const [value, setValue] = useState<number>(0);
 
-    const theme = useTheme();
-
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const [sessionLoading, setSessionLoading] = useState<boolean>(false);
+    const classes = useStyles();
 
     const [games, setGames] = useState<Game[]>([]);
 
-    const [session, setSession] = useState<SessionType>({ _id: '', _games: [], sessionRole: 3, skillRatingStart: 0, skillRatingCurrent: 0, createdAt: '' });
-
     const { getTokenSilently } = useAuth0();
-
-    const location = useLocation();
 
     const history = useHistory();
 
-    const classes = useStyles();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const location = useLocation();
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    const [session, setSession] = useState<SessionType>(initialSessionState);
+
+    const [sessionLoading, setSessionLoading] = useState<boolean>(false);
+
+    const sessionStorage = JSON.parse(localStorage.getItem('_session') as string) as { _session: string };
+
+    const theme = useTheme();
+
+    const transitionDuration = {
+        enter: theme.transitions.duration.enteringScreen,
+        exit: theme.transitions.duration.leavingScreen,
+    };
+
+    const [value, setValue] = useState<number>(0);
 
     if (!location) {
         history.push('/')
     }
-
-    const sessionStorage = JSON.parse(localStorage.getItem('_session') as string) as { _session: string };
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -60,43 +80,6 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
 
     const role: RoleObject = convertRoleKey(session.sessionRole);
 
-    async function getSelectedSession(_session: string) {
-        setSessionLoading(true);
-
-        const query: string = `{
-        getOneSession(_id: "${_session}") {
-            _id
-            skillRatingStart
-            skillRatingCurrent
-            sessionRole
-            createdAt
-            _games {
-                _id
-                _session
-                outcome
-                createdAt
-                }
-            }
-        }` ;
-
-        const token = await getTokenSilently({
-            audience: "AuthAPI",
-            scope: "read:current_user",
-        });
-
-        const res: { getOneSession: any } = await fetchGraphQL(token, query);
-
-        if (res === undefined) {
-            console.error('ALL SESSIONS RETURNED UNDEFINED');
-            return;
-        }
-
-        setSession(res.getOneSession);
-
-        setSessionLoading(false);
-    }
-
-    // start create game function
     async function createGame(form: GameForm) {
         const token = await getTokenSilently({
             audience: "AuthAPI",
@@ -134,9 +117,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                 }
             }`;
 
-        const res = await fetchGraphQL(token, query);
-        getAllGames(_session);
-        getSelectedSession(sessionStorage._session);
+        await fetchGraphQL(token, query);
+        return fetchData();
     }
 
     async function getAllGames(_session: string) {
@@ -158,7 +140,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                 rankOut
             }
         }`;
-        // conosole.log(query)
+
         const games = await fetchGraphQL(token, query);
 
         if (games && games.getAllGames) {
@@ -167,7 +149,27 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
         }
     };
 
-    //start effect to parse localstorage string if it exists
+    async function fetchData() {
+        const token = await getTokenSilently({
+            audience: "AuthAPI",
+            scope: "read:current_user",
+        });
+
+        const query: string = `{
+        getOneSession(_id: "${sessionStorage._session}") {
+                _id
+                skillRatingStart
+                skillRatingCurrent
+                sessionRole
+                createdAt
+            }
+        }` ;
+
+        getSelectedSession(token, setSession, setIsLoading, query);
+        getAllGames(sessionStorage._session);
+    }
+
+
     useEffect(() => {
         if (!sessionStorage) {
             console.error('No Session found in storage.');
@@ -175,18 +177,12 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
             return;
         }
 
-        getSelectedSession(sessionStorage._session);
-        getAllGames(sessionStorage._session);
+        fetchData();
     }, []);
 
-    const transitionDuration = {
-        enter: theme.transitions.duration.enteringScreen,
-        exit: theme.transitions.duration.leavingScreen,
-    };
 
     return (
         <Grid container style={{ marginBottom: '1em' }} spacing={2} justify={'center'}>
-
             <Grid item xs={12}>
                 <AppBar position="static">
                     <Tabs

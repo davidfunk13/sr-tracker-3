@@ -210,17 +210,17 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                         <SessionStats />
                     </TabPanel>
                 </SwipeableViews>
-            </Grid>
-            <Zoom
-                in={value === 1}
-                timeout={transitionDuration}
-                unmountOnExit
-            >
-                <Fab onClick={() => setModalOpen(true)} variant="extended" color="primary" aria-label="add" className={classes.fab}>
-                    <AddIcon className={classes.addIcon} />
+                <Zoom
+                    in={value === 1}
+                    timeout={transitionDuration}
+                    unmountOnExit
+                >
+                    <Fab onClick={() => setModalOpen(true)} variant="extended" color="primary" aria-label="add" className={classes.fab}>
+                        <AddIcon className={classes.addIcon} />
                     Add New Game
                 </Fab>
-            </Zoom>
+                </Zoom>
+            </Grid>
             <GameFormProvider>
                 <Modal modalControls={{ modalOpen, setModalOpen }} title={'Add New Game'}>
                     <GameFormComponent componentDependencies={{ createGame, role }} modalControls={{ modalOpen, setModalOpen }} />

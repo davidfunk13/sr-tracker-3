@@ -19,7 +19,6 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
-
 const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawerClose }) => {
     const classes = useStyles();
 
@@ -58,7 +57,7 @@ const DrawerRight: React.ComponentType<DrawerRightProps> = ({ open, handleDrawer
     return (
         <Drawer
             className={classes.drawer}
-            variant="persistent"
+            variant="temporary"
             anchor="right"
             open={open}
             classes={{ paper: classes.drawerPaper, }}>

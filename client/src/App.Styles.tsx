@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       width: '97vw',
       maxWidth: '97vw',
+      height: '85vh',
       flexGrow: 1,
       padding: '6% 0 0 0',
       transition: theme.transitions.create('all', {

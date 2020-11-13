@@ -80,7 +80,6 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session, de
                     </CardContent>
                 </div>
                 <div className={classes.images}>
-
                     <CardMedia
                         className={classes.cover}
                         image={role.icon}

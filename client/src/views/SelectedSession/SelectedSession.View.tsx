@@ -1,7 +1,7 @@
 // React
 import SwipeableViews from 'react-swipeable-views';
 import React, { useState, FunctionComponent, useEffect } from 'react';
-//Hooks
+// Hooks
 import { useAuth0 } from '../../react-auth0-spa';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import Modal from '../../UI/Modal/Modal.UI';
 import Tabs from '@material-ui/core/Tabs';
 import Zoom from '@material-ui/core/Zoom';
-//SR Tracker
+// SR Tracker
 import { a11yProps, LinkTab, TabPanel } from '../../UI/PageTabs/PageTabs.UI';
 import Games from '../Games/Games.View';
 import GameFormComponent from '../../forms/AddGame/AddGame.Modal.UI';
@@ -217,8 +217,8 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                 >
                     <Fab onClick={() => setModalOpen(true)} variant="extended" color="primary" aria-label="add" className={classes.fab}>
                         <AddIcon className={classes.addIcon} />
-                    Add New Game
-                </Fab>
+                        Add New Game
+                    </Fab>
                 </Zoom>
             </Grid>
             <GameFormProvider>

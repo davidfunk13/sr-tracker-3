@@ -10,6 +10,9 @@ export interface Battletag {
   isPublic: boolean,
   platform: Platform,
   portrait: string,
+  createdAt?: string;
+  updatedAt?: string;
+  _sessions?: string[];
 }
 
 export interface BlizzAPIBattletag {

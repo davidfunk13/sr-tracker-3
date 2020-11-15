@@ -21,7 +21,7 @@ const PressHoldCard: FunctionComponent<PressHoldCardProps> = ({ onClick, action,
             clearTimeout(timer)
         }
 
-        setTimer(setTimeout(handleLongPress, 500, e));
+        setTimer(setTimeout(handleLongPress, 1000, e));
     };
 
     const handleLongPress = (e: any) => {

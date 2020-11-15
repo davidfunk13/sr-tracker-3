@@ -1,16 +1,12 @@
-import React, { Fragment, useEffect, FunctionComponent, useState } from "react";
+import React, { useEffect, FunctionComponent, useState } from "react";
 import SelectBattletagTypes from "./SelectBattletag.View.Types";
-import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import DeleteIcon from '@material-ui/icons/Delete';
-import CardWithAvatar from "../../UI/CardWithAvatar/CardWithAvatar.UI";
 import { Battletag } from "../../App.Types";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuth0 } from "../../react-auth0-spa";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import fetchGraphQL from "../../utils/fetchGraphQL";
-import Modal from "../../UI/Modal/Modal.UI";
 import PressHoldCard from "../../UI/PressHoldCard/PressHoldCard.UI";
 import DeleteBattletag from "../../forms/DeleteBattletag/DeleteBattletag.Form";
 
@@ -24,12 +20,6 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
   const [data, setData] = useState<Battletag[]>([]);
 
   const [loading, setLoading] = useState<boolean>();
-
-  const [open, setOpen] = useState<boolean>(false);
-
-  const [isDone, setIsDone] = useState<boolean>(false);
-
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   enum PrevLocation {
     Track = 'Track',
@@ -89,9 +79,8 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
           _id
         }
     }
-}`
+}`;
 
-    console.log(query)
     setData([]);
 
     setLoading(true);
@@ -137,30 +126,6 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
     fetchBattletags();
   }
 
-  const handleButtonPress = function (e: any) {
-    if (timer) {
-      clearTimeout(timer)
-    }
-
-    setTimer(setTimeout(handleLongPress, 500, e));
-  };
-
-  const handleLongPress = (e: any) => {
-    console.log("LongPress");
-    setOpen(true)
-    setIsDone(true);
-  };
-
-  const handleButtonRelease = function (e: any) {
-    if (!isDone) {
-      console.log("Release", isDone);
-      setIsDone(true);
-    }
-
-    clearTimeout(timer as any);
-  };
-
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -189,20 +154,25 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
             return (
               <Grid key={battletag._id} item xs={12}>
                 <PressHoldCard onClick={() => setSelected(battletag)} modalTitle="Delete Battletag?" action={deleteBattletag} modalChildren={modalChildren}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={3}>
+                  <Grid container alignItems={'center'} spacing={2}>
+                    <Grid item xs={4}>
                       <img style={{ width: '100%' }} src={imgUrl} />
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={8}>
                       <Typography variant={'h6'} component={'h3'}>
                         {battletag.name}
                       </Typography>
                       <Typography variant={'subtitle1'} component={'h3'}>
                         Sessions: {battletag && battletag._sessions ? battletag._sessions.length : 0}
                       </Typography>
-                      <Typography variant={'subtitle1'} component={'h3'}>
-                        Last Change: {parseDate(battletag.createdAt as string).date + ' ' + parseDate(battletag.updatedAt as string).time}
+                      <div>
+                        <Typography variant={'subtitle1'} component={'p'}>
+                          Last Change:
                       </Typography>
+                        <Typography variant={'subtitle1'} component={'p'}>
+                          {parseDate(battletag.createdAt as string).date + ' ' + parseDate(battletag.updatedAt as string).time}
+                        </Typography>
+                      </div>
                     </Grid>
                   </Grid>
                 </PressHoldCard>
@@ -211,8 +181,6 @@ const SelectBattletag: FunctionComponent<SelectBattletagTypes> = () => {
           })}
         </Grid>
       </Grid>
-      <Modal modalControls={{ modalOpen: open, setModalOpen: setOpen }} title={'Delete Battletag'} >
-      </Modal>
     </Grid >
   );
 };

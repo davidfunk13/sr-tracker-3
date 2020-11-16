@@ -3,7 +3,7 @@ const useStyles = makeStyles({
     root: {
         '& > *': {
             borderBottom: 'unset',
-            padding: '0',
+            padding: '0 .25em 0 0',
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
             overflow: 'hidden',
@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     },
     noPadding: {
         padding: 0,
+        textAlign: 'left',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         overflow: 'hidden',

@@ -47,6 +47,13 @@ export interface GameForm {
   skillRating: number | undefined
 }
 
+export interface GameRow {
+  mapPlayed: string
+  heroesPlayed: string
+  outcome: string
+  skillRating: number
+}
+
 export interface SessionForm {
   step: number
   role: RoleKey

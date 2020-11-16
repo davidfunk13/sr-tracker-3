@@ -19,7 +19,7 @@ const GameTable: FunctionComponent<GameTableTypes> = ({ isLoading, games }) => {
     return (
         <Grid container spacing={2} justify={"center"} >
             {isLoading ? <CircularProgress style={{ margin: "5vh 0" }} size={100} /> :
-                <CollapsibleTable />
+                <CollapsibleTable rows={games} />
                 // <TableContainer className={clsx(classes.tablePadding, classes.tableWidth)} component={Paper}>
                 //     <Table size={'small'} aria-label={'Games Table'}>
                 //         <TableHead>

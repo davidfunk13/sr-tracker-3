@@ -14,6 +14,7 @@ import Loss from '../../assets/icons/other/loss.png';
 import Draw from '../../assets/icons/other/draw.png';
 import { GameFormContextType, HeroEntry } from '../../App.Types';
 import GameFormContext from '../../contexts/GameForm/GameFormContext';
+import generateGameOutcomeString from '../../utils/generateGameOutcomeString';
 
 const useStyles = makeStyles({
     root: {
@@ -49,22 +50,9 @@ const GameCard: FunctionComponent<GameCardTypes> = () => {
         }
     }
 
-    function generateOutcomeString(outcome: number | undefined) {
-        switch (outcome) {
-            case 0:
-                return 'Defeat';
-            case 1:
-                return 'Victory';
-            case 2:
-                return 'Draw';
-            default:
-                break;
-        }
-    }
-
     const iconPath: string | undefined = generateOutcomeIcon(state.outcome);
 
-    const outcomeString: string | undefined = generateOutcomeString(state.outcome);
+    const outcomeString: string | undefined = generateGameOutcomeString(state.outcome);
 
     const mapImage = state.mapPlayed && state.mapPlayed.icon ? state.mapPlayed.icon.toString() : 'Error';
 

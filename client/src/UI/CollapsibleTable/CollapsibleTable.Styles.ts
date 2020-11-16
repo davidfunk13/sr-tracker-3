@@ -3,18 +3,33 @@ const useStyles = makeStyles({
     root: {
         '& > *': {
             borderBottom: 'unset',
-            padding: '0 1em 0 0',
+            padding: '0',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
         },
     },
     noPadding: {
         padding: 0,
-    },
-    textOverflow: {
         whiteSpace: 'nowrap',
-        overflow: 'hidden',
         textOverflow: 'ellipsis',
+        overflow: 'hidden',
+    },
+    downArrowWidth: {
+        width: '10%',
+    },
+    heroesPlayedWidth: {
+        width: '35%'
+    },
+    mapWidth: {
+        width: '25%'
+    },
+    wLWidth: {
+        width: '15%'
+    },
+    overrideOverflow: {
+        overflow: 'unset !important'
     }
-
 });
 
 export default useStyles;

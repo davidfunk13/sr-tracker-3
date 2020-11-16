@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         loadingContainer: {
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            width: '100%',
         },
         iconContainer: {
             textAlign: 'center',

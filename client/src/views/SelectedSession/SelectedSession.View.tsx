@@ -193,7 +193,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                     >
                         <LinkTab label="Info" {...a11yProps(0)} />
                         <LinkTab label="Games" {...a11yProps(1)} />
-                        <LinkTab label="Statistics" {...a11yProps(2)} />
+                        <LinkTab label="Stats" {...a11yProps(2)} />
                     </Tabs>
                 </AppBar>
                 <SwipeableViews
@@ -204,7 +204,7 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                         <SessionInfo />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
-                        <Games session={session} isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
+                        <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
                     </TabPanel>
                     <TabPanel value={value} index={2}>
                         <SessionStats />

@@ -11,8 +11,8 @@ const SessionStats: FunctionComponent<SessionStatsProps> = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} >
-                <Typography variant={'h5'} >
-                    Session Statistics
+                <Typography variant={'h4'} >
+                    This Session
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>

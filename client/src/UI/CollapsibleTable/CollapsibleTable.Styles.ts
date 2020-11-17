@@ -30,6 +30,27 @@ const useStyles = makeStyles({
     },
     overrideOverflow: {
         overflow: 'unset !important'
+    },
+    image: {
+        height: '5em',
+        width: 'auto',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+    },
+    image12: {
+        height: '5em',
+        width: 'auto',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 35%',
+        backgroundRepeat: 'no-repeat'
+    },
+    rankIcon: {
+        height: '5em',
+        width: 'auto',
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
     }
 });
 

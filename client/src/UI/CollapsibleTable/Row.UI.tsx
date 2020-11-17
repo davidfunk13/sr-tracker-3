@@ -125,23 +125,6 @@ const Row: FunctionComponent<GameRowProps> = ({ row }) => {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                {/* <Grid item xs={12} >
-
-                                    <Typography variant="h6" gutterBottom component="div">
-                                        Farts
-                                    </Typography>
-                                    <Grid container>
-                                        <Grid item xs={4}>
-                                            <div style={{ width: '100%', height: '10em', backgroundColor: 'red' }}></div>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <div style={{ width: '100%', height: '10em', backgroundColor: 'green' }}></div>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <div style={{ width: '100%', height: '10em', backgroundColor: 'blue' }}></div>
-                                        </Grid>
-                                    </Grid>
-                                </Grid> */}
                             </Grid>
                         </Box>
                     </Collapse>

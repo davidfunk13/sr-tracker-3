@@ -73,6 +73,12 @@ export interface HeroEntry {
   subCategory: string,
 };
 
+export interface LineChartData {
+  x: number
+  y: number
+  label?: string
+}
+
 export interface Location {
   pathname?: string
   state: LocationStateRole

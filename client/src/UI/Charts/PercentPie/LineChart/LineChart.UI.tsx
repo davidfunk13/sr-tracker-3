@@ -1,25 +1,25 @@
-import React from 'react';
-import { VictoryLine, VictoryChart, VictoryTheme } from 'victory';
+import { Typography } from '@material-ui/core';
+import React, { FunctionComponent, useEffect } from 'react';
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryZoomContainer } from 'victory';
+import { LineChartData } from '../../../../App.Types';
+interface LineChartProps {
+    data: LineChartData[]
+}
 
-const LineChart = () => {
+const LineChart: FunctionComponent<LineChartProps> = ({ data }) => {
+
     return (
-        <VictoryChart theme={VictoryTheme.material} >
+        <VictoryChart containerComponent={<VictoryZoomContainer />} theme={VictoryTheme.material} >
             <VictoryLine
                 animate={{
                     duration: 2000,
-                    onLoad: { duration: 1000 }
+                    onLoad: { duration: 2000 }
                 }}
                 style={{
                     data: { stroke: "#c43a31" },
                     parent: { border: "1px solid #ccc" }
                 }}
-                data={[
-                    { x: 1, y: 2 },
-                    { x: 2, y: 3 },
-                    { x: 3, y: 5 },
-                    { x: 4, y: 4 },
-                    { x: 5, y: 7 }
-                ]}
+                data={data}
             />
         </VictoryChart>
     )

@@ -1,7 +1,8 @@
 import { Typography } from '@material-ui/core';
 import React, { FunctionComponent, useEffect } from 'react';
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryZoomContainer } from 'victory';
-import { LineChartData } from '../../../../App.Types';
+import { LineChartData } from '../../../App.Types';
+
 interface LineChartProps {
     data: LineChartData[]
 }
@@ -9,7 +10,7 @@ interface LineChartProps {
 const LineChart: FunctionComponent<LineChartProps> = ({ data }) => {
 
     return (
-        <VictoryChart containerComponent={<VictoryZoomContainer />} theme={VictoryTheme.material} >
+        <VictoryChart theme={VictoryTheme.material} >
             <VictoryLine
                 animate={{
                     duration: 2000,

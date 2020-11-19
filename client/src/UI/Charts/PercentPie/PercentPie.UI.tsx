@@ -2,7 +2,7 @@ import React, { useEffect, useState, FunctionComponent } from 'react';
 import { AnimationStyle, VictoryAnimation, VictoryLabel, VictoryPie } from 'victory';
 import { PercentPieData, PercentPieProps, PercentPieState } from './PercentPie.UI.Types';
 
-const PercentPie: FunctionComponent<PercentPieProps> = ({ value = 0, inView = true }) => {
+const PercentPie: FunctionComponent<PercentPieProps> = ({ value, inView = true }) => {
 
     const [state, setState] = useState<PercentPieState>({ percent: 0, data: getData(0) })
 
@@ -15,7 +15,7 @@ const PercentPie: FunctionComponent<PercentPieProps> = ({ value = 0, inView = tr
             const newState = { percent: value, data: getData(value) }
             setState(newState);
         }
-    }, [])
+    }, [value])
 
     return (
         <div>

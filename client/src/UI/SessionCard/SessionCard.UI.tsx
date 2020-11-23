@@ -65,7 +65,7 @@ const SessionCard: FunctionComponent<SessionCardProps> = ({ onClick, session, de
 
     return (
         <Fragment>
-            <Card onMouseDown={handleButtonPress} onMouseUp={handleButtonRelease} onClick={onClick} className={classes.root} >
+            <Card onTouchStart={handleButtonPress} onTouchEnd={handleButtonRelease} onMouseDown={handleButtonPress} onMouseUp={handleButtonRelease} onClick={onClick} className={classes.root} >
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
                         <Typography component="p" variant="subtitle1">

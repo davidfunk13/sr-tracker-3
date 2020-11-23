@@ -196,20 +196,17 @@ const SelectedSession: FunctionComponent<SelectedSessionTypes> = () => {
                         <LinkTab label="Stats" {...a11yProps(2)} />
                     </Tabs>
                 </AppBar>
-                <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={value}
-                >
-                    <TabPanel value={value} index={0}>
-                        <SessionInfo />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <SessionStats />
-                    </TabPanel>
-                </SwipeableViews>
+
+                <TabPanel value={value} index={0}>
+                    <SessionInfo />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <Games isLoading={isLoading} games={games} modalControls={{ modalOpen, setModalOpen }} />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    <SessionStats />
+                </TabPanel>
+
                 <Zoom
                     in={value === 1}
                     timeout={transitionDuration}

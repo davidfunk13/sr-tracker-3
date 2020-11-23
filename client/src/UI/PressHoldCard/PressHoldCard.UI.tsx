@@ -39,7 +39,7 @@ const PressHoldCard: FunctionComponent<PressHoldCardProps> = ({ onClick, action,
 
     return (
         <Fragment>
-            <Card onMouseDown={handleButtonPress} onMouseUp={handleButtonRelease} onClick={onClick} className={classes.root} >
+            <Card onTouchStart={handleButtonPress} onTouchEnd={handleButtonRelease} onMouseDown={handleButtonPress} onMouseUp={handleButtonRelease} onClick={onClick} className={classes.root} >
                 <CardContent className={classes.content}>
                     {children}
                 </CardContent>

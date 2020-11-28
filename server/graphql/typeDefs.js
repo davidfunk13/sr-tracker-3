@@ -1,4 +1,3 @@
-const statTypes = require('./types/statTypes');
 const gameTypes = require('./types/gameTypes');
 const sessionTypes = require('./types/sessionTypes');
 const battletagTypes = require('./types/battletagTypes');
@@ -14,8 +13,6 @@ ${gameTypes}
 ${sessionTypes}
 
 ${inputTypes}
-
-${statTypes}
 
 ${queries}
 

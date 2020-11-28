@@ -52,7 +52,6 @@ if (process.env.NODE_ENV === 'production') {
 };
 
 app.post('/stats', (req, res) => {
-  console.log(req.body)
   getBattletagStats(req, res)
 });
 

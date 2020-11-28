@@ -8,7 +8,6 @@ type Session {
     _games: [Game]
     createdAt: String!
     updatedAt: String
-}
-`;
+}`;
 
 module.exports = sessionTypeDefs;

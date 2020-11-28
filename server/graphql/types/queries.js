@@ -1,7 +1,6 @@
 const queries = `
 type Query {
   searchBattletags(battletag: String): [Battletag]
-  getBattletagStats(input: StatsInput! ): Stats
   getOneBattletag(_id: ID!): Battletag
   getAllBattletags(_user: ID!): [Battletag]
   getOneSession(_id: ID!): Session

@@ -7,22 +7,19 @@ const getBattletagStats = require("./resolvers/getBattletagStats");
 // parent, args, ctx, info
 const resolvers = {
   Query: {
-    async searchBattletags(parent, { battletag }) {
+    async searchBattletags (parent, { battletag }) {
       return await searchBattletags(battletag);
     },
-    async getBattletagStats(parent, { input }) {
-      return await getBattletagStats(input);
-    },
-    async getOneBattletag(_, { _id }) {
+    async getOneBattletag (_, { _id }) {
       return await Battletag.findById(_id);
     },
-    async getAllBattletags(_, { _user }) {
+    async getAllBattletags (_, { _user }) {
       return await Battletag.find({ _user: _user });
     },
-    async getOneSession(_, { _id }) {
+    async getOneSession (_, { _id }) {
       return await Session.findById(_id);
     },
-    async getAllSessions(_, { _battletag }) {
+    async getAllSessions (_, { _battletag }) {
       const populated = await Battletag.findById(_battletag).populate({
         path: '_sessions',
         populate: {
@@ -33,7 +30,7 @@ const resolvers = {
 
       return await populated._sessions;
     },
-    async getMostRecentSession(_, { _battletag }) {
+    async getMostRecentSession (_, { _battletag }) {
       const sessions = await Session.find({ _battletag: _battletag });
 
       const mostRecentSession = sessions.sort(function (a, b) {
@@ -42,27 +39,27 @@ const resolvers = {
 
       return mostRecentSession[0];
     },
-    async getAllGames(_, { _session }) {
+    async getAllGames (_, { _session }) {
       return await Game.find({ _session: _session });
     },
-    async getMostRecentGame(_, { _session }) {
+    async getMostRecentGame (_, { _session }) {
       const gamesSorted = await Game.find({ _session: _session }, null, { sort: { 'createdAt': -1 }, limit: 1 });
 
       const mostRecent = gamesSorted[0];
 
       return mostRecent;
     },
-    async getAllGamesOfType(_, { _session, role }) {
+    async getAllGamesOfType (_, { _session, role }) {
       return await Game.find({ _session: _session, role: role });
     },
   },
   Mutation: {
-    async createBattletag(_, { input }) {
+    async createBattletag (_, { input }) {
       const battletag = new Battletag(input);
 
       return await battletag.save();
     },
-    async createSession(_, { input }) {
+    async createSession (_, { input }) {
 
       const newSession = {
         ...input,
@@ -89,7 +86,7 @@ const resolvers = {
 
       return mostRecentSession[0];
     },
-    async createGame(_, { input }) {
+    async createGame (_, { input }) {
       let game = new Game(input);
 
       game = await game.save();
@@ -113,13 +110,13 @@ const resolvers = {
 
       return game;
     },
-    async updateGame(_, { _id, updatedGame }) {
+    async updateGame (_, { _id, updatedGame }) {
       return await Game.findByIdAndUpdate(_id, updatedGame);
     },
-    async deleteGame(_, { _id }) {
+    async deleteGame (_, { _id }) {
       return await Game.findByIdAndRemove(_id);
     },
-    async deleteBattletag(_, { _id }) {
+    async deleteBattletag (_, { _id }) {
       //get array of sessions
       const sessions = await Session.find({ _battletag: _id });
 
@@ -134,7 +131,7 @@ const resolvers = {
       //delete battletag
       await Battletag.findByIdAndDelete(_id).then(deletedBattletag => console.log("Battletag deleted", deletedBattletag));
     },
-    async deleteSession(_, { _id }) {
+    async deleteSession (_, { _id }) {
       await Game.deleteMany({ _session: _id }).then(deletedGames => {
         console.log("Games deleted:" + deletedGames)
       });

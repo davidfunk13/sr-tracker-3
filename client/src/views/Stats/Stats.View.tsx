@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StatsProps from './Stats.View.Types';
+import StatsProps, { StatsType } from './Stats.View.Types';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,7 +10,6 @@ import { CircularProgress } from '@material-ui/core';
 import { heroDictionary } from '../../utils/dictionaries';
 import { useAuth0 } from '../../react-auth0-spa';
 import fetchGraphQL from '../../utils/fetchGraphQL';
-import { Response } from './Stats.View.Types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Options, Ruleset } from './Stats.View.Types';
 import StatsTable from '../../components/StatsTable/StatsTable.Component';
@@ -27,7 +26,7 @@ const Stats: React.FC<StatsProps> = () => {
         ruleset: 0,
     });
 
-    const [statistics, setStatistics] = useState<Response>({} as Response);
+    const [statistics, setStatistics] = useState<StatsType | undefined>(undefined);
 
     // checks localStorage for selected SelectBattletag, if it isnt there, you get the boot my dude.
     useEffect(() => {
@@ -38,8 +37,6 @@ const Stats: React.FC<StatsProps> = () => {
         }
 
     }, [history]);
-
-
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         const name = event.target.name as keyof typeof options;
@@ -103,12 +100,10 @@ const Stats: React.FC<StatsProps> = () => {
                 }
             }`;
 
-
         const stats = await fetchGraphQL(token, query);
 
-        console.log(stats);
-
         setStatistics(stats.getBattletagStats);
+
         setIsLoading(false);
         return;
     };
@@ -163,12 +158,17 @@ const Stats: React.FC<StatsProps> = () => {
             </Grid>
             <Grid item xs={12}>
                 <Typography gutterBottom variant={"h5"} component={'h2'}>Stats</Typography>
-                <Grid container justify={isLoading ? 'center' : 'flex-start'}>
+                <Grid container spacing={2} justify={isLoading ? 'center' : 'flex-start'}>
+
                     {!isLoading ? null : <CircularProgress style={{ marginTop: '10vh' }} size={100} />}
+
                     {statistics && !isLoading ?
-                        <Grid item xs={12}>
-                            <StatsTable loading={isLoading} stats={statistics} />
-                        </Grid> : null}
+                        Object.keys(statistics).map(heading => {
+                            return <Grid item xs={12}>
+                                <StatsTable loading={isLoading} heading={heading.charAt(0).toUpperCase() + heading.slice(1)} stats={statistics[heading]} />
+                            </Grid>
+                        }) : null
+                    }
                 </Grid>
             </Grid>
 

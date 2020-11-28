@@ -6,8 +6,6 @@ import OverwatchImg from '../../assets/images/splash.png';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
 
-
-
 const Welcome: React.ComponentType<WelcomeViewProps> = () => {
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({

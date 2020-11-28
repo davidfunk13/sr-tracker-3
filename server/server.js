@@ -18,8 +18,6 @@ const mongoose = require('mongoose');
 
 const getBattletagStats = require("./graphql/resolvers/getBattletagStats");
 
-app.use(checkJwt);
-
 app.use(express.json());
 
 mongoose.Promise = global.Promise;
@@ -58,6 +56,7 @@ app.post('/stats', (req, res) => {
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
+  context: app.use(checkJwt),
 }));
 
 app.listen(PORT, () => {

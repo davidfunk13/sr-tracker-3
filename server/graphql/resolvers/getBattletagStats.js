@@ -8,8 +8,8 @@ const heroes = require('../../utils/heroDictionary');
 
 const { JSDOM } = jsdom;
 
-async function getBattletagStats(input) {
-    const { hero, _battletag, ruleset } = input;
+async function getBattletagStats (req, res) {
+    const { hero, _battletag, ruleset } = req.body;
 
     const currentBattletag = await Battletag.findById(_battletag);
 
@@ -60,7 +60,7 @@ async function getBattletagStats(input) {
             statsObj[categoryName] = innerObj;
         }
 
-        return { info: info, ...statsObj };
+        return res.json({ info: info, ...statsObj });
 
     } catch (err) {
         res.json({

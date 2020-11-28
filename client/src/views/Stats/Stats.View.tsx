@@ -64,50 +64,24 @@ const Stats: React.FC<StatsProps> = () => {
             scope: "read:current_user",
         });
 
-        const query: string = `
-                query{
-                    getBattletagStats(input:{
-                        hero: "${options.hero}"
-                        _battletag: "${selected._id}"
-                        ruleset:"${options.ruleset}"
-                    }){
-                    best {
-                        all_damage_done
-                        barrier_damage_done
-                        defensive_assists
-                        eliminations
-                        environmental_kills
-                        final_blows
-                        healing_done
-                        hero_damage_done
-                        kill_streak
-                        melee_final_blows
-                        multikill
-                        objective_kills
-                        objective_time
-                        offensive_assists
-                        recon_assists
-                        solo_kills
-                        teleporter_pad_destroyed
-                        time_spent_on_fire
-                        turrets_destroyed
-                    }
-                    
-                    info {
-                        ruleset
-                        hero
-                    }
-                }
-            }`;
+        const data = await fetch('/stats', {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json;charset=UTF-8",
+                authorization: `bearer ${token}`,
+            },
+            body: JSON.stringify({ hero: options.hero, _battletag: selected._id, ruleset: options.ruleset }),
+        });
 
-        const stats = await fetchGraphQL(token, query);
+        const stats = await data.json();
 
-        setStatistics(stats.getBattletagStats);
+        setStatistics(stats);
 
         setIsLoading(false);
         return;
     };
 
+    useEffect(() => console.log({ statistics }), [statistics])
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>

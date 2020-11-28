@@ -1,4 +1,8 @@
+require('dotenv').config();
+
 const cors = require("cors");
+
+const bodyParser = require('body-parser');
 
 const express = require("express");
 
@@ -12,7 +16,11 @@ const app = express();
 
 const mongoose = require('mongoose');
 
-require('dotenv').config();
+const getBattletagStats = require("./graphql/resolvers/getBattletagStats");
+
+app.use(checkJwt);
+
+app.use(express.json());
 
 mongoose.Promise = global.Promise;
 
@@ -28,7 +36,7 @@ mongoose.connect('mongodb://' + connectionString, { useNewUrlParser: true, useUn
   if (data) {
     console.log('connected');
   }
-})
+});
 
 const schema = require('./graphql/schema').default;
 
@@ -41,12 +49,16 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, './client/build/index.html'));
   });
-}
+};
+
+app.post('/stats', (req, res) => {
+  console.log(req.body)
+  getBattletagStats(req, res)
+});
 
 app.use('/api', graphqlHTTP({
   schema: schema,
   graphiql: useGraphiQL,
-  // context: app.use(checkJwt),
 }));
 
 app.listen(PORT, () => {

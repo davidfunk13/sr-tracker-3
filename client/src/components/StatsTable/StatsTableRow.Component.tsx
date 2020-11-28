@@ -8,10 +8,10 @@ interface StatsTableRowProps {
 const StatsTableRow: FunctionComponent<StatsTableRowProps> = ({ row }) => {
     return (
         < TableRow >
-            <TableCell component="th" scope="row">
-                row
+            <TableCell>
+                {row.heading}
             </TableCell>
-            <TableCell align="right">1234</TableCell>
+            <TableCell>{row.data}</TableCell>
         </TableRow >
     );
 };

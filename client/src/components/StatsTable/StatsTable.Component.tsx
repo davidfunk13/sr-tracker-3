@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,7 +11,9 @@ import useStyles from './StatsTable.Component.Styles';
 import StatsTableTypes from './StatsTable.Component.Types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StatsTableRow from './StatsTableRow.Component';
-
+import { TabletRounded } from '@material-ui/icons';
+import { Typography } from '@material-ui/core';
+import parseUnderscores from '../../utils/parseUnderscores';
 
 interface StatsTableRowType {
     heading: string
@@ -21,47 +23,38 @@ interface StatsTableRowType {
 const StatsTable: FunctionComponent<StatsTableTypes> = ({ loading, stats, heading }) => {
     const classes = useStyles();
 
-    function createData(name: string, calories: number) {
-        return { name, calories };
-    }
-
-
     const [rows, setRows] = useState<StatsTableRowType[]>([]);
 
     useEffect(() => {
-        const rows: { heading: string, data: string | number }[] = [];
+        const tableRows: { heading: string, data: string | number }[] = [];
 
-        Object.keys(stats).map((label, i) => {
-            console.log(stats)
-            // const parts = label.split('_');
-            // const capitalized = parts.map(word => word.charAt(0) + word.slice(1))
-            // const heading = capitalized.join(' ');
-            // rows.push({ heading: heading, data });
-        });
+        for (var row in stats) {
+            const heading = parseUnderscores(row);
+            const data = stats[row] || '0';
+            tableRows.push({ heading: heading, data });
+        }
 
-        setRows(rows);
+        setRows(tableRows);
+
         return () => {
             setRows([]);
         }
     }, [stats]);
-
-    // useEffect(() => console.log(rows), [rows])
-
     return (
-        <TableContainer component={Paper}>
-            <Table size="small" >
-                <TableHead>
-                    <TableRow>
-                        <TableCell>{heading}</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <StatsTableRow row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Fragment>
+            <Typography className={classes.heading} variant={'h6'}>
+                {parseUnderscores(heading)}
+            </Typography>
+            <TableContainer component={Paper}>
+                <Table size="small">
+                    <TableBody>
+                        {rows.map((row, i) => (
+                            <StatsTableRow key={'data' + i} row={row} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Fragment>
     );
 }
 

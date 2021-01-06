@@ -1,5 +1,11 @@
 require('dotenv').config();
 
+const path = require('path');
+
+const cors = require("cors");
+
+const bodyParser = require('body-parser');
+
 const express = require("express");
 
 const { graphqlHTTP } = require('express-graphql');
@@ -23,10 +29,10 @@ let connectionString;
 if (process.env.NODE_ENV === 'production') {
   connectionString = process.env.MONGO_DB_URI;
 } else {
-  connectionString = "mongodb://localhost:27017/sr-tracker";
+  connectionString = "localhost:27017/sr-tracker";
 }
 
-mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => {
+mongoose.connect("mongodb://" + connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => {
   if (data) {
     console.log('connected');
   }

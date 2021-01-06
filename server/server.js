@@ -29,10 +29,10 @@ let connectionString;
 if (process.env.NODE_ENV === 'production') {
   connectionString = process.env.MONGO_DB_URI;
 } else {
-  connectionString = "localhost:27017/sr-tracker";
+  connectionString = "mongodb://localhost:27017/sr-tracker";
 }
 
-mongoose.connect("mongodb://" + connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => {
+mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true }).then(data => {
   if (data) {
     console.log('connected');
   }

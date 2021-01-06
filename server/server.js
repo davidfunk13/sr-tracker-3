@@ -38,7 +38,7 @@ const schema = require('./graphql/schema').default;
 
 let useGraphiQL = process.env.NODE_ENV === 'production' ? false : true;
 
-console.log({ env: 'Prod' });
+console.log({ env: process.env.NODE_ENV });
 
 if (process.env.NODE_ENV === 'production') {
   //if you have weird errors with storing images etc in static dir this is why. back out a dir.

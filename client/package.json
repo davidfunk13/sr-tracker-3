@@ -19,7 +19,7 @@
     "@types/recharts": "^1.8.16",
     "@types/victory": "^33.1.4",
     "animate.css": "^4.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "graphql": "^15.3.0",
     "graphql.macro": "^1.4.2",
     "react": "^16.13.1",

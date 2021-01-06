@@ -2,10 +2,6 @@ require('dotenv').config();
 
 const path = require('path');
 
-const cors = require("cors");
-
-const bodyParser = require('body-parser');
-
 const express = require("express");
 
 const { graphqlHTTP } = require('express-graphql');
@@ -42,8 +38,9 @@ const schema = require('./graphql/schema').default;
 
 let useGraphiQL = process.env.NODE_ENV === 'production' ? false : true;
 
+console.log({ env: 'Prod' });
+
 if (process.env.NODE_ENV === 'production') {
-  console.log({ env: 'Prod' })
   //if you have weird errors with storing images etc in static dir this is why. back out a dir.
   app.use(express.static("client/build"));
 
